@@ -1,9 +1,7 @@
-// import styles from "./page.module.css";
-import Tracks from "@/pages/Tracks/Tracks";
+import Tracks from "@/components/Tracks/Tracks";
 import { MainNavigation } from "@/components/MainNavigation/MainNavigation";
 import { MainSidebar } from "@/components/MainSidebar/MainSidebar";
 import { MusicBar } from "@/components/MusicBar/MusicBar";
-// import Image from "next/image";
 
 export default function Home() {
   return (
