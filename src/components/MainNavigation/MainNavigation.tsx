@@ -13,38 +13,38 @@ export function MainNavigation() {
   }
 
   return (
-    <nav className={styles.main__nav}>
-      <div className={styles.nav__logo}>
+    <nav className={styles.mainNav}>
+      {/* <div className={styles.navLogo}>
         <Link href="/">
-          <Image
-            className={styles.logo__image}
-            src="/logo.svg"
+        <Image
+            className={styles.logoImage}
+            src="/img/logo.png"
             alt="logo"
             width={114}
             height={17}
           />
         </Link>
-      </div>
-      <div className={styles.nav__burger} onClick={handelOpenMenu}>
-        <span className={styles.burger__line}></span>
-        <span className={styles.burger__line}></span>
-        <span className={styles.burger__line}></span>
+      </div> */}
+      <div className={styles.navBurger} onClick={handelOpenMenu}>
+        <span className={styles.burgerLine}></span>
+        <span className={styles.burgerLine}></span>
+        <span className={styles.burgerLine}></span>
       </div>
       {isOpen && (
-        <div className={styles.nav__menu}>
-          <ul className={styles.menu__list}>
-            <li className={styles.menu__item}>
-              <Link href="#" className={styles.menu__link}>
+        <div className={styles.navMenu}>
+          <ul className={styles.menuList}>
+            <li className={styles.menuItem}>
+              <Link href="#" className={styles.menuLink}>
                 Главное
               </Link>
             </li>
-            <li className={styles.menu__item}>
-              <Link href="#" className={styles.menu__link}>
+            <li className={styles.menuItem}>
+              <Link href="#" className={styles.menuLink}>
                 Мой плейлист
               </Link>
             </li>
-            <li className={styles.menu__item}>
-              <Link href="../signin.html" className={styles.menu__link}>
+            <li className={styles.menuItem}>
+              <Link href="../signin.html" className={styles.menuLink}>
                 Войти
               </Link>
             </li>

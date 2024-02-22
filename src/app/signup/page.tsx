@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./SignUpPage.module.css";
+import classNames from "classnames";
 
 export default function SignUpPage() {
   return (
@@ -11,7 +12,7 @@ export default function SignUpPage() {
             <Link href="/">
               <div className={styles.modal__logo}>
                 <Image
-                  src="/logo_modal.png"
+                  src="/img/logo_modal.png"
                   alt="logo"
                   width={140}
                   height={21}
@@ -19,7 +20,7 @@ export default function SignUpPage() {
               </div>
             </Link>
             <input
-              className={`${styles.modal__input} ${styles.login}`}
+              className={classNames(styles.modal__input, styles.login)}
               type="text"
               name="login"
               placeholder="Почта"

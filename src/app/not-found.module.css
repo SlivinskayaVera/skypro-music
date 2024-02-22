@@ -1,0 +1,90 @@
+.wrapper {
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.modalBlock {
+    position: absolute;
+    z-index: 2;
+    left: calc(50% - (366px / 2));
+    top: calc(50% - (439px / 2));
+    opacity: 1;
+    text-align: center;
+}
+
+.header {
+    font-weight: 400;
+    font-size: 160px;
+    line-height: 105%;
+    color: #fff;
+}
+
+.description {
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 125%;
+    color: #fff;
+    padding-bottom: 16px;
+}
+
+.containerText {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 133%;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #4e4e4e;
+    padding-bottom: 36px;
+}
+
+.buttonGoBack {
+    width: 278px;
+    height: 52px;
+    background: #580ea2;
+    border-radius: 6px;
+    border: none;
+
+}
+
+.buttonGoBack:hover {
+    background-color: #3f007d;
+}
+
+.buttonGoBack:active {
+    background-color: #271a58;
+}
+
+.buttonGoBack a {
+    width: 100%;
+    height: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.05px;
+    color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}

@@ -1,33 +1,33 @@
+import classNames from "classnames";
 import styles from "./Tracks.module.css";
-import Image from "next/image";
-import { PlaylistBlock } from "@/components/PlaylistBlock/PlaylistBlock";
+import { PlaylistBlock } from "@components/PlaylistBlock/PlaylistBlock";
 
 export default function Tracks() {
   return (
-    <div className={styles.main__centerblock}>
-      <div className={styles.centerblock__search}>
-        <Image
-          className={styles.search__svg}
-          src="/search.svg"
-          alt="поиск"
-          width={12}
-          height={12}
-        />
+    <div className={styles.mainCenterBlock}>
+      {/* <div className={styles.centerBlockSearch}>
+        <svg className={styles.searchSvg}>
+          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
+        </svg>
         <input
-          className={styles.search__text}
+          className={styles.searchText}
           type="search"
           placeholder="Поиск"
           name="search"
         />
-      </div>
-      <h2 className={styles.centerblock__h2}>Треки</h2>
-      <div className={styles.centerblock__filter}>
-        <div className={styles.filter__title}>Искать по:</div>
-        <div className={`${styles.filter__button} ${styles._btn_text}`}>
+      </div> */}
+      <h2 className={styles.centerBlockH2}>Треки</h2>
+      <div className={styles.centerBlockFilter}>
+        <div className={styles.filterTitle}>Искать по:</div>
+        <div className={classNames(styles.filterButton, styles._btnText)}>
           исполнителю
         </div>
-        <div className={`${styles.filter__button} ${styles._btn_text}`}>году выпуска</div>
-        <div className={`${styles.filter__button} ${styles._btn_text}`}>жанру</div>
+        <div className={classNames(styles.filterButton, styles._btnText)}>
+          году выпуска
+        </div>
+        <div className={classNames(styles.filterButton, styles._btnText)}>
+          жанру
+        </div>
       </div>
       <PlaylistBlock />
     </div>

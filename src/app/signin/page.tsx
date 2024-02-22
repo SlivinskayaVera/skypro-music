@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./SignInPage.module.css"
+import styles from "./SignInPage.module.css";
+import classNames from "classnames";
 
 export default function SignInPage() {
   return (
@@ -10,17 +11,22 @@ export default function SignInPage() {
           <form className={styles.modal__form_login} action="#">
             <Link href="/">
               <div className={styles.modal__logo}>
-                <Image src="/logo_modal.png" alt="logo" width={140} height={21}/>
+                <Image
+                  src="/logo_modal.png"
+                  alt="logo"
+                  width={140}
+                  height={21}
+                />
               </div>
             </Link>
             <input
-              className={`${styles.modal__input} ${styles.login}`}
+              className={classNames(styles.modal__input, styles.login)}
               type="text"
               name="login"
               placeholder="Почта"
             />
             <input
-              className={`${styles.modal__input} ${styles.password}`}
+              className={classNames(styles.modal__input, styles.password)}
               type="password"
               name="password"
               placeholder="Пароль"

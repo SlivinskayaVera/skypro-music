@@ -1,46 +1,37 @@
 import Link from "next/link";
 import styles from "./TrackItem.module.css";
-import Image from "next/image";
 
 export function TrackItem() {
   return (
-    <div className={styles.playlist__item}>
-      <div className={styles.playlist__track}>
-        <div className={styles.track__title}>
-          <div className={styles.track__title_image}>
-            <Image
-              src="/note.svg"
-              className={styles.track__title_svg}
-              alt="обложка альбома"
-              width={51}
-              height={51}
-            />
+    <div className={styles.playlistItem}>
+      <div className={styles.playlistTrack}>
+        <div className={styles.trackTitle}>
+          <div className={styles.trackTitleImage}>
+            <svg className={styles.trackTitleSvg}>
+              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+            </svg>
           </div>
           <div>
-            <Link className={styles.track__title_link} href="http://">
-              Guilt <span className={styles.track__title_span}></span>
+            <Link className={styles.trackTitleLink} href="http://">
+              Guilt <span className={styles.trackTitleSpan}></span>
             </Link>
           </div>
         </div>
-        <div className={styles.track__author}>
-          <Link className={styles.track__author_link} href="http://">
+        <div className={styles.trackAuthor}>
+          <Link className={styles.trackAuthorLink} href="http://">
             Nero
           </Link>
         </div>
-        <div className={styles.track__album}>
-          <Link className={styles.track__album_link} href="http://">
+        <div className={styles.trackAlbum}>
+          <Link className={styles.trackAlbumLink} href="http://">
             Welcome Reality
           </Link>
         </div>
         <div>
-          <Image
-            className={styles.track__time_svg}
-            src="/like.svg"
-            alt="like"
-            width={14}
-            height={12}
-          />
-          <span className={styles.track__time_text}>4:44</span>
+          <svg className={styles.trackTimeSvg}>
+            <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+          </svg>
+          <span className={styles.trackTimeText}>4:44</span>
         </div>
       </div>
     </div>
