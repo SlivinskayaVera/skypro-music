@@ -14,17 +14,6 @@ export function MainNavigation() {
 
   return (
     <nav className={styles.mainNav}>
-      {/* <div className={styles.navLogo}>
-        <Link href="/">
-        <Image
-            className={styles.logoImage}
-            src="/img/logo.png"
-            alt="logo"
-            width={114}
-            height={17}
-          />
-        </Link>
-      </div> */}
       <div className={styles.navBurger} onClick={handelOpenMenu}>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>

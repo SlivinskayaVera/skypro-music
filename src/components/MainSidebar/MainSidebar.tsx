@@ -5,20 +5,6 @@ import Image from "next/image";
 export function MainSidebar() {
   return (
     <div className={styles.mainSidebar}>
-      {/* <div className={styles.sidebarPersonal}>
-        <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
-        <div className={styles.sidebarIcon}>
-          <Link href="/signin">
-            <Image
-              className={styles.logoutSvg}
-              src="/img/logout.png"
-              alt="logo"
-              width={40}
-              height={40}
-            />
-          </Link>
-        </div>
-      </div> */}
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
           <div className={styles.sidebarItem}>
