@@ -1,68 +1,12 @@
-.wrapper {
-    width: 100%;
-    min-height: 100%;
-    overflow: hidden;
-}
-
-.container_signup {
-    max-width: 100%;
-    height: 100vh;
-    margin: 0 auto;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.85);
-}
-
-.modal__btn_signup_ent:hover {
+.modalBtnSignupEnt:hover {
     background-color: #3F007D;
 }
 
-.modal__btn_signup_ent:active {
+.modalBtnSignupEnt:active {
     background-color: #271A58;
 }
 
-.modal__block {
-    position: absolute;
-    z-index: 2;
-    left: calc(50% - (366px/2));
-    top: calc(50% - (439px/2));
-    opacity: 1;
-}
-
-.modal__form_login {
-    width: 366px;
-    height: 439px;
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 43px 44px 47px 40px;
-}
-
-.modal__form_login input:first-child {
-    margin-bottom: 30px;
-}
-
-.modal__logo {
-    width: 140px;
-    height: 21px;
-    margin-bottom: 34px;
-    background-color: transparent;
-}
-
-.modal__logo img {
-    width: 140px;
-    height: auto;
-}
-
-.modal__input {
+.modalInput {
     width: 100%;
     border-top: none;
     border-left: none;
@@ -73,7 +17,7 @@
     margin-bottom: 30px;
 }
 
-.modal__input::-webkit-input-placeholder {
+.modalInput::-webkit-input-placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -82,7 +26,7 @@
     color: #D0CECE;
 }
 
-.modal__input:-ms-input-placeholder {
+.modalInput:-ms-input-placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -91,7 +35,7 @@
     color: #D0CECE;
 }
 
-.modal__input::-ms-input-placeholder {
+.modalInput::-ms-input-placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -100,7 +44,7 @@
     color: #D0CECE;
 }
 
-.modal__input::placeholder {
+.modalInput::placeholder {
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -109,7 +53,7 @@
     color: #D0CECE;
 }
 
-.modal__btn_signup_ent {
+.modalBtnSignupEnt {
     width: 278px;
     height: 62px;
     background-color: #580EA2;
@@ -128,7 +72,7 @@
     justify-content: center;
 }
 
-.modal__btn_signup_ent a {
+.modalBtnSignupEnt a {
     width: 100%;
     height: 100%;
     font-style: normal;

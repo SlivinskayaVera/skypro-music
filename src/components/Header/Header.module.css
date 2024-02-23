@@ -3,7 +3,7 @@
     flex-direction: row;
     /* justify-content: space-between; */
     padding: 20px 90px 0 36px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .navLogo {
@@ -107,7 +107,7 @@
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end;
-    padding: 12px 0 15px 0;
+    padding: 14px 0 15px 0;
     justify-self: flex-end;
 }
 
