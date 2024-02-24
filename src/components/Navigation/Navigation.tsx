@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./MainNavigator.module.css";
+import styles from "./Navigator.module.css";
 import Link from "next/link";
 import { useState } from "react";
 
-export function MainNavigation() {
+export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   function handelOpenMenu() {

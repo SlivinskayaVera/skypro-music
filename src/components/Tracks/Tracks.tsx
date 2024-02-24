@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import styles from "./Tracks.module.css";
-import { PlaylistBlock } from "@components/PlaylistBlock/PlaylistBlock";
+import { Playlist } from "../Playlist/Playlist";
 
 export default function Tracks() {
   return (
@@ -18,7 +18,7 @@ export default function Tracks() {
           жанру
         </div>
       </div>
-      <PlaylistBlock />
+      <Playlist />
     </div>
   );
 }

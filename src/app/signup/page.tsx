@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./SignUpPage.module.css";
 import classNames from "classnames";
-import WrapperModal from "@/components/Common/WrapperForModalSign/WrapperModal";
+import WrapperModal from "@components/Common/WrapperModal/WrapperModal";
 
 export default function SignUpPage() {
   return (

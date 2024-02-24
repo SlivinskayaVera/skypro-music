@@ -1,9 +1,9 @@
 import Tracks from "@components/Tracks/Tracks";
-import { MainNavigation } from "@components/MainNavigation/MainNavigation";
-import { MainSidebar } from "@components/MainSidebar/MainSidebar";
-import { MusicBar } from "@components/MusicBar";
 import styles from "./page.module.css";
-import { Header } from "@/components/Header/Header";
+import { Header } from "@components/Header/Header";
+import { Navigation } from "@components/Navigation/Navigation";
+import { Sidebar } from "@components/Sidebar/Sidebar";
+import Bar from "@components/Bar/Bar";
 
 export default function Home() {
   return (
@@ -11,11 +11,11 @@ export default function Home() {
       <div className={styles.container}>
         <Header />
         <main className={styles.main}>
-          <MainNavigation />
+          <Navigation />
           <Tracks />
-          <MainSidebar />
+          <Sidebar />
         </main>
-        <MusicBar />
+        <Bar />
       </div>
     </div>
   );

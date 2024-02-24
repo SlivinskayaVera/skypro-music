@@ -1,8 +1,8 @@
 import Link from "next/link";
-import styles from "./MainSidebar.module.css";
+import styles from "./Sidebar.module.css";
 import Image from "next/image";
 
-export function MainSidebar() {
+export function Sidebar() {
   return (
     <div className={styles.mainSidebar}>
       <div className={styles.sidebarBlock}>
