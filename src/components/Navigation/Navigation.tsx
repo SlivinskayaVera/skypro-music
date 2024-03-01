@@ -2,10 +2,10 @@
 
 import styles from "./Navigator.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import React from "react";
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   function handelOpenMenu() {
     setIsOpen((prev) => !prev);
