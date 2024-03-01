@@ -1,9 +1,9 @@
 import { TrackItem } from "../TrackItem/TrackItem";
-import styles from "./PlaylistBlock.module.css";
+import styles from "./Playlist.module.css";
 
-export function PlaylistBlock() {
+export function Playlist() {
   return (
-    <div className={styles.centerblockContent}>
+    <div className={styles.centerBlockContent}>
       <div className={styles.contentTitle}>
         <div className={styles.playlistTitleCol}>Трек</div>
         <div className={styles.playlistTitleCol}>ИСПОЛНИТЕЛЬ</div>

@@ -2,7 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./WrapperModal.module.css";
 
-export default function WrapperModal({ children } : { children: any}) {
+type WrapperModalProps = { children: string };
+
+const WrapperModal: React.FC<WrapperModalProps> = ({ children }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -18,10 +20,12 @@ export default function WrapperModal({ children } : { children: any}) {
                 />
               </div>
             </Link>
-            { children }
+            {children}
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default WrapperModal;

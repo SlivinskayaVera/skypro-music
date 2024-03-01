@@ -1,9 +1,8 @@
-import Image from "next/image";
-import styles from "./MusicBar.module.css";
+import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
 
-export default function MusicBar() {
+export default function Bar() {
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>

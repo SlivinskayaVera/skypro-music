@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import styles from "./MainNavigator.module.css";
+import styles from "./Navigator.module.css";
 import Link from "next/link";
-import { useState } from "react";
+import React from "react";
 
-export function MainNavigation() {
-  const [isOpen, setIsOpen] = useState(false);
+export function Navigation() {
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   function handelOpenMenu() {
     setIsOpen((prev) => !prev);
@@ -14,17 +13,6 @@ export function MainNavigation() {
 
   return (
     <nav className={styles.mainNav}>
-      {/* <div className={styles.navLogo}>
-        <Link href="/">
-        <Image
-            className={styles.logoImage}
-            src="/img/logo.png"
-            alt="logo"
-            width={114}
-            height={17}
-          />
-        </Link>
-      </div> */}
       <div className={styles.navBurger} onClick={handelOpenMenu}>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
