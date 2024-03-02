@@ -12,7 +12,7 @@ export default function Home() {
         <Header />
         <main className={styles.main}>
           <Navigation />
-          <Tracks />
+          <Tracks title="Треки"/>
           <Sidebar />
         </main>
         <Bar />

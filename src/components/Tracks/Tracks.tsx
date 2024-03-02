@@ -1,23 +1,13 @@
-import classNames from "classnames";
 import styles from "./Tracks.module.css";
+import React from "react";
 import { Playlist } from "../Playlist/Playlist";
+import { FilterWrapper } from "../FilterWrapper/FilterWrapper";
 
-export default function Tracks() {
+export default function Tracks({ title }: { title: string }) {
   return (
     <div className={styles.mainCenterBlock}>
-      <h2 className={styles.centerBlockH2}>Треки</h2>
-      <div className={styles.centerBlockFilter}>
-        <div className={styles.filterTitle}>Искать по:</div>
-        <div className={classNames(styles.filterButton, styles._btnText)}>
-          исполнителю
-        </div>
-        <div className={classNames(styles.filterButton, styles._btnText)}>
-          году выпуска
-        </div>
-        <div className={classNames(styles.filterButton, styles._btnText)}>
-          жанру
-        </div>
-      </div>
+      <h2 className={styles.centerBlockH2}>{title}</h2>
+      <FilterWrapper />
       <Playlist />
     </div>
   );

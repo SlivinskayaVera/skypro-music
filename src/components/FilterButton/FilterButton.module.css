@@ -1,0 +1,62 @@
+.filterPosition {
+    position: relative;
+}
+.modal {
+    position: absolute;
+    width: 248px;
+    height: 305px;
+    top: 50px;
+    border-radius: 12px;
+    background: rgb(49, 49, 49);
+    /* Автолейаут */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 34px;
+}
+
+.content {
+    position: static;
+    width: 180px;
+    height: 237px;
+    /* Автолейаут */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+
+    /* Inside Auto Layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 10px 0px;
+}
+
+.filterButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+}
+
+.filterButton:not(:last-child) {
+    margin-right: 10px;
+}
+
+
+._btnText:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+._btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
