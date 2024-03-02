@@ -1,10 +1,9 @@
 .filterPosition {
     position: relative;
 }
+
 .modal {
     position: absolute;
-    width: 248px;
-    height: 305px;
     top: 50px;
     border-radius: 12px;
     background: rgb(49, 49, 49);
@@ -17,21 +16,48 @@
 }
 
 .content {
-    position: static;
-    width: 180px;
-    height: 237px;
-    /* Автолейаут */
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 0px;
+}
 
-    /* Inside Auto Layout */
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 10px 0px;
+.list {
+    display: flex;
+    flex-direction: column;
+    height: 232px;
+    row-gap: 28px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: rgb(75, 73, 73);
+}
+
+.list::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid rgb(255, 255, 255);
+}
+
+.listItem {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0%;
+    text-align: left;
+    padding-right: 28px;
+}
+
+.listItem:hover {
+    color: rgb(182, 114, 255);
+    text-decoration-line: underline;
 }
 
 .filterButton {
@@ -43,11 +69,6 @@
     border-radius: 60px;
     padding: 6px 20px;
 }
-
-.filterButton:not(:last-child) {
-    margin-right: 10px;
-}
-
 
 ._btnText:active {
     border-color: #ad61ff;

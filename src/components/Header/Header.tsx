@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
 import Image from "next/image";
+import { SVG } from "../Common/SVGImage";
 
 export function Header() {
   return (
@@ -17,9 +18,7 @@ export function Header() {
         </Link>
       </div>
       <div className={styles.centerBlockSearch}>
-        <svg className={styles.searchSvg}>
-          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-        </svg>
+        <SVG className={styles.searchSvg} url="search"/>
         <input
           className={styles.searchText}
           type="search"

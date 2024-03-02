@@ -47,10 +47,6 @@
     padding: 6px 20px;
 }
 
-.filterButton:not(:last-child) {
-    margin-right: 10px;
-}
-
 ._btnText:active {
     border-color: #ad61ff;
     color: #ad61ff;

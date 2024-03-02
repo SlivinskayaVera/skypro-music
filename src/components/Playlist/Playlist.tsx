@@ -1,3 +1,4 @@
+import { SVG } from "../Common/SVGImage";
 import { TrackItem } from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
 
@@ -9,9 +10,7 @@ export function Playlist() {
         <div className={styles.playlistTitleCol}>ИСПОЛНИТЕЛЬ</div>
         <div className={styles.playlistTitleCol}>АЛЬБОМ</div>
         <div className={styles.playlistTitleCol}>
-          <svg className={styles.playlistTitleSvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
-          </svg>
+          <SVG className={styles.playlistTitleSvg} url="watch" />
         </div>
       </div>
       <div className={styles.contentPlaylist}>

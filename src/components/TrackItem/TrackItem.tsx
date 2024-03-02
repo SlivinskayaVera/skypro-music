@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./TrackItem.module.css";
+import { SVG } from "../Common/SVGImage";
 
 export function TrackItem() {
   return (
@@ -7,9 +8,7 @@ export function TrackItem() {
       <div className={styles.playlistTrack}>
         <div className={styles.trackTitle}>
           <div className={styles.trackTitleImage}>
-            <svg className={styles.trackTitleSvg}>
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-            </svg>
+            <SVG className={styles.trackTitleSvg} url="note" />
           </div>
           <div>
             <Link className={styles.trackTitleLink} href="http://">
@@ -28,9 +27,7 @@ export function TrackItem() {
           </Link>
         </div>
         <div>
-          <svg className={styles.trackTimeSvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-          </svg>
+          <SVG className={styles.trackTimeSvg} url="like" />
           <span className={styles.trackTimeText}>4:44</span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../Tracks/Tracks.module.css";
+import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
 import { authors, years, genres } from "./data";
 import { useState } from "react";
@@ -16,22 +16,22 @@ export function FilterWrapper() {
     <div className={styles.centerBlockFilter}>
       <div className={styles.filterTitle}>Искать по:</div>
       <FilterButton
-        isOpen={isActive === "исполнитель" ? true : false}
+        isOpen={isActive === "исполнителю" ? true : false}
         list={authors}
-        title="исполнитель"
-        onClick={() => handelActive("исполнитель")}
+        title="исполнителю"
+        onClick={() => handelActive("исполнителю")}
       />
       <FilterButton
-        isOpen={isActive === "год" ? true : false}
+        isOpen={isActive === "году выпуска" ? true : false}
         list={years}
-        title="год"
-        onClick={() => handelActive("год")}
+        title="году выпуска"
+        onClick={() => handelActive("году выпуска")}
       />
       <FilterButton
-        isOpen={isActive === "жанр" ? true : false}
+        isOpen={isActive === "жанру" ? true : false}
         list={genres}
-        title="жанр"
-        onClick={() => handelActive("жанр")}
+        title="жанру"
+        onClick={() => handelActive("жанру")}
       />
     </div>
   );

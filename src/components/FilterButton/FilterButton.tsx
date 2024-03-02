@@ -20,9 +20,9 @@ export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
       {isOpen && (
         <div className={styles.modal}>
           <div className={styles.content}>
-            <ul>
+            <ul className={styles.list}>
               {list.map((item, index) => {
-                return <li key={index}>{item.name}</li>;
+                return <li className={styles.listItem} key={index}>{item.name}</li>;
               })}
             </ul>
           </div>
