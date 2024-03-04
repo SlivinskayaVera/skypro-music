@@ -11,12 +11,12 @@ type FilterType = {
 export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
   return (
     <div className={styles.filterPosition}>
-      <div
+      <button
         onClick={onClick}
         className={cn(styles.filterButton, styles._btnText)}
       >
         {title}
-      </div>
+      </button>
       {isOpen && (
         <div className={styles.modal}>
           <div className={styles.content}>
