@@ -1,7 +1,3 @@
-.filterPosition {
-    position: relative;
-}
-
 .modal {
     position: absolute;
     top: 50px;
@@ -13,6 +9,34 @@
     justify-content: flex-start;
     align-items: flex-start;
     padding: 34px;
+}
+
+.filterButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+._btnText:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+._btnText:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
+.filterPosition {
+    position: relative;
 }
 
 .content {
@@ -58,28 +82,4 @@
 .listItem:hover {
     color: rgb(182, 114, 255);
     text-decoration-line: underline;
-}
-
-.filterButton {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    border: 1px solid #ffffff;
-    border-radius: 60px;
-    padding: 6px 20px;
-    background-color: transparent;
-    color: #ffffff;
-}
-
-._btnText:active {
-    border-color: #ad61ff;
-    color: #ad61ff;
-    cursor: pointer;
-}
-
-._btnText:hover {
-    border-color: #d9b6ff;
-    color: #d9b6ff;
-    cursor: pointer;
 }

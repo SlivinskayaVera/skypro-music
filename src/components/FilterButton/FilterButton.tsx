@@ -1,12 +1,6 @@
 import styles from "./FilterButton.module.css";
 import cn from "classnames";
-
-type FilterType = {
-  list: Array<{ id: number; name: string }>;
-  title: string;
-  isOpen: boolean;
-  onClick: () => void;
-};
+import {FilterType} from "../../../types.types"
 
 export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
   return (

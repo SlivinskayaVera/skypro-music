@@ -1,4 +1,4 @@
-import { SVG } from "../Common/SVGImage";
+import { SVG } from "../SVGImage/SVGImage";
 import { TrackItem } from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
 

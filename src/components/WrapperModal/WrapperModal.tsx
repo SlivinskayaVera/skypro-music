@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./WrapperModal.module.css";
+import { ChildrenType } from "../../../types.types";
 
-type WrapperModalProps = { children: string };
-
-const WrapperModal: React.FC<WrapperModalProps> = ({ children }) => {
+// Ниже пример мы так описываем стрелочную функцию?
+// const WrapperModal: React.FC<ChildrenType> = ({ children }) => {
+function WrapperModal({ children }: ChildrenType) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -26,6 +27,6 @@ const WrapperModal: React.FC<WrapperModalProps> = ({ children }) => {
       </div>
     </div>
   );
-};
+}
 
 export default WrapperModal;

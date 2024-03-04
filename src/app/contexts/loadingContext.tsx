@@ -1,11 +1,11 @@
 // "use client";
 
 import React, { createContext, useEffect, useState } from "react";
+import { ChildrenType } from "../../../types.types";
 
-type PropsType = { children: JSX.Element };
 
 const LoadingContext = createContext<boolean>(false);
-function LoadingProvider({ children }: PropsType) {
+function LoadingProvider({ children }: ChildrenType) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

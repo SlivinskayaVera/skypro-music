@@ -1,26 +1,23 @@
 import Link from "next/link";
 import styles from "./SignInPage.module.css";
-import classNames from "classnames";
-import WrapperModal from "@components/Common/WrapperModal/WrapperModal";
+import WrapperModal from "@/components/WrapperModal/WrapperModal";
+import { FormInput } from "@/components/FormInput/FormInput";
+import { BtnEnter } from "@/components/BtnEnter/BtnEnter";
 
 export default function SignInPage() {
   return (
     <WrapperModal>
-      <input
-        className={classNames(styles.modalInput, styles.login)}
+      <FormInput
         type="text"
         name="login"
         placeholder="Почта"
       />
-      <input
-        className={classNames(styles.modalInput, styles.password)}
+      <FormInput
         type="password"
         name="password"
         placeholder="Пароль"
       />
-      <button className={styles.modalBtnEnter}>
-        <Link href="/">Войти</Link>
-      </button>
+      <BtnEnter title="Войти"/>
       <button className={styles.modalBtnSignup}>
         <Link href="/signup">Зарегистрироваться</Link>
       </button>

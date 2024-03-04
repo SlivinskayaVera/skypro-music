@@ -3,7 +3,7 @@
 import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
-import { SVG } from "../Common/SVGImage";
+import { SVG } from "../SVGImage/SVGImage";
 import { LoadingItems } from "./LoadingItems";
 import { useEffect, useState } from "react";
 

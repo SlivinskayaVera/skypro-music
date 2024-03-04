@@ -4,6 +4,7 @@
     }
 }
 
+/* ._btn перенести в глобал */
 ._btn {
     cursor: pointer;
 }
@@ -147,8 +148,6 @@
     stroke: #ffffff;
     cursor: pointer;
 }
-
-
 
 .playerBtnShuffle {
     display: -webkit-box;

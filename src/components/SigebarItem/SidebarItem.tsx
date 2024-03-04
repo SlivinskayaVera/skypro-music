@@ -4,11 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "./SidebarItem.module.css";
-
-type ItemProps = {
-  link: string;
-  scrImg: string;
-};
+import { ItemProps } from "../../../types.types";
 
 export function SidebarItem({ link, scrImg }: ItemProps) {
   const [isLoading, setIsLoading] = useState(false);
