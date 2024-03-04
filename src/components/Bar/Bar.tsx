@@ -1,9 +1,24 @@
+"use client";
+
 import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
 import { SVG } from "../Common/SVGImage";
+import { LoadingItems } from "./LoadingItems";
+import { useEffect, useState } from "react";
 
 export default function Bar() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const timerLoading = setTimeout(() => {
+      setIsLoading((prev) => !prev);
+    }, 2000);
+    return () => {
+      clearTimeout(timerLoading);
+    };
+  }, []);
+
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -33,21 +48,25 @@ export default function Bar() {
             </div>
 
             <div className={styles.playerTrackPlay}>
-              <div className={styles.trackPlayContain}>
-                <div className={styles.trackPlayImage}>
-                  <SVG className={styles.trackPlaySvg} url="note" />
+              {isLoading ? (
+                <div className={styles.trackPlayContain}>
+                  <div className={styles.trackPlayImage}>
+                    <SVG className={styles.trackPlaySvg} url="note" />
+                  </div>
+                  <div className={styles.trackPlayAuthor}>
+                    <Link className={styles.trackPlayAuthorLink} href="">
+                      Ты та...
+                    </Link>
+                  </div>
+                  <div className={styles.trackPlayAlbum}>
+                    <Link className={styles.trackPlayAlbumLink} href="">
+                      Баста
+                    </Link>
+                  </div>
                 </div>
-                <div className={styles.trackPlayAuthor}>
-                  <Link className={styles.trackPlayAuthorLink} href="">
-                    Ты та...
-                  </Link>
-                </div>
-                <div className={styles.trackPlayAlbum}>
-                  <Link className={styles.trackPlayAlbumLink} href="">
-                    Баста
-                  </Link>
-                </div>
-              </div>
+              ) : (
+                <LoadingItems />
+              )}
 
               <div className={styles.trackPlayLikeDis}>
                 <div
