@@ -1,22 +1,25 @@
 import styles from "./FilterButton.module.css";
-import cn from "classnames";
-import {FilterType} from "../../../types.types"
+import { FilterType } from "../../../types.types";
+import { Button } from "./Button.styled";
 
 export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
   return (
     <div className={styles.filterPosition}>
-      <button
+      <Button active={`${isOpen}`}
         onClick={onClick}
-        className={cn(styles.filterButton, styles._btnText)}
       >
         {title}
-      </button>
+      </Button>
       {isOpen && (
         <div className={styles.modal}>
           <div className={styles.content}>
             <ul className={styles.list}>
               {list.map((item, index) => {
-                return <li className={styles.listItem} key={index}>{item.name}</li>;
+                return (
+                  <li className={styles.listItem} key={index}>
+                    {item.name}
+                  </li>
+                );
               })}
             </ul>
           </div>

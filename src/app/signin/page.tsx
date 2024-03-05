@@ -18,7 +18,7 @@ export default function SignInPage() {
         placeholder="Пароль"
       />
       <BtnEnter title="Войти"/>
-      <button className={styles.modalBtnSignup}>
+      <button className={styles.btnSignUp}>
         <Link href="/signup">Зарегистрироваться</Link>
       </button>
     </WrapperModal>

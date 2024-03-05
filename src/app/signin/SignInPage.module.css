@@ -1,12 +1,12 @@
-.modalBtnSignup:hover {
+.btnSignUp:hover {
     background-color: #f4f5f6;
 }
 
-.modalBtnSignup:active {
+.btnSignUp:active {
     background-color: #d9d9d9;
 }
 
-.modalBtnSignup {
+.btnSignUp {
     width: 278px;
     height: 52px;
     background-color: transparent;
@@ -29,7 +29,7 @@
     justify-content: center;
 }
 
-.modalBtnSignup a {
+.btnSignUp a {
     width: 100%;
     height: 100%;
     font-style: normal;
