@@ -23,13 +23,13 @@
     color: #ffffff;
 }
 
-._btnText:active {
+.filterButton:active {
     border-color: #ad61ff;
     color: #ad61ff;
     cursor: pointer;
 }
 
-._btnText:hover {
+.filterButton:hover {
     border-color: #d9b6ff;
     color: #d9b6ff;
     cursor: pointer;
@@ -37,6 +37,31 @@
 
 .filterPosition {
     position: relative;
+}
+
+.activeButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid;
+    border-color: rgb(182, 114, 255);
+    border-radius: 60px;
+    padding: 6px 20px;
+    background-color: transparent;
+    color: rgb(182, 114, 255);
+}
+
+.activeButton:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+.activeButton:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
 }
 
 .content {
