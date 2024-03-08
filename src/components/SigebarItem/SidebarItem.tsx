@@ -6,31 +6,23 @@ import { useEffect, useState } from "react";
 import styles from "./SidebarItem.module.css";
 import { ItemProps } from "../../../types.types";
 
-export function SidebarItem({ link, scrImg }: ItemProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const timerLoading = setTimeout(() => {
-      setIsLoading((prev) => !prev);
-    }, 1000);
-    return () => {
-      clearTimeout(timerLoading);
-    };
-  }, []);
+export function SidebarItem({ name, isLoading }: ItemProps) {
 
   return (
     <>
       {isLoading && (
-        <Link className={styles.sidebarLink} href={link}>
+        <div className={styles.sidebarItem}>
+        <Link className={styles.sidebarLink} href={`/playlists/${name}`}>
           <Image
             className={styles.sidebarImg}
-            src={scrImg}
+            src={`/img/${name}.png`}
             alt="day's playlist"
             width={250}
             height={150}
             priority={true}
           />
         </Link>
+        </div>
       )}
     </>
   );

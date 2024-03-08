@@ -6,19 +6,11 @@ import classNames from "classnames";
 import { SVG } from "../SVGImage/SVGImage";
 import { LoadingItems } from "./loading";
 import { Suspense, useEffect, useState } from "react";
+import { Track } from "../../../types.types";
 
-export default function Bar() {
-  const [isLoading, setIsLoading] = useState(false);
+type BarProps = {isLoading: boolean, currentTrack: Track | null}
 
-  useEffect(() => {
-    const timerLoading = setTimeout(() => {
-      setIsLoading((prev) => !prev);
-    }, 1000);
-    return () => {
-      clearTimeout(timerLoading);
-    };
-  }, []);
-
+export default function Bar({isLoading, currentTrack}: BarProps) {
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -55,12 +47,12 @@ export default function Bar() {
                   </div>
                   <div className={styles.trackPlayAuthor}>
                     <Link className={styles.trackPlayAuthorLink} href="">
-                      Ты та...
+                    {currentTrack?.name}
                     </Link>
                   </div>
                   <div className={styles.trackPlayAlbum}>
                     <Link className={styles.trackPlayAlbumLink} href="">
-                      Баста
+                      {currentTrack?.author}
                     </Link>
                   </div>
                 </div>

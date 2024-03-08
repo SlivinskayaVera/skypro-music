@@ -1,8 +1,19 @@
+import { Track } from "../../../types.types";
 import { SVG } from "../SVGImage/SVGImage";
 import { TrackItem } from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
 
-export function Playlist() {
+type PlaylistProps = {
+  trackList: Track[];
+  isLoading: boolean;
+  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>;
+};
+
+export function Playlist({
+  trackList,
+  isLoading,
+  setCurrentTrack,
+}: PlaylistProps) {
   return (
     <div className={styles.centerBlockContent}>
       <div className={styles.contentTitle}>
@@ -14,9 +25,16 @@ export function Playlist() {
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-        <TrackItem />
-        <TrackItem />
-        <TrackItem />
+        {trackList.map((track) => {
+          return (
+            <TrackItem
+              key={track.id}
+              track={track}
+              isLoading={isLoading}
+              setCurrentTrack={setCurrentTrack}
+            />
+          );
+        })}
       </div>
     </div>
   );

@@ -1,20 +1,23 @@
 import styles from "./Sidebar.module.css";
 import { SidebarItem } from "../SigebarItem/SidebarItem";
 
-export function Sidebar() {
+type SidebarProps = { isLoading: boolean };
+const nameButtons = ["favorite", "hits", "genre"];
+
+export function Sidebar({ isLoading }: SidebarProps) {
   return (
     <div className={styles.mainSidebar}>
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
-          <div className={styles.sidebarItem}>
-            <SidebarItem link="/playlists/favorite" scrImg="/img/playlist01.png" />
-          </div>
-          <div className={styles.sidebarItem}>
-            <SidebarItem link="/hits" scrImg="/img/playlist02.png" />
-          </div>
-          <div className={styles.sidebarItem}>
-            <SidebarItem link="/genre" scrImg="/img/playlist03.png" />
-          </div>
+          {nameButtons.map((nameButton) => {
+            return (
+              <SidebarItem
+                key={nameButton}
+                name={nameButton}
+                isLoading={isLoading}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

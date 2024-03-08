@@ -14,9 +14,6 @@ export default function Tracks() {
   const router = useRouter();
   const { index } = router.query;
 
-  console.log(index);
-  console.log(Object.keys(namePages)[1]);
-
   if (index === Object.keys(namePages)[0]) {
     nameTitlePage = namePages.favorite;
   } else if (index === Object.keys(namePages)[1]) {
