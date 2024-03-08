@@ -4,8 +4,8 @@ import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
 import { SVG } from "../SVGImage/SVGImage";
-import { LoadingItems } from "./LoadingItems";
-import { useEffect, useState } from "react";
+import { LoadingItems } from "./loading";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Bar() {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +13,7 @@ export default function Bar() {
   useEffect(() => {
     const timerLoading = setTimeout(() => {
       setIsLoading((prev) => !prev);
-    }, 2000);
+    }, 1000);
     return () => {
       clearTimeout(timerLoading);
     };
@@ -67,6 +67,24 @@ export default function Bar() {
               ) : (
                 <LoadingItems />
               )}
+
+              {/* <Suspense fallback={<LoadingItems />}>
+                <div className={styles.trackPlayContain}>
+                  <div className={styles.trackPlayImage}>
+                    <SVG className={styles.trackPlaySvg} url="note" />
+                  </div>
+                  <div className={styles.trackPlayAuthor}>
+                    <Link className={styles.trackPlayAuthorLink} href="">
+                      Ты та...
+                    </Link>
+                  </div>
+                  <div className={styles.trackPlayAlbum}>
+                    <Link className={styles.trackPlayAlbumLink} href="">
+                      Баста
+                    </Link>
+                  </div>
+                </div>
+              </Suspense> */}
 
               <div className={styles.trackPlayLikeDis}>
                 <div

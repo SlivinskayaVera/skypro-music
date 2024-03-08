@@ -7,7 +7,7 @@ export function Sidebar() {
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
           <div className={styles.sidebarItem}>
-            <SidebarItem link="/favorite" scrImg="/img/playlist01.png" />
+            <SidebarItem link="/playlists/favorite" scrImg="/img/playlist01.png" />
           </div>
           <div className={styles.sidebarItem}>
             <SidebarItem link="/hits" scrImg="/img/playlist02.png" />

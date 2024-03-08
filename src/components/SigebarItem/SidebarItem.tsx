@@ -12,7 +12,7 @@ export function SidebarItem({ link, scrImg }: ItemProps) {
   useEffect(() => {
     const timerLoading = setTimeout(() => {
       setIsLoading((prev) => !prev);
-    }, 2000);
+    }, 1000);
     return () => {
       clearTimeout(timerLoading);
     };
