@@ -1,9 +1,16 @@
+@keyframes background {
+    50% {
+        box-shadow: 0 -200px 100px -100px rgb(116, 114, 114) inset;
+    }
+}
+
+/* ._btn перенести в глобал */
 ._btn {
     cursor: pointer;
 }
 
 .bar {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -141,8 +148,6 @@
     stroke: #ffffff;
     cursor: pointer;
 }
-
-
 
 .playerBtnShuffle {
     display: -webkit-box;
@@ -321,4 +326,20 @@
 
 .volumeProgressLine {
     width: 109px;
+}
+
+.loadingImage {
+    width: 51px;
+    height: 51px;
+    margin-right: 12px;
+    grid-area: image;
+    background-color: rgb(49, 49, 49);
+    animation: background 3s infinite alternate;
+}
+
+.loadingItem {
+    width: 59px;
+    height: 15px;
+    background-color: rgb(49, 49, 49);
+    animation: background 3s infinite alternate;
 }

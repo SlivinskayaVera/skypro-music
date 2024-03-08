@@ -1,23 +1,12 @@
-.btnSignUp:hover {
-    background-color: #f4f5f6;
-}
-
-.btnSignUp:active {
-    background-color: #d9d9d9;
-}
-
-.btnSignUp {
+.button {
     width: 278px;
     height: 52px;
-    background-color: transparent;
-    border: 1px solid #d0cece;
+    background-color: #580EA2;
     border-radius: 6px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #000000;
+    margin-left: 4px;
+    border: none;
+    margin-top: 30px;
+    margin-bottom: 20px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -29,7 +18,7 @@
     justify-content: center;
 }
 
-.btnSignUp a {
+.button a {
     width: 100%;
     height: 100%;
     font-style: normal;
@@ -37,7 +26,7 @@
     font-size: 18px;
     line-height: 24px;
     letter-spacing: -0.05px;
-    color: #000000;
+    color: #FFFFFF;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -47,4 +36,12 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+}
+
+.button:hover {
+    background-color: #3F007D;
+}
+
+.button:active {
+    background-color: #271A58;
 }

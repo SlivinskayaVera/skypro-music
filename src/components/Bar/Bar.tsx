@@ -1,8 +1,24 @@
+"use client";
+
 import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
+import { SVG } from "../SVGImage/SVGImage";
+import { LoadingItems } from "./loading";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Bar() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const timerLoading = setTimeout(() => {
+      setIsLoading((prev) => !prev);
+    }, 1000);
+    return () => {
+      clearTimeout(timerLoading);
+    };
+  }, []);
+
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -11,63 +27,78 @@ export default function Bar() {
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
               <div className={styles.playerBtnPrev}>
-                <svg className={styles.playerBtnPrevSvg}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
-                </svg>
+                <SVG className={styles.playerBtnPrevSvg} url="prev" />
               </div>
               <div className={classNames(styles.playerBtnPlay, styles._btn)}>
-                <svg className={styles.playerBtnPlaySvg}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
-                </svg>
+                <SVG className={styles.playerBtnPlaySvg} url="play" />
               </div>
               <div className={styles.playerBtnNext}>
-                <svg className={styles.playerBtnNextSvg}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
-                </svg>
+                <SVG className={styles.playerBtnNextSvg} url="next" />
               </div>
-              <div className={classNames(styles.playerBtnShuffle, styles._btnIcon)}>
-                <svg className={styles.playerBtnRepeatSvg}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
-                </svg>
+              <div
+                className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
+              >
+                <SVG className={styles.playerBtnRepeatSvg} url="repeat" />
               </div>
-              <div className={classNames(styles.playerBtnShuffle, styles._btnIcon)}>
-                <svg className={styles.playerBtnShuffleSvg}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
-                </svg>
+              <div
+                className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
+              >
+                <SVG className={styles.playerBtnShuffleSvg} url="shuffle" />
               </div>
             </div>
 
             <div className={styles.playerTrackPlay}>
-              <div className={styles.trackPlayContain}>
-                <div className={styles.trackPlayImage}>
-                  <svg className={styles.trackPlaySvg}>
-                    <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                  </svg>
+              {isLoading ? (
+                <div className={styles.trackPlayContain}>
+                  <div className={styles.trackPlayImage}>
+                    <SVG className={styles.trackPlaySvg} url="note" />
+                  </div>
+                  <div className={styles.trackPlayAuthor}>
+                    <Link className={styles.trackPlayAuthorLink} href="">
+                      Ты та...
+                    </Link>
+                  </div>
+                  <div className={styles.trackPlayAlbum}>
+                    <Link className={styles.trackPlayAlbumLink} href="">
+                      Баста
+                    </Link>
+                  </div>
                 </div>
-                <div className={styles.trackPlayAuthor}>
-                  <Link className={styles.trackPlayAuthorLink} href="">
-                    Ты та...
-                  </Link>
+              ) : (
+                <LoadingItems />
+              )}
+
+              {/* <Suspense fallback={<LoadingItems />}>
+                <div className={styles.trackPlayContain}>
+                  <div className={styles.trackPlayImage}>
+                    <SVG className={styles.trackPlaySvg} url="note" />
+                  </div>
+                  <div className={styles.trackPlayAuthor}>
+                    <Link className={styles.trackPlayAuthorLink} href="">
+                      Ты та...
+                    </Link>
+                  </div>
+                  <div className={styles.trackPlayAlbum}>
+                    <Link className={styles.trackPlayAlbumLink} href="">
+                      Баста
+                    </Link>
+                  </div>
                 </div>
-                <div className={styles.trackPlayAlbum}>
-                  <Link className={styles.trackPlayAlbumLink} href="">
-                    Баста
-                  </Link>
-                </div>
-              </div>
+              </Suspense> */}
 
               <div className={styles.trackPlayLikeDis}>
-                <div className={classNames(styles.trackPlayLike, styles._btnIcon)}>
-                  <svg className={styles.trackPlayLikeSvg}>
-                    <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                  </svg>
+                <div
+                  className={classNames(styles.trackPlayLike, styles._btnIcon)}
+                >
+                  <SVG className={styles.trackPlayLikeSvg} url="like" />
                 </div>
                 <div
-                  className={classNames(styles.trackPlayDislike, styles._btnIcon)}
+                  className={classNames(
+                    styles.trackPlayDislike,
+                    styles._btnIcon
+                  )}
                 >
-                  <svg className={styles.trackPlayDislikeSvg}>
-                    <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
-                  </svg>
+                  <SVG className={styles.trackPlayDislikeSvg} url="dislike" />
                 </div>
               </div>
             </div>
@@ -75,9 +106,7 @@ export default function Bar() {
           <div className={styles.barVolumeBlock}>
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>
-                <svg className={styles.volumeSvg}>
-                  <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
-                </svg>
+                <SVG className={styles.volumeSvg} url="volume" />
               </div>
               <div className={classNames(styles.volumeProgress, styles._btn)}>
                 <input

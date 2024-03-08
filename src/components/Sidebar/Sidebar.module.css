@@ -1,3 +1,9 @@
+@keyframes background {
+    50% {
+        box-shadow: 0 -200px 100px -100px rgb(116, 114, 114) inset;
+    }
+}
+
 .mainSidebar {
     width: 418px;
     padding: 20px 90px 20px 78px;
@@ -33,22 +39,14 @@
 }
 
 .sidebarItem {
-    width: 251px;
-    height: 151px;
+    width: 250px;
+    height: 150px;
+    background: rgb(65, 65, 65);
+    animation: background 3s infinite alternate;
 }
 
 .sidebarItem:not(:last-child) {
     margin-bottom: 30px;
-}
-
-.sidebarLink {
-    width: 100%;
-    height: 100%;
-}
-
-.sidebarImg {
-    width: 100%;
-    height: auto;
 }
 
 @media (max-width: 1840px) {

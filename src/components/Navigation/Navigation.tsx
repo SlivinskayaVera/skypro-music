@@ -2,10 +2,10 @@
 
 import styles from "./Navigator.module.css";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
 
 export function Navigation() {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   function handelOpenMenu() {
     setIsOpen((prev) => !prev);
@@ -13,11 +13,11 @@ export function Navigation() {
 
   return (
     <nav className={styles.mainNav}>
-      <div className={styles.navBurger} onClick={handelOpenMenu}>
+      <button className={styles.navBurger} onClick={handelOpenMenu}>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
-      </div>
+      </button>
       {isOpen && (
         <div className={styles.navMenu}>
           <ul className={styles.menuList}>
