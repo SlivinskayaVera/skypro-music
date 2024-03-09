@@ -10,8 +10,7 @@ import { Track } from "../../../types.types";
 type TrackItemProps = {
   track: Track;
   isLoading: boolean;
-  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>;
-  onClick?: () => React.MouseEventHandler<HTMLDivElement> | undefined;
+  setCurrentTrack: (track: Track) => void;
 };
 
 export function TrackItem({ track, isLoading, setCurrentTrack }: TrackItemProps) {
@@ -43,7 +42,7 @@ export function TrackItem({ track, isLoading, setCurrentTrack }: TrackItemProps)
               {track.album}
             </Link>
           </div>
-          <div>
+          <div className={styles.trackTime}>
             <SVG className={styles.trackTimeSvg} url="like" />
             <span
               className={styles.trackTimeText}

@@ -6,7 +6,7 @@ import styles from "./Playlist.module.css";
 type PlaylistProps = {
   trackList: Track[];
   isLoading: boolean;
-  setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>;
+  setCurrentTrack: (track: Track) => void;
 };
 
 export function Playlist({

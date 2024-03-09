@@ -7,7 +7,12 @@
 .playlistItem {
     width: 100%;
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 7px;
+    padding: 10px;
+}
+
+.playlistItem:hover {
+    outline: solid 2px rgb(127, 67, 230);
 }
 
 .playlistTrack {
@@ -116,6 +121,10 @@
     line-height: 24px;
     text-align: right;
     color: #696969;
+}
+
+.trackTime {
+    justify-self: end;
 }
 
 .loadingImage {

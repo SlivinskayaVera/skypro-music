@@ -4,7 +4,10 @@ import { Playlist } from "../Playlist/Playlist";
 import { FilterWrapper } from "../FilterWrapper/FilterWrapper";
 import { Track } from "../../../types.types";
 
-type TracksProps = { trackList: Track[], isLoading: boolean, setCurrentTrack: React.Dispatch<React.SetStateAction<Track | null>>};
+// Ниже React.Dispatch<React.SetStateAction<Track | null>> можно заменить на (*типы параментров, если есть *) => void
+// В этом проекте setCurrentTrack принимает из мэпа track по типу Track
+
+type TracksProps = { trackList: Track[], isLoading: boolean, setCurrentTrack: (track: Track) => void};
 
 export default function Tracks({ trackList, isLoading, setCurrentTrack }: TracksProps) {
   return (
