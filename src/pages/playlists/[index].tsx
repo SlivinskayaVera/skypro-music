@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import styles from "../../components/Tracks/Tracks.module.css";
-import { Playlist } from "@components/Playlist/Playlist";
 import { useRouter } from "next/router";
 
 let namePages: { favorite: string; hits: string; genre: string } = {
@@ -37,7 +36,6 @@ export default function Tracks() {
           жанру
         </div>
       </div>
-      <Playlist />
     </div>
   );
 }

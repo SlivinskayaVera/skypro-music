@@ -13,12 +13,21 @@ type TrackItemProps = {
   setCurrentTrack: (track: Track) => void;
 };
 
-export function TrackItem({ track, isLoading, setCurrentTrack }: TrackItemProps) {
+export function TrackItem({
+  track,
+  isLoading,
+  setCurrentTrack,
+}: TrackItemProps) {
   const durationTrackSec = track.duration_in_seconds % 60;
   const durationTrackMin = (track.duration_in_seconds - durationTrackSec) / 60;
 
   return (
-    <div onClick={() => {setCurrentTrack(track)}} className={styles.playlistItem}>
+    <div
+      onClick={() => {
+        setCurrentTrack(track);
+      }}
+      className={styles.playlistItem}
+    >
       {isLoading ? (
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>
@@ -44,9 +53,11 @@ export function TrackItem({ track, isLoading, setCurrentTrack }: TrackItemProps)
           </div>
           <div className={styles.trackTime}>
             <SVG className={styles.trackTimeSvg} url="like" />
-            <span
-              className={styles.trackTimeText}
-            >{`${durationTrackMin} : ${durationTrackSec}`}</span>
+            <div className={styles.trackTimeText}>{`${
+              durationTrackMin < 10 ? "0" : ""
+            }${durationTrackMin} : ${
+              durationTrackSec < 10 ? "0" : ""
+            }${durationTrackSec}`}</div>
           </div>
         </div>
       ) : (

@@ -27,10 +27,16 @@ export default function Home() {
         <Header />
         <main className={styles.main}>
           <Navigation />
-          <Tracks trackList={trackList} isLoading={isLoading} setCurrentTrack={setCurrentTrack}/>
+          <Tracks
+            trackList={trackList}
+            isLoading={isLoading}
+            setCurrentTrack={setCurrentTrack}
+          />
           <Sidebar isLoading={isLoading} />
         </main>
-        <Bar isLoading={isLoading} currentTrack={currentTrack}/>
+        {currentTrack && (
+          <Bar currentTrack={currentTrack} />
+        )}
       </div>
     </div>
   );

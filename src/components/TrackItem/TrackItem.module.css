@@ -112,6 +112,7 @@
     margin-right: 17px;
     fill: transparent;
     stroke: #696969;
+    padding-top: 1px;
 }
 
 .trackTimeText {
@@ -121,10 +122,14 @@
     line-height: 24px;
     text-align: right;
     color: #696969;
+    width: 55px;
 }
 
 .trackTime {
+    display: flex;
+    flex-direction: row;
     justify-self: end;
+    align-items: center;
 }
 
 .loadingImage {
