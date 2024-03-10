@@ -16,7 +16,7 @@ export default function Bar({ currentTrack }: BarProps) {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState<string | null>();
-  const [currentTime, setCurrentTime] = useState<string | undefined>();
+  const [currentTime, setCurrentTime] = useState<string>("");
 
   const duration = currentTrack?.duration_in_seconds;
 
