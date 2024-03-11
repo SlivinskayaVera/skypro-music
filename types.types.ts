@@ -6,7 +6,7 @@ export type ItemProps = {
 };
 
 export type FilterType = {
-  list: Array<{ id: number; name: string }>;
+  list: string[];
   title: string;
   isOpen: boolean;
   onClick: () => void;
@@ -33,7 +33,7 @@ export type Track = {
   track_file: string;
 };
 
-export type StaredUser = {
+type StaredUser = {
   email: string;
   first_name: string;
   id: number;

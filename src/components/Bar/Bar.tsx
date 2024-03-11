@@ -18,7 +18,8 @@ export default function Bar({ currentTrack }: BarProps) {
   const [volume, setVolume] = useState<string | null>();
   const [currentTime, setCurrentTime] = useState<string>("");
 
-  const duration = currentTrack?.duration_in_seconds;
+  const duration = audioRef.current?.duration;
+  // const duration = currentTrack?.duration_in_seconds;
 
   function handleStart() {
     if (!audioRef.current) return;
@@ -39,8 +40,7 @@ export default function Bar({ currentTrack }: BarProps) {
   }
 
   function handleVolume() {
-    if (!audioRef.current) return;
-    if (!volume) return;
+    if (!audioRef.current || !volume) return;
     audioRef.current.volume = +volume;
   }
 
@@ -62,40 +62,58 @@ export default function Bar({ currentTrack }: BarProps) {
   return (
     <div className={styles.bar}>
       <audio autoPlay controls ref={audioRef} src={currentTrack?.track_file} />
+      <div>
+        {audioRef.current?.currentTime} / {duration} -{" "}
+        {audioRef.current?.currentTime}
+      </div>
       <div className={styles.barContent}>
-          <input className={styles.barPlayerProgress}
-            ref={durationRef}
-            type="range"
-            min={0}
-            max={duration}
-            value={currentTime}
-            onChange={(e) => {
-              setCurrentTime(e.target.value), handleSetTime();
-            }}
-            step={0.000001}
-          />
+        <input
+          className={styles.barPlayerProgress}
+          ref={durationRef}
+          type="range"
+          min={0}
+          max={duration}
+          value={currentTime}
+          onChange={(e) => {
+            setCurrentTime(e.target.value), handleSetTime();
+          }}
+          step={0.000001}
+        />
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
-              <div className={styles.playerBtnPrev}>
+              <div
+                onClick={() => alert("Еще не реализовано")}
+                className={styles.playerBtnPrev}
+              >
                 <SVG className={styles.playerBtnPrevSvg} url="prev" />
               </div>
               <div
                 onClick={togglePlay}
                 className={classNames(styles.playerBtnPlay, styles._btn)}
               >
-                <SVG className={styles.playerBtnPlaySvg} url="play" />
+                <SVG
+                  className={styles.playerBtnPlaySvg}
+                  url={isPlaying ? "play" : "pause"}
+                />
               </div>
-              <div className={styles.playerBtnNext}>
+              <div
+                onClick={() => alert("Еще не реализовано")}
+                className={styles.playerBtnNext}
+              >
                 <SVG className={styles.playerBtnNextSvg} url="next" />
               </div>
               <div
                 onClick={handleLoop}
                 className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
               >
-                <SVG className={styles.playerBtnRepeatSvg} url="repeat" />
+                <SVG
+                  className={styles.playerBtnRepeatSvg}
+                  url={audioRef.current?.loop ? "repeatActive" : "repeat"}
+                />
               </div>
               <div
+                onClick={() => alert("Еще не реализовано")}
                 className={classNames(styles.playerBtnShuffle, styles._btnIcon)}
               >
                 <SVG className={styles.playerBtnShuffleSvg} url="shuffle" />

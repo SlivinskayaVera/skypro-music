@@ -18,7 +18,7 @@ export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
                 {list.map((item, index) => {
                   return (
                     <li className={styles.listItem} key={index}>
-                      {item.name}
+                      {item}
                     </li>
                   );
                 })}

@@ -13,7 +13,7 @@ export default function Tracks({ trackList, isLoading, setCurrentTrack }: Tracks
   return (
     <div className={styles.mainCenterBlock}>
       <h2 className={styles.centerBlockH2}>Треки</h2>
-      <FilterWrapper />
+      <FilterWrapper trackList={trackList}/>
       <Playlist trackList={trackList} isLoading={isLoading} setCurrentTrack={setCurrentTrack}/>
     </div>
   );
