@@ -16,10 +16,9 @@ export default function Bar({ currentTrack }: BarProps) {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState<string | null>();
-  const [currentTime, setCurrentTime] = useState<string>("");
+  const [currentTime, setCurrentTime] = useState<number>(0);
 
   const duration = audioRef.current?.duration;
-  // const duration = currentTrack?.duration_in_seconds;
 
   function handleStart() {
     if (!audioRef.current) return;
@@ -51,7 +50,8 @@ export default function Bar({ currentTrack }: BarProps) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(`${audioRef.current?.currentTime}`);
+      if (!audioRef.current?.currentTime) return;
+      setCurrentTime(audioRef.current.currentTime);
     }, 300);
 
     return () => clearInterval(timer);
@@ -59,12 +59,16 @@ export default function Bar({ currentTrack }: BarProps) {
 
   const togglePlay = isPlaying ? handleStop : handleStart;
 
+  const currentSec = Math.round(currentTime) % 60;
+  const currentMin = (Math.round(currentTime) - Math.round(currentTime)) / 60;
+
   return (
     <div className={styles.bar}>
       <audio autoPlay controls ref={audioRef} src={currentTrack?.track_file} />
       <div>
-        {audioRef.current?.currentTime} / {duration} -{" "}
-        {audioRef.current?.currentTime}
+        {`${currentMin < 10 ? "0" : ""}${currentMin} : ${
+          currentSec < 10 ? "0" : ""
+        }${currentSec}`}
       </div>
       <div className={styles.barContent}>
         <input
@@ -75,7 +79,7 @@ export default function Bar({ currentTrack }: BarProps) {
           max={duration}
           value={currentTime}
           onChange={(e) => {
-            setCurrentTime(e.target.value), handleSetTime();
+            setCurrentTime(+e.target.value), handleSetTime();
           }}
           step={0.000001}
         />

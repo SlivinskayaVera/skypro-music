@@ -1,6 +1,7 @@
 export async function getTracks() {
   const response = await fetch(
-    "https://skypro-music-api.skyeng.tech/catalog/track/all/"
+    "https://skypro-music-api.skyeng.tech/catalog/track/all/",
+    { cache: "no-cache" }
   );
 
   // method можно не прописывать, по умолчанию GET
@@ -11,3 +12,4 @@ export async function getTracks() {
   const responseData = await response.json();
   return responseData;
 }
+

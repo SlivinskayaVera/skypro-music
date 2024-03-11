@@ -7,7 +7,7 @@ import { Navigation } from "@components/Navigation/Navigation";
 import { Sidebar } from "@components/Sidebar/Sidebar";
 import Bar from "@components/Bar/Bar";
 import { useEffect, useState } from "react";
-import { getTracks } from "./api/music";
+import { getTracks } from "./api/musicApi";
 import { Track } from "../../types.types";
 
 export default function Home() {
