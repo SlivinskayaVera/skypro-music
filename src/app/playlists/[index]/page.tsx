@@ -1,7 +1,5 @@
 import classNames from "classnames";
-import styles from "../../components/Tracks/Tracks.module.css";
-import { Playlist } from "@components/Playlist/Playlist";
-import { useRouter } from "next/router";
+import styles from "../../../components/Tracks/Tracks.module.css";
 
 let namePages: { favorite: string; hits: string; genre: string } = {
   favorite: "Избранное",
@@ -10,18 +8,13 @@ let namePages: { favorite: string; hits: string; genre: string } = {
 };
 let nameTitlePage: string;
 
-export default function Tracks() {
-  const router = useRouter();
-  const { index } = router.query;
+export default function Tracks({ params }: { params: { index: string } }) {
 
-  console.log(index);
-  console.log(Object.keys(namePages)[1]);
-
-  if (index === Object.keys(namePages)[0]) {
+  if (params.index === Object.keys(namePages)[0]) {
     nameTitlePage = namePages.favorite;
-  } else if (index === Object.keys(namePages)[1]) {
+  } else if (params.index === Object.keys(namePages)[1]) {
     nameTitlePage = namePages.hits;
-  } else if (index === Object.keys(namePages)[2]) {
+  } else if (params.index === Object.keys(namePages)[2]) {
     nameTitlePage = namePages.genre;
   }
 
@@ -40,7 +33,6 @@ export default function Tracks() {
           жанру
         </div>
       </div>
-      <Playlist />
     </div>
   );
 }

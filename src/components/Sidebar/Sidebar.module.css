@@ -38,22 +38,11 @@
     flex-wrap: wrap;
 }
 
-.sidebarItem {
-    width: 250px;
-    height: 150px;
-    background: rgb(65, 65, 65);
-    animation: background 3s infinite alternate;
-}
-
-.sidebarItem:not(:last-child) {
-    margin-bottom: 30px;
-}
-
 @media (max-width: 1840px) {
 
     .mainSidebar {
         width: 100%;
-        padding: 20px 90px 20px 294px;
+        padding: 20px 90px 100px 294px;
     }
 
     .sidebarBlock {

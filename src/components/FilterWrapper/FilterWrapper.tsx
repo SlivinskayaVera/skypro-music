@@ -2,34 +2,50 @@
 
 import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
-import { authors, years, genres } from "./data";
 import { useState } from "react";
+import { Track } from "../../../types.types";
 
-export function FilterWrapper() {
+type FilterWrapperPropTypes = { trackList: Track[] };
+type TrackKeys = Pick<Track, "author" | "genre">;
+
+export function FilterWrapper({ trackList }: FilterWrapperPropTypes) {
   const [isActive, setIsActive] = useState<string | null>();
 
   function handelActive(title: string) {
     setIsActive((prev) => (prev === title ? null : title));
   }
 
+  function getListItem(item: keyof TrackKeys) {
+    const listItem: string[] = [];
+    trackList.map((track) => {
+      if (listItem.includes(track[item]) || track[item] === null) return;
+      listItem.push(track[item]);
+    });
+    return listItem;
+  }
+
+  const authorsList: string[] = getListItem("author");
+  const genreList: string[] = getListItem("genre");
+  // const years: string[] = getListItem("release_date");
+
   return (
     <div className={styles.centerBlockFilter}>
       <div className={styles.filterTitle}>Искать по:</div>
       <FilterButton
         isOpen={isActive === "исполнителю" ? true : false}
-        list={authors}
+        list={authorsList}
         title="исполнителю"
         onClick={() => handelActive("исполнителю")}
       />
       <FilterButton
         isOpen={isActive === "году выпуска" ? true : false}
-        list={years}
+        list={authorsList}
         title="году выпуска"
         onClick={() => handelActive("году выпуска")}
       />
       <FilterButton
         isOpen={isActive === "жанру" ? true : false}
-        list={genres}
+        list={genreList}
         title="жанру"
         onClick={() => handelActive("жанру")}
       />

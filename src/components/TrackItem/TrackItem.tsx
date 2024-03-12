@@ -5,21 +5,29 @@ import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { useEffect, useState } from "react";
 import { LoadingTrack } from "./LoadingTrack";
+import { Track } from "../../../types.types";
 
-export function TrackItem() {
-  const [isLoading, setIsLoading] = useState(false);
+type TrackItemProps = {
+  track: Track;
+  isLoading: boolean;
+  setCurrentTrack: (track: Track) => void;
+};
 
-  useEffect(() => {
-    const timerLoading = setTimeout(() => {
-      setIsLoading((prev) => !prev);
-    }, 1000);
-    return () => {
-      clearTimeout(timerLoading);
-    };
-  }, []);
+export function TrackItem({
+  track,
+  isLoading,
+  setCurrentTrack,
+}: TrackItemProps) {
+  const durationTrackSec = track.duration_in_seconds % 60;
+  const durationTrackMin = (track.duration_in_seconds - durationTrackSec) / 60;
 
   return (
-    <div className={styles.playlistItem}>
+    <div
+      onClick={() => {
+        setCurrentTrack(track);
+      }}
+      className={styles.playlistItem}
+    >
       {isLoading ? (
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>
@@ -28,23 +36,28 @@ export function TrackItem() {
             </div>
             <div>
               <Link className={styles.trackTitleLink} href="http://">
-                Guilt <span className={styles.trackTitleSpan}>(Remix)</span>
+                {track.name}{" "}
+                <span className={styles.trackTitleSpan}>(Remix)</span>
               </Link>
             </div>
           </div>
           <div className={styles.trackAuthor}>
             <Link className={styles.trackAuthorLink} href="http://">
-              Nero
+              {track.author}
             </Link>
           </div>
           <div className={styles.trackAlbum}>
             <Link className={styles.trackAlbumLink} href="http://">
-              Welcome Reality
+              {track.album}
             </Link>
           </div>
-          <div>
+          <div className={styles.trackTime}>
             <SVG className={styles.trackTimeSvg} url="like" />
-            <span className={styles.trackTimeText}>4:44</span>
+            <div className={styles.trackTimeText}>{`${
+              durationTrackMin < 10 ? "0" : ""
+            }${durationTrackMin} : ${
+              durationTrackSec < 10 ? "0" : ""
+            }${durationTrackSec}`}</div>
           </div>
         </div>
       ) : (

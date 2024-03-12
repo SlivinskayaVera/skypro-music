@@ -12,19 +12,19 @@ export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
         {title}
       </button>
       {isOpen && (
-        <div className={styles.modal}>
-          <div className={styles.content}>
-            <ul className={styles.list}>
-              {list.map((item, index) => {
-                return (
-                  <li className={styles.listItem} key={index}>
-                    {item.name}
-                  </li>
-                );
-              })}
-            </ul>
+          <div className={styles.modal}>
+            <div className={styles.content}>
+              <ul className={styles.list}>
+                {list.map((item, index) => {
+                  return (
+                    <li className={styles.listItem} key={index}>
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
-        </div>
       )}
     </div>
   );

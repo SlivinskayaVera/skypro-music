@@ -3,7 +3,7 @@
     -webkit-box-flex: 3;
     -ms-flex-positive: 3;
     flex-grow: 3;
-    padding: 71px 40px 20px 50px;
+    padding: 71px 40px 100px 50px;
 }
 
 .centerBlockH2 {
@@ -14,7 +14,6 @@
     letter-spacing: -0.8px;
     margin-bottom: 45px;
 }
-
 
 /* перенести нижние */
 
