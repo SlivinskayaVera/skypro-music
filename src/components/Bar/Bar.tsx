@@ -22,30 +22,30 @@ export default function Bar({ currentTrack }: BarProps) {
 
   const duration = audioRef.current?.duration;
 
-  function handleStart() {
+  function handleStartClick() {
     if (!audioRef.current) return;
     audioRef.current.play();
     setIsPlaying(true);
   }
 
-  function handleStop() {
+  function handleStopClick() {
     if (!audioRef.current) return;
     audioRef.current.pause();
     setIsPlaying(false);
   }
 
-  function handleLoop() {
+  function handleLoopClick() {
     if (!audioRef.current) return;
     if (!audioRef.current.loop) audioRef.current.loop = true;
     else audioRef.current.loop = false;
   }
 
-  function handleVolume() {
+  function handleVolumeChange() {
     if (!audioRef.current || !volume) return;
     audioRef.current.volume = +volume;
   }
 
-  function handleSetTime() {
+  function handleSetTimeChange() {
     if (!audioRef.current || !currentTime) return;
     audioRef.current.currentTime = +currentTime;
   }
@@ -59,7 +59,7 @@ export default function Bar({ currentTrack }: BarProps) {
     return () => clearInterval(timer);
   });
 
-  const togglePlay = isPlaying ? handleStop : handleStart;
+  const togglePlay = isPlaying ? handleStopClick : handleStartClick;
 
   const currentSec = Math.round(currentTime) % 60;
   const currentMin = (Math.round(currentTime) - currentSec) / 60;
@@ -71,7 +71,7 @@ export default function Bar({ currentTrack }: BarProps) {
 
   return (
     <div className={styles.bar}>
-      <audio autoPlay ref={audioRef} src={currentTrack?.track_file} />
+      <audio autoPlay controls ref={audioRef} src={currentTrack?.track_file} />
       <div>
         <div className={styles.timers}>
           <div>
@@ -96,7 +96,7 @@ export default function Bar({ currentTrack }: BarProps) {
             max={duration}
             value={currentTime}
             onChange={(e) => {
-              setCurrentTime(+e.target.value), handleSetTime();
+              setCurrentTime(+e.target.value), handleSetTimeChange();
             }}
             step={0.000001}
           />
@@ -125,14 +125,18 @@ export default function Bar({ currentTrack }: BarProps) {
                   <SVG className={styles.playerBtnNextSvg} url="next" />
                 </div>
                 <div
-                  onClick={handleLoop}
+                  onClick={handleLoopClick}
                   className={classNames(
                     styles.playerBtnShuffle,
                     styles._btnIcon
                   )}
                 >
                   <SVG
-                    className={styles.playerBtnRepeatSvg}
+                    className={
+                      audioRef.current?.loop
+                        ? `${styles.playerBtnActiveRepeatSvg}`
+                        : `${styles.playerBtnRepeatSvg}`
+                    }
                     url={audioRef.current?.loop ? "repeatActive" : "repeat"}
                   />
                 </div>
@@ -193,7 +197,7 @@ export default function Bar({ currentTrack }: BarProps) {
                   <input
                     ref={volumeRef}
                     onChange={() => {
-                      setVolume(volumeRef.current?.value), handleVolume();
+                      setVolume(volumeRef.current?.value), handleVolumeChange();
                     }}
                     className={classNames(
                       styles.barPlayerProgress,

@@ -2,7 +2,6 @@ export type ChildrenType = { children: JSX.Element[] };
 
 export type ItemProps = {
   name: string;
-  isLoading: boolean
 };
 
 export type FilterType = {

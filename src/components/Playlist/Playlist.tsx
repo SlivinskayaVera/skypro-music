@@ -1,17 +1,15 @@
 import { Track } from "../../../types.types";
 import { SVG } from "../SVGImage/SVGImage";
-import { TrackItem } from "../TrackItem/TrackItem";
+import TrackItem from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
 
 type PlaylistProps = {
   trackList: Track[];
-  isLoading: boolean;
   setCurrentTrack: (track: Track) => void;
 };
 
-export function Playlist({
+export default function Playlist({
   trackList,
-  isLoading,
   setCurrentTrack,
 }: PlaylistProps) {
   return (
@@ -25,16 +23,15 @@ export function Playlist({
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-        {trackList.map((track) => {
-          return (
-            <TrackItem
-              key={track.id}
-              track={track}
-              isLoading={isLoading}
-              setCurrentTrack={setCurrentTrack}
-            />
-          );
-        })}
+          {trackList.map((track) => {
+            return (
+              <TrackItem
+                key={track.id}
+                track={track}
+                setCurrentTrack={setCurrentTrack}
+              />
+            );
+          })}
       </div>
     </div>
   );

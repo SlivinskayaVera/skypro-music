@@ -283,8 +283,21 @@
 .playerBtnRepeatSvg {
     width: 18px;
     height: 12px;
-    fill: transparent;
+    fill: #696969;
     stroke: #696969;
+}
+
+.playerBtnActiveRepeatSvg {
+    width: 18px;
+    height: 12px;
+    fill: white;
+    stroke: white;
+}
+
+.playerBtnRepeatSvg:active {
+    fill: #ffffff;
+    stroke: #ffffff;
+    cursor: pointer;
 }
 
 ._btnIcon:hover svg {
