@@ -1,17 +1,11 @@
-import { Track } from "../../../types.types";
+import { useAppSelector } from "@/store/hooks";
 import { SVG } from "../SVGImage/SVGImage";
 import TrackItem from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
 
-type PlaylistProps = {
-  trackList: Track[];
-  setCurrentTrack: (track: Track) => void;
-};
+export default function Playlist() {
+  const tracks = useAppSelector((store) => store.playlist.tracks);
 
-export default function Playlist({
-  trackList,
-  setCurrentTrack,
-}: PlaylistProps) {
   return (
     <div className={styles.centerBlockContent}>
       <div className={styles.contentTitle}>
@@ -23,15 +17,9 @@ export default function Playlist({
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-          {trackList.map((track) => {
-            return (
-              <TrackItem
-                key={track.id}
-                track={track}
-                setCurrentTrack={setCurrentTrack}
-              />
-            );
-          })}
+        {tracks?.map((track) => {
+          return <TrackItem key={track.id} track={track} />;
+        })}
       </div>
     </div>
   );

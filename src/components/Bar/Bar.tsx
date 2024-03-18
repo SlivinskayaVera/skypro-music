@@ -4,14 +4,19 @@ import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
 import { SVG } from "../SVGImage/SVGImage";
-import { Track } from "../../../types.types";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  setCurrentPlaylist,
+  setNextTrack,
+  setPrevTrack,
+  setToggleShuffled,
+} from "@/store/features/playlistSlise";
 
-type BarProps = { currentTrack: Track | null };
 let durationTrackSec: number;
 let durationTrackMin: number;
 
-export default function Bar({ currentTrack }: BarProps) {
+export default function Bar() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const volumeRef = useRef<HTMLInputElement | null>(null);
   const durationRef = useRef<HTMLInputElement | null>(null);
@@ -20,7 +25,12 @@ export default function Bar({ currentTrack }: BarProps) {
   const [volume, setVolume] = useState<string | null>();
   const [currentTime, setCurrentTime] = useState<number>(0);
 
+  const dispatch = useAppDispatch();
+
   const duration = audioRef.current?.duration;
+
+  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const isShuffled = useAppSelector((store) => store.playlist.isShuffled);
 
   function handleStartClick() {
     if (!audioRef.current) return;
@@ -50,10 +60,31 @@ export default function Bar({ currentTrack }: BarProps) {
     audioRef.current.currentTime = +currentTime;
   }
 
+  function handleNextTrackClick() {
+    if (!currentTrack) return;
+    dispatch(setNextTrack());
+  }
+
+  function handlePrevTrackClick() {
+    if (!currentTrack) return;
+    dispatch(setPrevTrack());
+  }
+
+  function handleShuffleClick() {
+    if (!currentTrack) return;
+    dispatch(setToggleShuffled());
+    dispatch(setCurrentPlaylist());
+  }
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (!audioRef.current?.currentTime) return;
       setCurrentTime(audioRef.current.currentTime);
+      if (
+        audioRef.current.currentTime === audioRef.current.duration &&
+        !audioRef.current?.loop
+      )
+        handleNextTrackClick();
     }, 300);
 
     return () => clearInterval(timer);
@@ -71,7 +102,7 @@ export default function Bar({ currentTrack }: BarProps) {
 
   return (
     <div className={styles.bar}>
-      <audio autoPlay controls ref={audioRef} src={currentTrack?.track_file} />
+      <audio autoPlay ref={audioRef} src={currentTrack?.track_file} />
       <div>
         <div className={styles.timers}>
           <div>
@@ -103,8 +134,9 @@ export default function Bar({ currentTrack }: BarProps) {
           <div className={styles.barPlayerBlock}>
             <div className={styles.barPlayer}>
               <div className={styles.playerControls}>
+                {/* предыдущий трек */}
                 <div
-                  onClick={() => alert("Еще не реализовано")}
+                  onClick={handlePrevTrackClick}
                   className={styles.playerBtnPrev}
                 >
                   <SVG className={styles.playerBtnPrevSvg} url="prev" />
@@ -118,12 +150,14 @@ export default function Bar({ currentTrack }: BarProps) {
                     url={isPlaying ? "pause" : "play"}
                   />
                 </div>
+                {/* следующий трек */}
                 <div
-                  onClick={() => alert("Еще не реализовано")}
+                  onClick={handleNextTrackClick}
                   className={styles.playerBtnNext}
                 >
                   <SVG className={styles.playerBtnNextSvg} url="next" />
                 </div>
+                {/* повтор трека */}
                 <div
                   onClick={handleLoopClick}
                   className={classNames(
@@ -140,14 +174,22 @@ export default function Bar({ currentTrack }: BarProps) {
                     url={audioRef.current?.loop ? "repeatActive" : "repeat"}
                   />
                 </div>
+                {/* перемешать */}
                 <div
-                  onClick={() => alert("Еще не реализовано")}
+                  onClick={handleShuffleClick}
                   className={classNames(
                     styles.playerBtnShuffle,
                     styles._btnIcon
                   )}
                 >
-                  <SVG className={styles.playerBtnShuffleSvg} url="shuffle" />
+                  <SVG
+                    className={
+                      isShuffled
+                        ? styles.playerActiveBtnShuffleSvg
+                        : styles.playerBtnShuffleSvg
+                    }
+                    url="shuffle"
+                  />
                 </div>
               </div>
 

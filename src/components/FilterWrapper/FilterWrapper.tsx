@@ -4,12 +4,13 @@ import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
 import { useState } from "react";
 import { Track } from "../../../types.types";
+import { useAppSelector } from "@/store/hooks";
 
-type FilterWrapperPropTypes = { trackList: Track[] };
 type TrackKeys = Pick<Track, "author" | "genre">;
 
-export function FilterWrapper({ trackList }: FilterWrapperPropTypes) {
+export function FilterWrapper() {
   const [isActive, setIsActive] = useState<string | null>();
+  const trackList = useAppSelector((store) => store.playlist.tracks);
 
   function handelActive(title: string) {
     setIsActive((prev) => (prev === title ? null : title));
@@ -17,7 +18,7 @@ export function FilterWrapper({ trackList }: FilterWrapperPropTypes) {
 
   function getListItem(item: keyof TrackKeys) {
     const listItem: string[] = [];
-    trackList.map((track) => {
+    trackList?.map((track) => {
       if (listItem.includes(track[item]) || track[item] === null) return;
       listItem.push(track[item]);
     });

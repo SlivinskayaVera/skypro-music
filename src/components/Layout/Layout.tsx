@@ -3,21 +3,15 @@ import { Header } from "@components/Header/Header";
 import { Navigation } from "@components/Navigation/Navigation";
 import { Sidebar } from "@components/Sidebar/Sidebar";
 import Bar from "@components/Bar/Bar";
-import { Track } from "../../../types.types";
+import { useAppSelector } from "@/store/hooks";
 
 type LayoutPropTypes = {
-  currentTrack?: Track | null;
   children: JSX.Element;
-  trackList?: Track[];
-  setCurrentTrack?: (track: Track) => void;
 };
 
-export default function Layout({
-  currentTrack,
-  children,
-  trackList,
-  setCurrentTrack,
-}: LayoutPropTypes) {
+export default function Layout({ children }: LayoutPropTypes) {
+  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -27,7 +21,7 @@ export default function Layout({
           {children}
           <Sidebar />
         </main>
-        {currentTrack && <Bar currentTrack={currentTrack} />}
+        {currentTrack && <Bar />}
       </div>
     </div>
   );
