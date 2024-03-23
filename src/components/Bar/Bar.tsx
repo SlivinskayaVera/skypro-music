@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setCurrentPlaylist,
+  setIsPlaying,
   setNextTrack,
   setPrevTrack,
   setToggleShuffled,
@@ -21,7 +22,6 @@ export default function Bar() {
   const volumeRef = useRef<HTMLInputElement | null>(null);
   const durationRef = useRef<HTMLInputElement | null>(null);
 
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [volume, setVolume] = useState<string | null>();
   const [currentTime, setCurrentTime] = useState<number>(0);
 
@@ -35,13 +35,13 @@ export default function Bar() {
   function handleStartClick() {
     if (!audioRef.current) return;
     audioRef.current.play();
-    setIsPlaying(true);
+    dispatch(setIsPlaying());
   }
 
   function handleStopClick() {
     if (!audioRef.current) return;
     audioRef.current.pause();
-    setIsPlaying(false);
+    dispatch(setIsPlaying());
   }
 
   function handleLoopClick() {
@@ -86,7 +86,9 @@ export default function Bar() {
     return () => clearInterval(timer);
   });
 
-  const togglePlay = isPlaying ? handleStopClick : handleStartClick;
+  const togglePlay = audioRef.current?.paused
+    ? handleStartClick
+    : handleStopClick;
 
   const currentSec = Math.round(currentTime) % 60;
   const currentMin = (Math.round(currentTime) - currentSec) / 60;
@@ -143,7 +145,7 @@ export default function Bar() {
                 >
                   <SVG
                     className={styles.playerBtnPlaySvg}
-                    url={isPlaying ? "pause" : "play"}
+                    url={audioRef.current?.paused ? "play" : "pause"}
                   />
                 </div>
                 {/* следующий трек */}

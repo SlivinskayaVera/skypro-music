@@ -3,7 +3,7 @@ import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCurrentTrack } from "@/store/features/playlistSlise";
+import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlise";
 
 type TrackItemProps = {
   track: Track;
@@ -15,6 +15,7 @@ export default function TrackItem({ track }: TrackItemProps) {
 
   const dispatch = useAppDispatch();
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
 
   // на 24 строке создать текущий плейлист в стор и исходный плейлист
 
@@ -22,6 +23,7 @@ export default function TrackItem({ track }: TrackItemProps) {
     <div
       onClick={() => {
         dispatch(setCurrentTrack(track));
+        dispatch(setIsPlaying());
       }}
       className={styles.playlistItem}
     >
@@ -29,7 +31,7 @@ export default function TrackItem({ track }: TrackItemProps) {
         <div className={styles.trackTitle}>
           <div className={styles.trackTitleImage}>
             {currentTrack?.id === track.id && (
-              <span className={styles.pulse}></span>
+              <span className={`${isPlaying ? styles.pulse : styles.pulseStop}`}></span>
             )}
             <SVG className={styles.trackTitleSvg} url="note" />
           </div>

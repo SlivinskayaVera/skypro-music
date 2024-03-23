@@ -10,6 +10,7 @@ type PlaylistType = {
   shuffledPlaylist: [] | Track[];
   filterOptions: { authors: string[]; searchValue: string };
   filteredTracks: [] | Track[];
+  isPlaying: boolean;
 };
 
 const initialState: PlaylistType = {
@@ -21,6 +22,7 @@ const initialState: PlaylistType = {
   shuffledPlaylist: [],
   filterOptions: { authors: [], searchValue: "" },
   filteredTracks: [],
+  isPlaying: false,
 };
 
 function changeTrack(direction: number) {
@@ -74,17 +76,14 @@ const playlistSlice = createSlice({
     ) => {
       state.filterOptions = {
         authors: action.payload.authors || state.filterOptions.authors,
-        searchValue: action.payload.searchValue || ""
+        searchValue: action.payload.searchValue || "",
         // action.payload.searchValue || state.filterOptions.searchValue,
       };
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthors = state.filterOptions.authors.length !== 0;
-        const isSearchValueIncluded =
-          // action.payload.searchValue &&
-          // action.payload.searchValue?.length > 2 &&
-          track.name
-            .toLowerCase()
-            .includes(state.filterOptions.searchValue.toLowerCase());
+        const isSearchValueIncluded = track.name
+          .toLowerCase()
+          .includes(state.filterOptions.searchValue.toLowerCase());
         if (hasAuthors) {
           return (
             state.filterOptions.authors.includes(track.author) &&
@@ -93,7 +92,9 @@ const playlistSlice = createSlice({
         }
         return isSearchValueIncluded;
       });
-      state.currentPlaylist = state.filteredTracks;
+    },
+    setIsPlaying: (state) => {
+      state.isPlaying = !state.isPlaying;
     },
   },
 });
@@ -107,5 +108,6 @@ export const {
   setCurrentPlaylist,
   setPrevTrack,
   setFilteredTracks,
+  setIsPlaying,
 } = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;
