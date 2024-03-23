@@ -8,9 +8,10 @@ type PlaylistType = {
   isShuffled: boolean;
   isRepeated: boolean;
   shuffledPlaylist: [] | Track[];
-  filterOptions: { authors: string[]; searchValue: string };
+  filterOptions: { authors: string[]; genres: string[]; searchValue: string };
   filteredTracks: [] | Track[];
   isPlaying: boolean;
+  sortedPlaylist: [] | Track[];
 };
 
 const initialState: PlaylistType = {
@@ -20,9 +21,10 @@ const initialState: PlaylistType = {
   isShuffled: false,
   isRepeated: false,
   shuffledPlaylist: [],
-  filterOptions: { authors: [], searchValue: "" },
+  filterOptions: { authors: [], genres: [], searchValue: "" },
   filteredTracks: [],
   isPlaying: false,
+  sortedPlaylist: [],
 };
 
 function changeTrack(direction: number) {
@@ -76,6 +78,7 @@ const playlistSlice = createSlice({
     ) => {
       state.filterOptions = {
         authors: action.payload.authors || state.filterOptions.authors,
+        genres: state.filterOptions.genres,
         searchValue: action.payload.searchValue || "",
         // action.payload.searchValue || state.filterOptions.searchValue,
       };
@@ -93,8 +96,46 @@ const playlistSlice = createSlice({
         return isSearchValueIncluded;
       });
     },
+    setFilteredGenres: (
+      state,
+      action: PayloadAction<{ genres?: string[] }>
+    ) => {
+      state.filterOptions = {
+        authors: state.filterOptions.authors,
+        genres: action.payload.genres || state.filterOptions.genres,
+        searchValue: state.filterOptions.searchValue,
+      };
+      state.filteredTracks = state.tracks.filter((track) => {
+        const hasAuthors = state.filterOptions.authors.length !== 0;
+        const hasGenres = action.payload.genres?.includes(track.genre);
+
+        if (hasAuthors) {
+          return (
+            state.filterOptions.authors.includes(track.author) && hasGenres
+          );
+        }
+        return hasGenres;
+      });
+    },
     setIsPlaying: (state) => {
       state.isPlaying = !state.isPlaying;
+    },
+    setSortedTracksByDate: (state, action: PayloadAction<{ item: string }>) => {
+      if (action.payload.item === "Сначала новые") {
+        state.filteredTracks = [...state.currentPlaylist]?.sort((a, b) => {
+          const dateA = new Date(a.release_date);
+          const dateB = new Date(b.release_date);
+          return +dateB - +dateA;
+        });
+      } else if (action.payload.item === "Сначала старые") {
+        state.filteredTracks = [...state.currentPlaylist]?.sort((a, b) => {
+          const dateA = new Date(a.release_date);
+          const dateB = new Date(b.release_date);
+          return +dateA - +dateB;
+        });
+      } else {
+        state.filteredTracks = [...state.currentPlaylist];
+      }
     },
   },
 });
@@ -108,6 +149,8 @@ export const {
   setCurrentPlaylist,
   setPrevTrack,
   setFilteredTracks,
+  setFilteredGenres,
   setIsPlaying,
+  setSortedTracksByDate,
 } = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;

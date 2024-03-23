@@ -5,15 +5,22 @@ import { FilterButton } from "../FilterButton/FilterButton";
 import { useState } from "react";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setFilteredTracks } from "@/store/features/playlistSlise";
+import {
+  setFilteredGenres,
+  setFilteredTracks,
+  setSortedTracksByDate,
+} from "@/store/features/playlistSlise";
 
-type TrackKeys = Pick<Track, "author" | "genre">;
+type TrackKeys = Pick<Track, "author" | "genre" | "release_date">;
 
 export function FilterWrapper() {
   const [isActive, setIsActive] = useState<string | null>();
   const trackList = useAppSelector((store) => store.playlist.tracks);
   const selectedAuthors = useAppSelector(
     (store) => store.playlist.filterOptions.authors
+  );
+  const selectedGenres = useAppSelector(
+    (store) => store.playlist.filterOptions.genres
   );
   const dispatch = useAppDispatch();
 
@@ -24,11 +31,21 @@ export function FilterWrapper() {
   function getListItem(item: keyof TrackKeys) {
     const listItem: string[] = [];
     trackList?.forEach((track) => {
-      if (listItem.includes(track[item]) || track[item] === undefined) return;
+      if (listItem.includes(track[item]) || track[item] === "-") return;
       listItem.push(track[item]);
     });
     return listItem.sort();
   }
+
+  const sortedPlaylist = useAppSelector(
+    (store) => store.playlist.sortedPlaylist
+  );
+  console.log(sortedPlaylist);
+  const sortedByDate: string[] = [
+    "По умолчанию",
+    "Сначала новые",
+    "Сначала старые",
+  ];
 
   // const uniq = (value, index, array) => array.indexOf(value) === index
 
@@ -40,7 +57,6 @@ export function FilterWrapper() {
 
   const authorsList: string[] = getListItem("author");
   const genreList: string[] = getListItem("genre");
-  // const years: string[] = getListItem("release_date");
 
   function toggleSelectedAuthors(item: string) {
     dispatch(
@@ -50,6 +66,20 @@ export function FilterWrapper() {
           : [...selectedAuthors, item],
       })
     );
+  }
+
+  function toggleSelectedGenre(item: string) {
+    dispatch(
+      setFilteredGenres({
+        genres: selectedGenres.includes(item)
+          ? selectedGenres.filter((genre) => genre !== item)
+          : [...selectedGenres, item],
+      })
+    );
+  }
+
+  function toggleSelectedDate(item: string) {
+    dispatch(setSortedTracksByDate({item}))
   }
 
   return (
@@ -65,14 +95,17 @@ export function FilterWrapper() {
       />
       <FilterButton
         isOpen={isActive === "году выпуска" ? true : false}
-        list={authorsList}
+        list={sortedByDate}
         title="году выпуска"
+        toggleSelected={toggleSelectedDate}
         onClick={() => handelActive("году выпуска")}
       />
       <FilterButton
         isOpen={isActive === "жанру" ? true : false}
         list={genreList}
         title="жанру"
+        selected={selectedGenres}
+        toggleSelected={toggleSelectedGenre}
         onClick={() => handelActive("жанру")}
       />
     </div>
