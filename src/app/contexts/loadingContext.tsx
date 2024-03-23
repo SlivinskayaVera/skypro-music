@@ -1,8 +1,7 @@
-// "use client";
+"use client";
 
 import React, { createContext, useEffect, useState } from "react";
 import { ChildrenType } from "../../../types.types";
-
 
 const LoadingContext = createContext<boolean>(false);
 function LoadingProvider({ children }: ChildrenType) {

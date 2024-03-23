@@ -4,12 +4,18 @@ import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
 import { useState } from "react";
 import { Track } from "../../../types.types";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { setFilteredTracks } from "@/store/features/playlistSlise";
 
-type FilterWrapperPropTypes = { trackList: Track[] };
 type TrackKeys = Pick<Track, "author" | "genre">;
 
-export function FilterWrapper({ trackList }: FilterWrapperPropTypes) {
+export function FilterWrapper() {
   const [isActive, setIsActive] = useState<string | null>();
+  const trackList = useAppSelector((store) => store.playlist.tracks);
+  const selectedAuthors = useAppSelector(
+    (store) => store.playlist.filterOptions.authors
+  );
+  const dispatch = useAppDispatch();
 
   function handelActive(title: string) {
     setIsActive((prev) => (prev === title ? null : title));
@@ -17,16 +23,34 @@ export function FilterWrapper({ trackList }: FilterWrapperPropTypes) {
 
   function getListItem(item: keyof TrackKeys) {
     const listItem: string[] = [];
-    trackList.map((track) => {
-      if (listItem.includes(track[item]) || track[item] === null) return;
+    trackList?.forEach((track) => {
+      if (listItem.includes(track[item]) || track[item] === undefined) return;
       listItem.push(track[item]);
     });
-    return listItem;
+    return listItem.sort();
   }
+
+  // const uniq = (value, index, array) => array.indexOf(value) === index
+
+  // const artists = tracks
+  //   .map(({ author }) => author ?? 'Неизвестный исполнитель')
+  //   .filter((i) => i)
+  //   .filter(uniq)
+  //   .sort()
 
   const authorsList: string[] = getListItem("author");
   const genreList: string[] = getListItem("genre");
   // const years: string[] = getListItem("release_date");
+
+  function toggleSelectedAuthors(item: string) {
+    dispatch(
+      setFilteredTracks({
+        authors: selectedAuthors.includes(item)
+          ? selectedAuthors.filter((author) => author !== item)
+          : [...selectedAuthors, item],
+      })
+    );
+  }
 
   return (
     <div className={styles.centerBlockFilter}>
@@ -34,7 +58,9 @@ export function FilterWrapper({ trackList }: FilterWrapperPropTypes) {
       <FilterButton
         isOpen={isActive === "исполнителю" ? true : false}
         list={authorsList}
+        selected={selectedAuthors}
         title="исполнителю"
+        toggleSelected={toggleSelectedAuthors}
         onClick={() => handelActive("исполнителю")}
       />
       <FilterButton

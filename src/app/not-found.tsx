@@ -19,6 +19,7 @@ export default function NotFound() {
               alt=""
               width={52}
               height={52}
+              priority={true}
             />
           </div>
           <button className={styles.buttonGoBack}>

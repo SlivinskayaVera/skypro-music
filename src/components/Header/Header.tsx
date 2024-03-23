@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
 import Image from "next/image";
-import { SVG } from "../SVGImage/SVGImage";
+import Search from "../Search/Search";
 
 export function Header() {
   return (
@@ -17,15 +17,7 @@ export function Header() {
           />
         </Link>
       </div>
-      <div className={styles.centerBlockSearch}>
-        <SVG className={styles.searchSvg} url="search" />
-        <input
-          className={styles.searchText}
-          type="search"
-          placeholder="Поиск"
-          name="search"
-        />
-      </div>
+      <Search />
       <div className={styles.sidebarPersonal}>
         <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
         <div className={styles.sidebarIcon}>

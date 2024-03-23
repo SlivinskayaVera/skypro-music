@@ -2,7 +2,14 @@ import styles from "./FilterButton.module.css";
 import { FilterType } from "../../../types.types";
 import cn from "classnames";
 
-export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
+export function FilterButton({
+  list,
+  title,
+  isOpen,
+  selected,
+  onClick,
+  toggleSelected,
+}: FilterType) {
   return (
     <div className={styles.filterPosition}>
       <button
@@ -12,19 +19,28 @@ export function FilterButton({ list, title, isOpen, onClick }: FilterType) {
         {title}
       </button>
       {isOpen && (
-          <div className={styles.modal}>
-            <div className={styles.content}>
-              <ul className={styles.list}>
-                {list.map((item, index) => {
-                  return (
-                    <li className={styles.listItem} key={index}>
-                      {item}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+        <div className={styles.modal}>
+          <div className={styles.content}>
+            <ul className={styles.list}>
+              {list.map((item, index) => {
+                const activeClass = selected?.includes(item)
+                  ? styles.listItemActive
+                  : "";
+                return (
+                  <li
+                    className={cn(styles.listItem, activeClass)}
+                    key={index}
+                    onClick={() => {
+                      if (toggleSelected) toggleSelected(item);
+                    }}
+                  >
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
+        </div>
       )}
     </div>
   );

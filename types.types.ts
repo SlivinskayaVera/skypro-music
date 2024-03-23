@@ -2,13 +2,14 @@ export type ChildrenType = { children: JSX.Element[] };
 
 export type ItemProps = {
   name: string;
-  isLoading: boolean
 };
 
 export type FilterType = {
   list: string[];
   title: string;
   isOpen: boolean;
+  selected?: string[];
+  toggleSelected?: (item: string) => void; 
   onClick: () => void;
 };
 

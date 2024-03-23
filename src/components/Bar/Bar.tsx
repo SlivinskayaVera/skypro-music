@@ -4,14 +4,19 @@ import styles from "./Bar.module.css";
 import Link from "next/link";
 import classNames from "classnames";
 import { SVG } from "../SVGImage/SVGImage";
-import { Track } from "../../../types.types";
 import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import {
+  setCurrentPlaylist,
+  setNextTrack,
+  setPrevTrack,
+  setToggleShuffled,
+} from "@/store/features/playlistSlise";
 
-type BarProps = { currentTrack: Track | null };
 let durationTrackSec: number;
 let durationTrackMin: number;
 
-export default function Bar({ currentTrack }: BarProps) {
+export default function Bar() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const volumeRef = useRef<HTMLInputElement | null>(null);
   const durationRef = useRef<HTMLInputElement | null>(null);
@@ -20,46 +25,68 @@ export default function Bar({ currentTrack }: BarProps) {
   const [volume, setVolume] = useState<string | null>();
   const [currentTime, setCurrentTime] = useState<number>(0);
 
+  const dispatch = useAppDispatch();
+
   const duration = audioRef.current?.duration;
 
-  function handleStart() {
+  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const isShuffled = useAppSelector((store) => store.playlist.isShuffled);
+
+  function handleStartClick() {
     if (!audioRef.current) return;
     audioRef.current.play();
     setIsPlaying(true);
   }
 
-  function handleStop() {
+  function handleStopClick() {
     if (!audioRef.current) return;
     audioRef.current.pause();
     setIsPlaying(false);
   }
 
-  function handleLoop() {
+  function handleLoopClick() {
     if (!audioRef.current) return;
     if (!audioRef.current.loop) audioRef.current.loop = true;
     else audioRef.current.loop = false;
   }
 
-  function handleVolume() {
+  function handleVolumeChange() {
     if (!audioRef.current || !volume) return;
     audioRef.current.volume = +volume;
   }
 
-  function handleSetTime() {
+  function handleSetTimeChange() {
     if (!audioRef.current || !currentTime) return;
     audioRef.current.currentTime = +currentTime;
+  }
+
+  function handleNextTrackClick() {
+    if (!currentTrack) return;
+    dispatch(setNextTrack());
+  }
+
+  function handlePrevTrackClick() {
+    if (!currentTrack) return;
+    dispatch(setPrevTrack());
+  }
+
+  function handleShuffleClick() {
+    if (!currentTrack) return;
+    dispatch(setToggleShuffled());
+    dispatch(setCurrentPlaylist());
   }
 
   useEffect(() => {
     const timer = setInterval(() => {
       if (!audioRef.current?.currentTime) return;
       setCurrentTime(audioRef.current.currentTime);
+      if (audioRef.current?.ended) handleNextTrackClick();
     }, 300);
 
     return () => clearInterval(timer);
   });
 
-  const togglePlay = isPlaying ? handleStop : handleStart;
+  const togglePlay = isPlaying ? handleStopClick : handleStartClick;
 
   const currentSec = Math.round(currentTime) % 60;
   const currentMin = (Math.round(currentTime) - currentSec) / 60;
@@ -70,7 +97,7 @@ export default function Bar({ currentTrack }: BarProps) {
   }
 
   return (
-    <div className={styles.bar}>
+    <div className={`${currentTrack ? styles.barActive : styles.barHidden}`}>
       <audio autoPlay ref={audioRef} src={currentTrack?.track_file} />
       <div>
         <div className={styles.timers}>
@@ -93,18 +120,19 @@ export default function Bar({ currentTrack }: BarProps) {
             ref={durationRef}
             type="range"
             min={0}
-            max={duration}
+            max={`${duration}`}
             value={currentTime}
             onChange={(e) => {
-              setCurrentTime(+e.target.value), handleSetTime();
+              setCurrentTime(+e.target.value), handleSetTimeChange();
             }}
             step={0.000001}
           />
           <div className={styles.barPlayerBlock}>
             <div className={styles.barPlayer}>
               <div className={styles.playerControls}>
+                {/* предыдущий трек */}
                 <div
-                  onClick={() => alert("Еще не реализовано")}
+                  onClick={handlePrevTrackClick}
                   className={styles.playerBtnPrev}
                 >
                   <SVG className={styles.playerBtnPrevSvg} url="prev" />
@@ -118,32 +146,46 @@ export default function Bar({ currentTrack }: BarProps) {
                     url={isPlaying ? "pause" : "play"}
                   />
                 </div>
+                {/* следующий трек */}
                 <div
-                  onClick={() => alert("Еще не реализовано")}
+                  onClick={handleNextTrackClick}
                   className={styles.playerBtnNext}
                 >
                   <SVG className={styles.playerBtnNextSvg} url="next" />
                 </div>
+                {/* повтор трека */}
                 <div
-                  onClick={handleLoop}
+                  onClick={handleLoopClick}
                   className={classNames(
                     styles.playerBtnShuffle,
                     styles._btnIcon
                   )}
                 >
                   <SVG
-                    className={styles.playerBtnRepeatSvg}
+                    className={
+                      audioRef.current?.loop
+                        ? `${styles.playerBtnActiveRepeatSvg}`
+                        : `${styles.playerBtnRepeatSvg}`
+                    }
                     url={audioRef.current?.loop ? "repeatActive" : "repeat"}
                   />
                 </div>
+                {/* перемешать */}
                 <div
-                  onClick={() => alert("Еще не реализовано")}
+                  onClick={handleShuffleClick}
                   className={classNames(
                     styles.playerBtnShuffle,
                     styles._btnIcon
                   )}
                 >
-                  <SVG className={styles.playerBtnShuffleSvg} url="shuffle" />
+                  <SVG
+                    className={
+                      isShuffled
+                        ? styles.playerActiveBtnShuffleSvg
+                        : styles.playerBtnShuffleSvg
+                    }
+                    url="shuffle"
+                  />
                 </div>
               </div>
 
@@ -193,7 +235,7 @@ export default function Bar({ currentTrack }: BarProps) {
                   <input
                     ref={volumeRef}
                     onChange={() => {
-                      setVolume(volumeRef.current?.value), handleVolume();
+                      setVolume(volumeRef.current?.value), handleVolumeChange();
                     }}
                     className={classNames(
                       styles.barPlayerProgress,

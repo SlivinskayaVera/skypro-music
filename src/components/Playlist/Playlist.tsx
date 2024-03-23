@@ -1,19 +1,35 @@
-import { Track } from "../../../types.types";
+"use client";
+
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { SVG } from "../SVGImage/SVGImage";
-import { TrackItem } from "../TrackItem/TrackItem";
+import TrackItem from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
+import { useEffect } from "react";
+import { getTracks } from "@/app/api/musicApi";
+import {
+  setCurrentPlaylist,
+  setTrackList,
+} from "@/store/features/playlistSlise";
 
-type PlaylistProps = {
-  trackList: Track[];
-  isLoading: boolean;
-  setCurrentTrack: (track: Track) => void;
-};
+export default function Playlist() {
+  const currentPlaylist = useAppSelector(
+    (store) => store.playlist.currentPlaylist
+  );
+  const filteredTracks = useAppSelector(
+    (store) => store.playlist.filteredTracks
+  );
+  const filterOptions = useAppSelector((store) => store.playlist.filterOptions);
+  const dispatch = useAppDispatch();
 
-export function Playlist({
-  trackList,
-  isLoading,
-  setCurrentTrack,
-}: PlaylistProps) {
+  // здесь из апи получать список треков
+
+  useEffect(() => {
+    getTracks().then((resTrackList) => {
+      dispatch(setTrackList(resTrackList));
+      dispatch(setCurrentPlaylist());
+    });
+  }, [dispatch]);
+
   return (
     <div className={styles.centerBlockContent}>
       <div className={styles.contentTitle}>
@@ -25,16 +41,23 @@ export function Playlist({
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-        {trackList.map((track) => {
-          return (
-            <TrackItem
-              key={track.id}
-              track={track}
-              isLoading={isLoading}
-              setCurrentTrack={setCurrentTrack}
-            />
-          );
-        })}
+
+        {filteredTracks.length !== 0 ? (
+          filteredTracks.map((track) => {
+            return <TrackItem key={track.id} track={track} />;
+          })
+        ) : filterOptions.searchValue.length > 2 &&
+          filteredTracks.length === 0 ? (
+          <>ничего не найдено</>
+        ) : (
+          currentPlaylist?.map((track) => {
+            return <TrackItem key={track.id} track={track} />;
+          })
+        )}
+
+        {/* {currentPlaylist?.map((track) => {
+          return <TrackItem key={track.id} track={track} />;
+        })} */}
       </div>
     </div>
   );
