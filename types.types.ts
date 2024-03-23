@@ -8,7 +8,7 @@ export type FilterType = {
   list: string[];
   title: string;
   isOpen: boolean;
-  selected?: string[];
+  selected: string[] | string;
   toggleSelected?: (item: string) => void; 
   onClick: () => void;
 };

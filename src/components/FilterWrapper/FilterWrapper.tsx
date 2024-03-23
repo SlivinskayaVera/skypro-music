@@ -22,6 +22,9 @@ export function FilterWrapper() {
   const selectedGenres = useAppSelector(
     (store) => store.playlist.filterOptions.genres
   );
+  const selectedDate = useAppSelector(
+    (store) => store.playlist.filterOptions.date
+  );
   const dispatch = useAppDispatch();
 
   function handelActive(title: string) {
@@ -37,10 +40,6 @@ export function FilterWrapper() {
     return listItem.sort();
   }
 
-  const sortedPlaylist = useAppSelector(
-    (store) => store.playlist.sortedPlaylist
-  );
-  console.log(sortedPlaylist);
   const sortedByDate: string[] = [
     "По умолчанию",
     "Сначала новые",
@@ -79,7 +78,12 @@ export function FilterWrapper() {
   }
 
   function toggleSelectedDate(item: string) {
-    dispatch(setSortedTracksByDate({item}))
+    console.log(item);
+    dispatch(
+      setSortedTracksByDate({
+        date: item
+      })
+    );
   }
 
   return (
@@ -97,6 +101,7 @@ export function FilterWrapper() {
         isOpen={isActive === "году выпуска" ? true : false}
         list={sortedByDate}
         title="году выпуска"
+        selected={selectedDate}
         toggleSelected={toggleSelectedDate}
         onClick={() => handelActive("году выпуска")}
       />
