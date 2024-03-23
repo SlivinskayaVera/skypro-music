@@ -10,8 +10,6 @@ type LayoutPropTypes = {
 };
 
 export default function Layout({ children }: LayoutPropTypes) {
-  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -21,7 +19,7 @@ export default function Layout({ children }: LayoutPropTypes) {
           {children}
           <Sidebar />
         </main>
-        {currentTrack && <Bar />}
+        <Bar />
       </div>
     </div>
   );

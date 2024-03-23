@@ -8,6 +8,8 @@ type PlaylistType = {
   isShuffled: boolean;
   isRepeated: boolean;
   shuffledPlaylist: [] | Track[];
+  filterOptions: { authors: string[]; searchValue: string };
+  filteredTracks: [] | Track[];
 };
 
 const initialState: PlaylistType = {
@@ -17,7 +19,25 @@ const initialState: PlaylistType = {
   isShuffled: false,
   isRepeated: false,
   shuffledPlaylist: [],
+  filterOptions: { authors: [], searchValue: "" },
+  filteredTracks: [],
 };
+
+function changeTrack(direction: number) {
+  return (state: PlaylistType) => {
+    const currentTracks = state.isShuffled
+      ? state.shuffledPlaylist
+      : state.tracks;
+    let newIndex =
+      currentTracks.findIndex((item) => item.id === state.currentTrack?.id) +
+      direction;
+    // Циклическое переключение
+    newIndex = (newIndex + currentTracks.length) % currentTracks.length;
+
+    state.currentTrack = currentTracks[newIndex];
+    // state.isPlaying = true;
+  };
+}
 
 // Редьюсер принимает текущее состояние, применяет к нему какое-то действие и возвращает новое состояние.
 // Редьюсеры содержат основную логику приложения
@@ -46,27 +66,34 @@ const playlistSlice = createSlice({
     setRepeatTrack: (state) => {
       state.isRepeated = !state.isRepeated;
     },
-    setNextTrack: (state) => {
-      const index =
-        state.currentPlaylist.findIndex(
-          (track) => track.id === state.currentTrack?.id
-        ) + 1;
-      if (state.currentPlaylist[index] === undefined) {
-        state.currentTrack = state.currentPlaylist[0];
-      } else {
-        state.currentTrack = state.currentPlaylist[index];
-      }
-    },
-    setPrevTrack: (state) => {
-      const index =
-        state.currentPlaylist.findIndex(
-          (track) => track.id === state.currentTrack?.id
-        ) - 1;
-      if (state.currentPlaylist[index] === undefined) {
-        state.currentTrack = state.currentPlaylist[0];
-      } else {
-        state.currentTrack = state.currentPlaylist[index];
-      }
+    setNextTrack: changeTrack(1),
+    setPrevTrack: changeTrack(-1),
+    setFilteredTracks: (
+      state,
+      action: PayloadAction<{ authors?: string[]; searchValue?: string }>
+    ) => {
+      state.filterOptions = {
+        authors: action.payload.authors || state.filterOptions.authors,
+        searchValue: action.payload.searchValue || ""
+        // action.payload.searchValue || state.filterOptions.searchValue,
+      };
+      state.filteredTracks = state.tracks.filter((track) => {
+        const hasAuthors = state.filterOptions.authors.length !== 0;
+        const isSearchValueIncluded =
+          // action.payload.searchValue &&
+          // action.payload.searchValue?.length > 2 &&
+          track.name
+            .toLowerCase()
+            .includes(state.filterOptions.searchValue.toLowerCase());
+        if (hasAuthors) {
+          return (
+            state.filterOptions.authors.includes(track.author) &&
+            isSearchValueIncluded
+          );
+        }
+        return isSearchValueIncluded;
+      });
+      state.currentPlaylist = state.filteredTracks;
     },
   },
 });
@@ -79,5 +106,6 @@ export const {
   setNextTrack,
   setCurrentPlaylist,
   setPrevTrack,
+  setFilteredTracks,
 } = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;

@@ -108,3 +108,7 @@
     color: rgb(182, 114, 255);
     text-decoration-line: underline;
 }
+
+.listItemActive {
+    color: rgb(228, 89, 249);
+}

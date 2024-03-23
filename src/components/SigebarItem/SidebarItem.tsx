@@ -14,7 +14,7 @@ export function SidebarItem({ name }: ItemProps) {
             alt="day's playlist"
             width={250}
             height={150}
-            priority={true}
+            priority
           />
         </Link>
       </div>

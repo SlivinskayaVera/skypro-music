@@ -16,6 +16,8 @@ export default function TrackItem({ track }: TrackItemProps) {
   const dispatch = useAppDispatch();
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
 
+  // на 24 строке создать текущий плейлист в стор и исходный плейлист
+
   return (
     <div
       onClick={() => {

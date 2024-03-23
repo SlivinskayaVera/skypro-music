@@ -80,11 +80,7 @@ export default function Bar() {
     const timer = setInterval(() => {
       if (!audioRef.current?.currentTime) return;
       setCurrentTime(audioRef.current.currentTime);
-      if (
-        audioRef.current.currentTime === audioRef.current.duration &&
-        !audioRef.current?.loop
-      )
-        handleNextTrackClick();
+      if (audioRef.current?.ended) handleNextTrackClick();
     }, 300);
 
     return () => clearInterval(timer);
@@ -101,7 +97,7 @@ export default function Bar() {
   }
 
   return (
-    <div className={styles.bar}>
+    <div className={`${currentTrack ? styles.barActive : styles.barHidden}`}>
       <audio autoPlay ref={audioRef} src={currentTrack?.track_file} />
       <div>
         <div className={styles.timers}>
@@ -124,7 +120,7 @@ export default function Bar() {
             ref={durationRef}
             type="range"
             min={0}
-            max={duration}
+            max={`${duration}`}
             value={currentTime}
             onChange={(e) => {
               setCurrentTime(+e.target.value), handleSetTimeChange();
