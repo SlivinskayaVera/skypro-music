@@ -132,7 +132,6 @@ export default function Bar() {
           <div className={styles.barPlayerBlock}>
             <div className={styles.barPlayer}>
               <div className={styles.playerControls}>
-                {/* предыдущий трек */}
                 <div
                   onClick={handlePrevTrackClick}
                   className={styles.playerBtnPrev}
@@ -148,14 +147,12 @@ export default function Bar() {
                     url={audioRef.current?.paused ? "play" : "pause"}
                   />
                 </div>
-                {/* следующий трек */}
                 <div
                   onClick={handleNextTrackClick}
                   className={styles.playerBtnNext}
                 >
                   <SVG className={styles.playerBtnNextSvg} url="next" />
                 </div>
-                {/* повтор трека */}
                 <div
                   onClick={handleLoopClick}
                   className={classNames(
@@ -172,7 +169,6 @@ export default function Bar() {
                     url={audioRef.current?.loop ? "repeatActive" : "repeat"}
                   />
                 </div>
-                {/* перемешать */}
                 <div
                   onClick={handleShuffleClick}
                   className={classNames(

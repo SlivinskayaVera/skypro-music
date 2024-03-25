@@ -2,7 +2,7 @@
 
 import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -13,9 +13,29 @@ import {
 
 type TrackKeys = Pick<Track, "author" | "genre" | "release_date">;
 
+function getListItem(item: keyof TrackKeys, trackList: Track[]) {
+  const listItem: string[] = [];
+  trackList?.forEach((track) => {
+    if (listItem.includes(track[item]) || track[item] === "-") return;
+    listItem.push(track[item]);
+  });
+  return listItem.sort();
+}
+
+const sortedByDate: string[] = [
+  "По умолчанию",
+  "Сначала новые",
+  "Сначала старые",
+];
+
 export function FilterWrapper() {
   const [isActive, setIsActive] = useState<string | null>();
-  const trackList = useAppSelector((store) => store.playlist.tracks);
+
+  const filterBtnHandler = useCallback((title: string) => {
+    setIsActive((prev) => (prev === title ? null : title));
+  }, []);
+
+  const tracks = useAppSelector((store) => store.playlist.tracks);
   const selectedAuthors = useAppSelector(
     (store) => store.playlist.filterOptions.authors
   );
@@ -27,24 +47,25 @@ export function FilterWrapper() {
   );
   const dispatch = useAppDispatch();
 
-  function handelActive(title: string) {
-    setIsActive((prev) => (prev === title ? null : title));
-  }
+  //Хотела сделать общую функцию с useMemo, но оно не работает, все равно вызывается каждый раз при нажатии кнопки с фильтрами
 
-  function getListItem(item: keyof TrackKeys) {
-    const listItem: string[] = [];
-    trackList?.forEach((track) => {
-      if (listItem.includes(track[item]) || track[item] === "-") return;
-      listItem.push(track[item]);
-    });
-    return listItem.sort();
-  }
+  // const filteredList = useMemo(() => {
 
-  const sortedByDate: string[] = [
-    "По умолчанию",
-    "Сначала новые",
-    "Сначала старые",
-  ];
+  //   return function getListItem(item: keyof TrackKeys, trackList: Track[]) {
+  //     const listItem: string[] = [];
+  //     trackList?.forEach((track) => {
+  //       if (listItem.includes(track[item]) || track[item] === "-") return;
+  //       listItem.push(track[item]);
+  //     });
+  //     console.log(listItem);
+  //     return listItem.sort();
+  //   }
+  // }, [tracks]);
+
+  // поэтому сделала два отдельных вызова функции getListItem через мемо 
+
+  const authorsList = useMemo(() => getListItem("author", tracks), [tracks]);
+  const genreList = useMemo(() => getListItem("genre", tracks), [tracks]);
 
   // const uniq = (value, index, array) => array.indexOf(value) === index
 
@@ -54,8 +75,6 @@ export function FilterWrapper() {
   //   .filter(uniq)
   //   .sort()
 
-  const authorsList: string[] = getListItem("author");
-  const genreList: string[] = getListItem("genre");
 
   function toggleSelectedAuthors(item: string) {
     dispatch(
@@ -78,10 +97,9 @@ export function FilterWrapper() {
   }
 
   function toggleSelectedDate(item: string) {
-    console.log(item);
     dispatch(
       setSortedTracksByDate({
-        date: item
+        date: item,
       })
     );
   }
@@ -95,7 +113,7 @@ export function FilterWrapper() {
         selected={selectedAuthors}
         title="исполнителю"
         toggleSelected={toggleSelectedAuthors}
-        onClick={() => handelActive("исполнителю")}
+        onClick={() => filterBtnHandler("исполнителю")}
       />
       <FilterButton
         isOpen={isActive === "году выпуска" ? true : false}
@@ -103,7 +121,7 @@ export function FilterWrapper() {
         title="году выпуска"
         selected={selectedDate}
         toggleSelected={toggleSelectedDate}
-        onClick={() => handelActive("году выпуска")}
+        onClick={() => filterBtnHandler("году выпуска")}
       />
       <FilterButton
         isOpen={isActive === "жанру" ? true : false}
@@ -111,7 +129,7 @@ export function FilterWrapper() {
         title="жанру"
         selected={selectedGenres}
         toggleSelected={toggleSelectedGenre}
-        onClick={() => handelActive("жанру")}
+        onClick={() => filterBtnHandler("жанру")}
       />
     </div>
   );

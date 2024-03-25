@@ -330,6 +330,7 @@
     font-size: 13px;
     line-height: 24px;
     color: #ffffff;
+    white-space: nowrap;
 }
 
 .trackPlayLikeDis {
@@ -343,7 +344,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-left: 26%;
+    margin-left: 26px;
 }
 
 .trackPlayLike,
