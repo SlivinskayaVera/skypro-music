@@ -6,6 +6,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
+  setCurrentPlaylist,
   setFilteredGenres,
   setFilteredTracks,
   setSortedTracksByDate,
@@ -62,7 +63,7 @@ export function FilterWrapper() {
   //   }
   // }, [tracks]);
 
-  // поэтому сделала два отдельных вызова функции getListItem через мемо 
+  // поэтому сделала два отдельных вызова функции getListItem через мемо
 
   const authorsList = useMemo(() => getListItem("author", tracks), [tracks]);
   const genreList = useMemo(() => getListItem("genre", tracks), [tracks]);
@@ -75,26 +76,30 @@ export function FilterWrapper() {
   //   .filter(uniq)
   //   .sort()
 
-
-  function toggleSelectedAuthors(item: string) {
+  function toggleSelectedFilters(item: string) {
     dispatch(
       setFilteredTracks({
         authors: selectedAuthors.includes(item)
           ? selectedAuthors.filter((author) => author !== item)
           : [...selectedAuthors, item],
-      })
-    );
-  }
-
-  function toggleSelectedGenre(item: string) {
-    dispatch(
-      setFilteredGenres({
         genres: selectedGenres.includes(item)
           ? selectedGenres.filter((genre) => genre !== item)
           : [...selectedGenres, item],
       })
     );
+    dispatch(setCurrentPlaylist());
   }
+
+  // function toggleSelectedGenre(item: string) {
+  //   dispatch(
+  //     setFilteredGenres({
+  //       genres: selectedGenres.includes(item)
+  //         ? selectedGenres.filter((genre) => genre !== item)
+  //         : [...selectedGenres, item],
+  //     })
+  //   );
+  //   dispatch(setCurrentPlaylist());
+  // }
 
   function toggleSelectedDate(item: string) {
     dispatch(
@@ -102,6 +107,7 @@ export function FilterWrapper() {
         date: item,
       })
     );
+    dispatch(setCurrentPlaylist());
   }
 
   return (
@@ -112,7 +118,7 @@ export function FilterWrapper() {
         list={authorsList}
         selected={selectedAuthors}
         title="исполнителю"
-        toggleSelected={toggleSelectedAuthors}
+        toggleSelected={toggleSelectedFilters}
         onClick={() => filterBtnHandler("исполнителю")}
       />
       <FilterButton
@@ -128,7 +134,7 @@ export function FilterWrapper() {
         list={genreList}
         title="жанру"
         selected={selectedGenres}
-        toggleSelected={toggleSelectedGenre}
+        toggleSelected={toggleSelectedFilters}
         onClick={() => filterBtnHandler("жанру")}
       />
     </div>

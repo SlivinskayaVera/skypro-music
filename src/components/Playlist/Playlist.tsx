@@ -15,10 +15,10 @@ export default function Playlist() {
   const currentPlaylist = useAppSelector(
     (store) => store.playlist.currentPlaylist
   );
-  const filteredTracks = useAppSelector(
-    (store) => store.playlist.filteredTracks
-  );
-  const filterOptions = useAppSelector((store) => store.playlist.filterOptions);
+  // const filteredTracks = useAppSelector(
+  //   (store) => store.playlist.filteredTracks
+  // );
+  // const filterOptions = useAppSelector((store) => store.playlist.filterOptions);
   const dispatch = useAppDispatch();
 
   // здесь из апи получать список треков
@@ -28,7 +28,7 @@ export default function Playlist() {
       dispatch(setTrackList(resTrackList));
       dispatch(setCurrentPlaylist());
     });
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className={styles.centerBlockContent}>
@@ -42,7 +42,7 @@ export default function Playlist() {
       </div>
       <div className={styles.contentPlaylist}>
 
-        {filteredTracks.length !== 0 ? (
+        {/* {filteredTracks.length !== 0 ? (
           filteredTracks.map((track) => {
             return <TrackItem key={track.id} track={track} />;
           })
@@ -53,11 +53,11 @@ export default function Playlist() {
           currentPlaylist?.map((track) => {
             return <TrackItem key={track.id} track={track} />;
           })
-        )}
+        )} */}
 
-        {/* {currentPlaylist?.map((track) => {
+        {currentPlaylist?.map((track) => {
           return <TrackItem key={track.id} track={track} />;
-        })} */}
+        })}
       </div>
     </div>
   );

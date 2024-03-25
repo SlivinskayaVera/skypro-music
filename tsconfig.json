@@ -23,6 +23,6 @@
 
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/FilterWrapper/data.ts", "src/app/loading.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/FilterWrapper/data.ts", "src/components/Playlist/loading.tsx"],
   "exclude": ["node_modules"]
 }

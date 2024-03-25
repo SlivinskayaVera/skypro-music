@@ -60,9 +60,18 @@ const playlistSlice = createSlice({
       state.currentTrack = action.payload;
     },
     setCurrentPlaylist: (state) => {
-      state.currentPlaylist = state.isShuffled
-        ? state.shuffledPlaylist
-        : state.tracks;
+      // state.currentPlaylist = state.isShuffled
+      //   ? state.shuffledPlaylist
+      //   : state.tracks;
+      state.currentPlaylist =
+        state.filteredTracks.length !== 0
+          ? state.filteredTracks
+          : state.filterOptions.searchValue.length > 2 &&
+            state.filteredTracks.length === 0
+          ? []
+          : state.isShuffled
+          ? state.shuffledPlaylist
+          : state.tracks;
     },
     setToggleShuffled: (state) => {
       state.isShuffled = !state.isShuffled;
@@ -77,24 +86,31 @@ const playlistSlice = createSlice({
     setPrevTrack: changeTrack(-1),
     setFilteredTracks: (
       state,
-      action: PayloadAction<{ authors?: string[]; searchValue?: string }>
+      action: PayloadAction<{
+        authors?: string[];
+        genres?: string[];
+        searchValue?: string;
+      }>
     ) => {
       state.filterOptions = {
         authors: action.payload.authors || state.filterOptions.authors,
-        genres: state.filterOptions.genres,
+        genres: action.payload.genres || state.filterOptions.authors,
         searchValue: action.payload.searchValue || "",
         date: state.filterOptions.date,
         // action.payload.searchValue || state.filterOptions.searchValue,
       };
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthors = state.filterOptions.authors.length !== 0;
+        const hasGenres = state.filterOptions.genres.length !== 0;
         const isSearchValueIncluded = track.name
           .toLowerCase()
           .includes(state.filterOptions.searchValue.toLowerCase());
-        if (hasAuthors) {
+
+        if (hasAuthors || hasGenres) {
           return (
-            state.filterOptions.authors.includes(track.author) &&
-            isSearchValueIncluded
+            state.filterOptions.authors.includes(track.author) ||
+            (state.filterOptions.genres.includes(track.genre) &&
+              isSearchValueIncluded)
           );
         }
         return isSearchValueIncluded;
@@ -126,11 +142,11 @@ const playlistSlice = createSlice({
       state.isPlaying = !state.isPlaying;
     },
     setSortedTracksByDate: (state, action: PayloadAction<{ date: string }>) => {
-      state.filteredTracks = [...state.currentPlaylist].sort((a, b) => {
+      state.filteredTracks = [...state.tracks].sort((a, b) => {
         const dateA = new Date(a.release_date);
         const dateB = new Date(b.release_date);
 
-       return action.payload.date === "Сначала новые"
+        return action.payload.date === "Сначала новые"
           ? +dateB - +dateA
           : action.payload.date === "Сначала старые"
           ? +dateA - +dateB

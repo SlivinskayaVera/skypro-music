@@ -4,7 +4,7 @@ import { SVG } from "../SVGImage/SVGImage";
 import styles from "../Header/Header.module.css";
 import { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
-import { setFilteredTracks } from "@/store/features/playlistSlise";
+import { setCurrentPlaylist, setFilteredTracks } from "@/store/features/playlistSlise";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");
@@ -22,6 +22,7 @@ export default function Search() {
         onChange={(e) => {
           setSearchValue(e.target.value);
           dispatch(setFilteredTracks({ searchValue: e.target.value }));
+          dispatch(setCurrentPlaylist());
         }}
       />
     </div>
