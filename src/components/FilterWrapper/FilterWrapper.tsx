@@ -96,6 +96,7 @@ export function FilterWrapper() {
         isOpen={isActive === "исполнителю" ? true : false}
         list={authorsList}
         selected={selectedAuthors}
+        counter={selectedAuthors.length}
         title="исполнителю"
         toggleSelected={toggleSelectedAuthors}
         onClick={() => filterBtnHandler("исполнителю")}
@@ -105,6 +106,7 @@ export function FilterWrapper() {
         list={sortedByDate}
         title="году выпуска"
         selected={selectedDate}
+        counter={0}
         toggleSelected={toggleSelectedDate}
         onClick={() => filterBtnHandler("году выпуска")}
       />
@@ -113,6 +115,7 @@ export function FilterWrapper() {
         list={genreList}
         title="жанру"
         selected={selectedGenres}
+        counter={selectedGenres.length}
         toggleSelected={toggleSelectedGenre}
         onClick={() => filterBtnHandler("жанру")}
       />

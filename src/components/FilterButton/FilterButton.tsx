@@ -1,21 +1,21 @@
 import styles from "./FilterButton.module.css";
 import { FilterType } from "../../../types.types";
 import cn from "classnames";
-import { useAppSelector } from "@/store/hooks";
 
 export function FilterButton({
   list,
   title,
   isOpen,
   selected,
+  counter,
   onClick,
   toggleSelected,
 }: FilterType) {
-
-  const genre = useAppSelector((store) => store.playlist.filterOptions);
-  console.log(genre);
   return (
     <div className={styles.filterPosition}>
+      {counter !== 0 && (
+        <span className={styles.counter}>{counter}</span>
+      )}
       <button
         onClick={onClick}
         className={cn(styles.filterButton, `${isOpen && styles.activeButton}`)}

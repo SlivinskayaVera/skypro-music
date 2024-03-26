@@ -9,6 +9,7 @@ export type FilterType = {
   title: string;
   isOpen: boolean;
   selected: string[] | string;
+  counter: number | null;
   toggleSelected?: (item: string) => void; 
   onClick: () => void;
 };

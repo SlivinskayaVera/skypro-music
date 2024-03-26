@@ -1,4 +1,3 @@
-import Link from "next/link";
 import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
@@ -31,26 +30,16 @@ export default function TrackItem({ track }: TrackItemProps) {
         <div className={styles.trackTitle}>
           <div className={styles.trackTitleImage}>
             {currentTrack?.id === track.id && (
-              <span className={`${isPlaying ? styles.pulse : styles.pulseStop}`}></span>
+              <span
+                className={`${isPlaying ? styles.pulse : styles.pulseStop}`}
+              ></span>
             )}
             <SVG className={styles.trackTitleSvg} url="note" />
           </div>
-          <div>
-            <Link className={styles.trackTitleLink} href="http://">
-              {track.name} <span className={styles.trackTitleSpan}></span>
-            </Link>
-          </div>
+          {track.name} <span className={styles.trackTitleSpan}></span>
         </div>
-        <div className={styles.trackAuthor}>
-          <Link className={styles.trackAuthorLink} href="http://">
-            {track.author}
-          </Link>
-        </div>
-        <div className={styles.trackAlbum}>
-          <Link className={styles.trackAlbumLink} href="http://">
-            {track.album}
-          </Link>
-        </div>
+        <div className={styles.trackAuthor}>{track.author}</div>
+        <div className={styles.trackAlbum}>{track.album}</div>
         <div className={styles.trackTime}>
           <SVG className={styles.trackTimeSvg} url="like" />
           <div className={styles.trackTimeText}>{`${
