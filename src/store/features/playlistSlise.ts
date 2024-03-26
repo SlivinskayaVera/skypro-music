@@ -32,9 +32,7 @@ const initialState: PlaylistType = {
 
 function changeTrack(direction: number) {
   return (state: PlaylistType) => {
-    const currentTracks = state.isShuffled
-      ? state.shuffledPlaylist
-      : state.tracks;
+    const currentTracks = state.currentPlaylist;
     let newIndex =
       currentTracks.findIndex((item) => item.id === state.currentTrack?.id) +
       direction;
@@ -42,7 +40,6 @@ function changeTrack(direction: number) {
     newIndex = (newIndex + currentTracks.length) % currentTracks.length;
 
     state.currentTrack = currentTracks[newIndex];
-    // state.isPlaying = true;
   };
 }
 
@@ -60,9 +57,6 @@ const playlistSlice = createSlice({
       state.currentTrack = action.payload;
     },
     setCurrentPlaylist: (state) => {
-      // state.currentPlaylist = state.isShuffled
-      //   ? state.shuffledPlaylist
-      //   : state.tracks;
       state.currentPlaylist =
         state.filteredTracks.length !== 0
           ? state.filteredTracks
@@ -75,7 +69,7 @@ const playlistSlice = createSlice({
     },
     setToggleShuffled: (state) => {
       state.isShuffled = !state.isShuffled;
-      state.shuffledPlaylist = [...state.tracks].sort(
+      state.shuffledPlaylist = [...state.currentPlaylist].sort(
         () => Math.random() - 0.5
       );
     },
@@ -94,10 +88,9 @@ const playlistSlice = createSlice({
     ) => {
       state.filterOptions = {
         authors: action.payload.authors || state.filterOptions.authors,
-        genres: action.payload.genres || state.filterOptions.authors,
+        genres: action.payload.genres || state.filterOptions.genres,
         searchValue: action.payload.searchValue || "",
         date: state.filterOptions.date,
-        // action.payload.searchValue || state.filterOptions.searchValue,
       };
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthors = state.filterOptions.authors.length !== 0;
@@ -108,34 +101,16 @@ const playlistSlice = createSlice({
 
         if (hasAuthors || hasGenres) {
           return (
-            state.filterOptions.authors.includes(track.author) ||
+            (state.filterOptions.authors.includes(track.author) &&
+              state.filterOptions.genres.includes(track.genre) &&
+              isSearchValueIncluded) ||
+            (state.filterOptions.authors.includes(track.author) &&
+              isSearchValueIncluded) ||
             (state.filterOptions.genres.includes(track.genre) &&
               isSearchValueIncluded)
           );
         }
         return isSearchValueIncluded;
-      });
-    },
-    setFilteredGenres: (
-      state,
-      action: PayloadAction<{ genres?: string[] }>
-    ) => {
-      state.filterOptions = {
-        authors: state.filterOptions.authors,
-        genres: action.payload.genres || state.filterOptions.genres,
-        searchValue: state.filterOptions.searchValue,
-        date: state.filterOptions.date,
-      };
-      state.filteredTracks = state.tracks.filter((track) => {
-        const hasAuthors = state.filterOptions.authors.length !== 0;
-        const hasGenres = action.payload.genres?.includes(track.genre);
-
-        if (hasAuthors) {
-          return (
-            state.filterOptions.authors.includes(track.author) && hasGenres
-          );
-        }
-        return hasGenres;
       });
     },
     setIsPlaying: (state) => {
@@ -165,7 +140,6 @@ export const {
   setCurrentPlaylist,
   setPrevTrack,
   setFilteredTracks,
-  setFilteredGenres,
   setIsPlaying,
   setSortedTracksByDate,
 } = playlistSlice.actions;

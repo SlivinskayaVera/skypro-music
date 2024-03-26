@@ -15,10 +15,6 @@ export default function Playlist() {
   const currentPlaylist = useAppSelector(
     (store) => store.playlist.currentPlaylist
   );
-  // const filteredTracks = useAppSelector(
-  //   (store) => store.playlist.filteredTracks
-  // );
-  // const filterOptions = useAppSelector((store) => store.playlist.filterOptions);
   const dispatch = useAppDispatch();
 
   // здесь из апи получать список треков
@@ -41,21 +37,7 @@ export default function Playlist() {
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-
-        {/* {filteredTracks.length !== 0 ? (
-          filteredTracks.map((track) => {
-            return <TrackItem key={track.id} track={track} />;
-          })
-        ) : filterOptions.searchValue.length > 2 &&
-          filteredTracks.length === 0 ? (
-          <>ничего не найдено</>
-        ) : (
-          currentPlaylist?.map((track) => {
-            return <TrackItem key={track.id} track={track} />;
-          })
-        )} */}
-
-        {currentPlaylist?.map((track) => {
+        {currentPlaylist.length === 0 && <>ничего не найдено</> || currentPlaylist?.map((track) => {
           return <TrackItem key={track.id} track={track} />;
         })}
       </div>

@@ -1,6 +1,7 @@
 import styles from "./FilterButton.module.css";
 import { FilterType } from "../../../types.types";
 import cn from "classnames";
+import { useAppSelector } from "@/store/hooks";
 
 export function FilterButton({
   list,
@@ -10,6 +11,9 @@ export function FilterButton({
   onClick,
   toggleSelected,
 }: FilterType) {
+
+  const genre = useAppSelector((store) => store.playlist.filterOptions);
+  console.log(genre);
   return (
     <div className={styles.filterPosition}>
       <button

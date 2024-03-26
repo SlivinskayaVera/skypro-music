@@ -7,7 +7,6 @@ import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setCurrentPlaylist,
-  setFilteredGenres,
   setFilteredTracks,
   setSortedTracksByDate,
 } from "@/store/features/playlistSlise";
@@ -48,23 +47,6 @@ export function FilterWrapper() {
   );
   const dispatch = useAppDispatch();
 
-  //Хотела сделать общую функцию с useMemo, но оно не работает, все равно вызывается каждый раз при нажатии кнопки с фильтрами
-
-  // const filteredList = useMemo(() => {
-
-  //   return function getListItem(item: keyof TrackKeys, trackList: Track[]) {
-  //     const listItem: string[] = [];
-  //     trackList?.forEach((track) => {
-  //       if (listItem.includes(track[item]) || track[item] === "-") return;
-  //       listItem.push(track[item]);
-  //     });
-  //     console.log(listItem);
-  //     return listItem.sort();
-  //   }
-  // }, [tracks]);
-
-  // поэтому сделала два отдельных вызова функции getListItem через мемо
-
   const authorsList = useMemo(() => getListItem("author", tracks), [tracks]);
   const genreList = useMemo(() => getListItem("genre", tracks), [tracks]);
 
@@ -76,12 +58,20 @@ export function FilterWrapper() {
   //   .filter(uniq)
   //   .sort()
 
-  function toggleSelectedFilters(item: string) {
+  function toggleSelectedAuthors(item: string) {
     dispatch(
       setFilteredTracks({
         authors: selectedAuthors.includes(item)
           ? selectedAuthors.filter((author) => author !== item)
           : [...selectedAuthors, item],
+      })
+    );
+    dispatch(setCurrentPlaylist());
+  }
+
+  function toggleSelectedGenre(item: string) {
+    dispatch(
+      setFilteredTracks({
         genres: selectedGenres.includes(item)
           ? selectedGenres.filter((genre) => genre !== item)
           : [...selectedGenres, item],
@@ -89,17 +79,6 @@ export function FilterWrapper() {
     );
     dispatch(setCurrentPlaylist());
   }
-
-  // function toggleSelectedGenre(item: string) {
-  //   dispatch(
-  //     setFilteredGenres({
-  //       genres: selectedGenres.includes(item)
-  //         ? selectedGenres.filter((genre) => genre !== item)
-  //         : [...selectedGenres, item],
-  //     })
-  //   );
-  //   dispatch(setCurrentPlaylist());
-  // }
 
   function toggleSelectedDate(item: string) {
     dispatch(
@@ -118,7 +97,7 @@ export function FilterWrapper() {
         list={authorsList}
         selected={selectedAuthors}
         title="исполнителю"
-        toggleSelected={toggleSelectedFilters}
+        toggleSelected={toggleSelectedAuthors}
         onClick={() => filterBtnHandler("исполнителю")}
       />
       <FilterButton
@@ -134,7 +113,7 @@ export function FilterWrapper() {
         list={genreList}
         title="жанру"
         selected={selectedGenres}
-        toggleSelected={toggleSelectedFilters}
+        toggleSelected={toggleSelectedGenre}
         onClick={() => filterBtnHandler("жанру")}
       />
     </div>
