@@ -117,6 +117,8 @@ const playlistSlice = createSlice({
       state.isPlaying = !state.isPlaying;
     },
     setSortedTracksByDate: (state, action: PayloadAction<{ date: string }>) => {
+      state.filterOptions.authors = [];
+      state.filterOptions.genres = [];
       state.filteredTracks = [...state.tracks].sort((a, b) => {
         const dateA = new Date(a.release_date);
         const dateB = new Date(b.release_date);

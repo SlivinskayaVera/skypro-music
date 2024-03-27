@@ -2,7 +2,7 @@
 
 import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -31,9 +31,9 @@ const sortedByDate: string[] = [
 export function FilterWrapper() {
   const [isActive, setIsActive] = useState<string | null>();
 
-  const filterBtnHandler = useCallback((title: string) => {
+  function handelActive(title: string) {
     setIsActive((prev) => (prev === title ? null : title));
-  }, []);
+  }
 
   const tracks = useAppSelector((store) => store.playlist.tracks);
   const selectedAuthors = useAppSelector(
@@ -99,7 +99,7 @@ export function FilterWrapper() {
         counter={selectedAuthors.length}
         title="исполнителю"
         toggleSelected={toggleSelectedAuthors}
-        onClick={() => filterBtnHandler("исполнителю")}
+        onClick={() => handelActive("исполнителю")}
       />
       <FilterButton
         isOpen={isActive === "году выпуска" ? true : false}
@@ -108,7 +108,7 @@ export function FilterWrapper() {
         selected={selectedDate}
         counter={0}
         toggleSelected={toggleSelectedDate}
-        onClick={() => filterBtnHandler("году выпуска")}
+        onClick={() => handelActive("году выпуска")}
       />
       <FilterButton
         isOpen={isActive === "жанру" ? true : false}
@@ -117,7 +117,7 @@ export function FilterWrapper() {
         selected={selectedGenres}
         counter={selectedGenres.length}
         toggleSelected={toggleSelectedGenre}
-        onClick={() => filterBtnHandler("жанру")}
+        onClick={() => handelActive("жанру")}
       />
     </div>
   );
