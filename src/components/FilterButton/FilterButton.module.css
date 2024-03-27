@@ -112,3 +112,14 @@
 .listItemActive {
     color: rgb(228, 89, 249);
 }
+
+.counter {
+    position: absolute;
+    text-align: center;
+    padding: 3px;
+    width: 25px;
+    border-radius: 50%;
+    background: #b672ff;
+    right: -5px;
+    top: -15px;
+}

@@ -1,9 +1,8 @@
-import Link from "next/link";
 import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCurrentTrack } from "@/store/features/playlistSlise";
+import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlise";
 
 type TrackItemProps = {
   track: Track;
@@ -15,6 +14,7 @@ export default function TrackItem({ track }: TrackItemProps) {
 
   const dispatch = useAppDispatch();
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
 
   // на 24 строке создать текущий плейлист в стор и исходный плейлист
 
@@ -22,6 +22,7 @@ export default function TrackItem({ track }: TrackItemProps) {
     <div
       onClick={() => {
         dispatch(setCurrentTrack(track));
+        dispatch(setIsPlaying());
       }}
       className={styles.playlistItem}
     >
@@ -29,26 +30,16 @@ export default function TrackItem({ track }: TrackItemProps) {
         <div className={styles.trackTitle}>
           <div className={styles.trackTitleImage}>
             {currentTrack?.id === track.id && (
-              <span className={styles.pulse}></span>
+              <span
+                className={`${isPlaying ? styles.pulse : styles.pulseStop}`}
+              ></span>
             )}
             <SVG className={styles.trackTitleSvg} url="note" />
           </div>
-          <div>
-            <Link className={styles.trackTitleLink} href="http://">
-              {track.name} <span className={styles.trackTitleSpan}></span>
-            </Link>
-          </div>
+          {track.name} <span className={styles.trackTitleSpan}></span>
         </div>
-        <div className={styles.trackAuthor}>
-          <Link className={styles.trackAuthorLink} href="http://">
-            {track.author}
-          </Link>
-        </div>
-        <div className={styles.trackAlbum}>
-          <Link className={styles.trackAlbumLink} href="http://">
-            {track.album}
-          </Link>
-        </div>
+        <div className={styles.trackAuthor}>{track.author}</div>
+        <div className={styles.trackAlbum}>{track.album}</div>
         <div className={styles.trackTime}>
           <SVG className={styles.trackTimeSvg} url="like" />
           <div className={styles.trackTimeText}>{`${

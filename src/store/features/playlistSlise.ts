@@ -8,8 +8,14 @@ type PlaylistType = {
   isShuffled: boolean;
   isRepeated: boolean;
   shuffledPlaylist: [] | Track[];
-  filterOptions: { authors: string[]; searchValue: string };
+  filterOptions: {
+    authors: string[];
+    genres: string[];
+    date: string;
+    searchValue: string;
+  };
   filteredTracks: [] | Track[];
+  isPlaying: boolean;
 };
 
 const initialState: PlaylistType = {
@@ -19,15 +25,14 @@ const initialState: PlaylistType = {
   isShuffled: false,
   isRepeated: false,
   shuffledPlaylist: [],
-  filterOptions: { authors: [], searchValue: "" },
+  filterOptions: { authors: [], genres: [], date: "", searchValue: "" },
   filteredTracks: [],
+  isPlaying: false,
 };
 
 function changeTrack(direction: number) {
   return (state: PlaylistType) => {
-    const currentTracks = state.isShuffled
-      ? state.shuffledPlaylist
-      : state.tracks;
+    const currentTracks = state.currentPlaylist;
     let newIndex =
       currentTracks.findIndex((item) => item.id === state.currentTrack?.id) +
       direction;
@@ -35,7 +40,6 @@ function changeTrack(direction: number) {
     newIndex = (newIndex + currentTracks.length) % currentTracks.length;
 
     state.currentTrack = currentTracks[newIndex];
-    // state.isPlaying = true;
   };
 }
 
@@ -53,13 +57,19 @@ const playlistSlice = createSlice({
       state.currentTrack = action.payload;
     },
     setCurrentPlaylist: (state) => {
-      state.currentPlaylist = state.isShuffled
-        ? state.shuffledPlaylist
-        : state.tracks;
+      state.currentPlaylist =
+        state.filteredTracks.length !== 0
+          ? state.filteredTracks
+          : state.filterOptions.searchValue.length > 2 &&
+            state.filteredTracks.length === 0
+          ? []
+          : state.isShuffled
+          ? state.shuffledPlaylist
+          : state.tracks;
     },
     setToggleShuffled: (state) => {
       state.isShuffled = !state.isShuffled;
-      state.shuffledPlaylist = [...state.tracks].sort(
+      state.shuffledPlaylist = [...state.currentPlaylist].sort(
         () => Math.random() - 0.5
       );
     },
@@ -70,30 +80,55 @@ const playlistSlice = createSlice({
     setPrevTrack: changeTrack(-1),
     setFilteredTracks: (
       state,
-      action: PayloadAction<{ authors?: string[]; searchValue?: string }>
+      action: PayloadAction<{
+        authors?: string[];
+        genres?: string[];
+        searchValue?: string;
+      }>
     ) => {
       state.filterOptions = {
         authors: action.payload.authors || state.filterOptions.authors,
-        searchValue: action.payload.searchValue || ""
-        // action.payload.searchValue || state.filterOptions.searchValue,
+        genres: action.payload.genres || state.filterOptions.genres,
+        searchValue: action.payload.searchValue || "",
+        date: state.filterOptions.date,
       };
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthors = state.filterOptions.authors.length !== 0;
-        const isSearchValueIncluded =
-          // action.payload.searchValue &&
-          // action.payload.searchValue?.length > 2 &&
-          track.name
-            .toLowerCase()
-            .includes(state.filterOptions.searchValue.toLowerCase());
-        if (hasAuthors) {
+        const hasGenres = state.filterOptions.genres.length !== 0;
+        const isSearchValueIncluded = track.name
+          .toLowerCase()
+          .includes(state.filterOptions.searchValue.toLowerCase());
+
+        if (hasAuthors || hasGenres) {
           return (
-            state.filterOptions.authors.includes(track.author) &&
-            isSearchValueIncluded
+            (state.filterOptions.authors.includes(track.author) &&
+              state.filterOptions.genres.includes(track.genre) &&
+              isSearchValueIncluded) ||
+            (state.filterOptions.authors.includes(track.author) &&
+              isSearchValueIncluded) ||
+            (state.filterOptions.genres.includes(track.genre) &&
+              isSearchValueIncluded)
           );
         }
         return isSearchValueIncluded;
       });
-      state.currentPlaylist = state.filteredTracks;
+    },
+    setIsPlaying: (state) => {
+      state.isPlaying = !state.isPlaying;
+    },
+    setSortedTracksByDate: (state, action: PayloadAction<{ date: string }>) => {
+      state.filterOptions.authors = [];
+      state.filterOptions.genres = [];
+      state.filteredTracks = [...state.tracks].sort((a, b) => {
+        const dateA = new Date(a.release_date);
+        const dateB = new Date(b.release_date);
+
+        return action.payload.date === "Сначала новые"
+          ? +dateB - +dateA
+          : action.payload.date === "Сначала старые"
+          ? +dateA - +dateB
+          : 0;
+      });
     },
   },
 });
@@ -107,5 +142,7 @@ export const {
   setCurrentPlaylist,
   setPrevTrack,
   setFilteredTracks,
+  setIsPlaying,
+  setSortedTracksByDate,
 } = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;
