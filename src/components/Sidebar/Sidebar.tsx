@@ -8,8 +8,8 @@ export function Sidebar() {
     <div className={styles.mainSidebar}>
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
-          {nameButtons.map((nameButton) => {
-            return <SidebarItem key={nameButton} name={nameButton} />;
+          {nameButtons.map((nameButton, index) => {
+            return <SidebarItem key={nameButton} name={nameButton} id={index} />;
           })}
         </div>
       </div>

@@ -3,10 +3,9 @@ import { Header } from "@components/Header/Header";
 import { Navigation } from "@components/Navigation/Navigation";
 import { Sidebar } from "@components/Sidebar/Sidebar";
 import Bar from "@components/Bar/Bar";
-import { useAppSelector } from "@/store/hooks";
 
 type LayoutPropTypes = {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 };
 
 export default function Layout({ children }: LayoutPropTypes) {
