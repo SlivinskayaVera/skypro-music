@@ -1,8 +1,8 @@
+import { Header } from "@/components/Header/Header";
 import styles from "../../app/page.module.css";
-import { Header } from "@components/Header/Header";
-import { Navigation } from "@components/Navigation/Navigation";
-import { Sidebar } from "@components/Sidebar/Sidebar";
-import Bar from "@components/Bar/Bar";
+import { Navigation } from "@/components/Navigation/Navigation";
+import { Sidebar } from "@/components/Sidebar/Sidebar";
+import Bar from "@/components/Bar/Bar";
 
 type LayoutPropTypes = {
   children: JSX.Element | JSX.Element[];

@@ -17,14 +17,12 @@ export default function Playlist() {
   );
   const dispatch = useAppDispatch();
 
-  // здесь из апи получать список треков
-
   useEffect(() => {
     getTracks().then((resTrackList) => {
       dispatch(setTrackList(resTrackList));
       dispatch(setCurrentPlaylist());
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.centerBlockContent}>
@@ -37,9 +35,10 @@ export default function Playlist() {
         </div>
       </div>
       <div className={styles.contentPlaylist}>
-        {currentPlaylist.length === 0 && <>ничего не найдено</> || currentPlaylist?.map((track) => {
-          return <TrackItem key={track.id} track={track} />;
-        })}
+        {(currentPlaylist.length === 0 && <>ничего не найдено</>) ||
+          currentPlaylist?.map((track) => {
+            return <TrackItem key={track.id} track={track} />;
+          })}
       </div>
     </div>
   );

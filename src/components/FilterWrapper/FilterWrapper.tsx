@@ -3,24 +3,13 @@
 import styles from "./FilterWrapper.module.css";
 import { FilterButton } from "../FilterButton/FilterButton";
 import { useMemo, useState } from "react";
-import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setCurrentPlaylist,
   setFilteredTracks,
   setSortedTracksByDate,
 } from "@/store/features/playlistSlise";
-
-type TrackKeys = Pick<Track, "author" | "genre" | "release_date">;
-
-function getListItem(item: keyof TrackKeys, trackList: Track[]) {
-  const listItem: string[] = [];
-  trackList?.forEach((track) => {
-    if (listItem.includes(track[item]) || track[item] === "-") return;
-    listItem.push(track[item]);
-  });
-  return listItem.sort();
-}
+import { getListItem } from "@/lib/getListItem";
 
 const sortedByDate: string[] = [
   "По умолчанию",

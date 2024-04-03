@@ -110,4 +110,41 @@
 // firstFunction();
 // secondFunction();
 
+const booksList = [
+  {
+    id: 1,
+    name: "Преступление и наказание",
+    author: "Федор Михайлович Достоевский",
+    genre: "драма",
+  },
+  {
+    id: 2,
+    name: "Война и мир",
+    author: "Лев Николаевич Толстой",
+    genre: "роман",
+  },
+  {
+    id: 3,
+    name: "Мастер и Маргарита",
+    author: "Михаил Афанасьевич Булгаков",
+    genre: "фанстастика",
+  },
+  {
+    id: 4,
+    name: "Воскресенье",
+    author: "Лев Николаевич Толстой",
+    genre: "роман",
+  },
+];
 
+function getBooks(booksList, author = "", genre = "", substring = "") {
+  const filteredBooks = booksList.filter((book) => {
+    const isAuthor = author ? book.author === author : true;
+    const isGenre = genre ? book.genre === genre : true;
+    const isSubstring = substring ? book.name.includes(substring) : true;
+    return isAuthor && isGenre && isSubstring;
+  });
+  console.log(filteredBooks);
+  return filteredBooks;
+}
+getBooks(booksList, "Лев Николаевич Толстой", "роман", "Воскресенье");

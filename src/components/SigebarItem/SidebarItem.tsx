@@ -3,11 +3,11 @@ import Link from "next/link";
 import styles from "./SidebarItem.module.css";
 import { ItemProps } from "../../../types.types";
 
-export function SidebarItem({ name, id }: ItemProps) {
+export function SidebarItem({ name }: ItemProps) {
   return (
     <>
       <div className={styles.sidebarItem}>
-        <Link className={styles.sidebarLink} href={`/playlists/${id}`}>
+        <Link className={styles.sidebarLink} href={`/tracks/playlists/${name}`}>
           <Image
             className={styles.sidebarImg}
             src={`/img/${name}.png`}

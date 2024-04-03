@@ -2,7 +2,6 @@ export type ChildrenType = { children: JSX.Element[] };
 
 export type ItemProps = {
   name: string;
-  id: number
 };
 
 export type FilterType = {
