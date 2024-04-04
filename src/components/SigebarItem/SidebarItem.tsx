@@ -7,7 +7,7 @@ export function SidebarItem({ name }: ItemProps) {
   return (
     <>
       <div className={styles.sidebarItem}>
-        <Link className={styles.sidebarLink} href={`/playlists/${name}`}>
+        <Link className={styles.sidebarLink} href={`/tracks/playlists/${name}`}>
           <Image
             className={styles.sidebarImg}
             src={`/img/${name}.png`}

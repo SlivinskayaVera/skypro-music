@@ -1,8 +1,21 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Track } from "../../../types.types";
 
+type CategoryPlaylistsType = {
+  id: number;
+  items: Track[];
+  owner: {
+    email: string;
+    first_name: string;
+    id: number;
+    last_name: string;
+    username: string;
+  };
+};
+
 type PlaylistType = {
   tracks: [] | Track[];
+  categoryPlaylists: CategoryPlaylistsType[];
   currentPlaylist: [] | Track[];
   currentTrack: null | Track;
   isShuffled: boolean;
@@ -20,6 +33,7 @@ type PlaylistType = {
 
 const initialState: PlaylistType = {
   tracks: [],
+  categoryPlaylists: [],
   currentPlaylist: [],
   currentTrack: null,
   isShuffled: false,
@@ -52,6 +66,12 @@ const playlistSlice = createSlice({
   reducers: {
     setTrackList: (state, action: PayloadAction<Track[]>) => {
       state.tracks = action.payload;
+    },
+    setPlaylistsByCategory: (
+      state,
+      action: PayloadAction<CategoryPlaylistsType[]>
+    ) => {
+      state.categoryPlaylists = action.payload;
     },
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
@@ -93,24 +113,22 @@ const playlistSlice = createSlice({
         date: state.filterOptions.date,
       };
       state.filteredTracks = state.tracks.filter((track) => {
-        const hasAuthors = state.filterOptions.authors.length !== 0;
-        const hasGenres = state.filterOptions.genres.length !== 0;
+        const hasAuthor = state.filterOptions.authors.length !== 0;
+        // const hasYear = state.filterOptions.years.length !== 0;
+        const hasGenre = state.filterOptions.genres.length !== 0;
+
+        const isAuthors = hasAuthor
+          ? state.filterOptions.authors.includes(track.author)
+          : true;
+        const isGenres = hasGenre
+          ? state.filterOptions.genres.includes(track.genre)
+          : true;
+        // const isYears = hasYear ? state.filterOptions.years.includes(track.release_date) : true
         const isSearchValueIncluded = track.name
           .toLowerCase()
           .includes(state.filterOptions.searchValue.toLowerCase());
 
-        if (hasAuthors || hasGenres) {
-          return (
-            (state.filterOptions.authors.includes(track.author) &&
-              state.filterOptions.genres.includes(track.genre) &&
-              isSearchValueIncluded) ||
-            (state.filterOptions.authors.includes(track.author) &&
-              isSearchValueIncluded) ||
-            (state.filterOptions.genres.includes(track.genre) &&
-              isSearchValueIncluded)
-          );
-        }
-        return isSearchValueIncluded;
+        return isAuthors && isGenres && isSearchValueIncluded;
       });
     },
     setIsPlaying: (state) => {
@@ -135,6 +153,7 @@ const playlistSlice = createSlice({
 
 export const {
   setTrackList,
+  setPlaylistsByCategory,
   setCurrentTrack,
   setToggleShuffled,
   setRepeatTrack,

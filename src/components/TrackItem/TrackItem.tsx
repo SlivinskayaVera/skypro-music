@@ -3,16 +3,16 @@ import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlise";
+import { timeString } from "@/lib/timeString";
 
 type TrackItemProps = {
   track: Track;
 };
 
 export default function TrackItem({ track }: TrackItemProps) {
-  const durationTrackSec = track.duration_in_seconds % 60;
-  const durationTrackMin = (track.duration_in_seconds - durationTrackSec) / 60;
-
   const dispatch = useAppDispatch();
+  const durationTrack = timeString(track.duration_in_seconds);
+
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
 
@@ -42,11 +42,7 @@ export default function TrackItem({ track }: TrackItemProps) {
         <div className={styles.trackAlbum}>{track.album}</div>
         <div className={styles.trackTime}>
           <SVG className={styles.trackTimeSvg} url="like" />
-          <div className={styles.trackTimeText}>{`${
-            durationTrackMin < 10 ? "0" : ""
-          }${durationTrackMin} : ${
-            durationTrackSec < 10 ? "0" : ""
-          }${durationTrackSec}`}</div>
+          <div className={styles.trackTimeText}>{durationTrack}</div>
         </div>
       </div>
     </div>
