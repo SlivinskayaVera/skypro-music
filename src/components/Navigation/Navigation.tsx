@@ -22,7 +22,7 @@ export function Navigation() {
         <div className={styles.navMenu}>
           <ul className={styles.menuList}>
             <li className={styles.menuItem}>
-              <Link href="#" className={styles.menuLink}>
+              <Link href="/" className={styles.menuLink}>
                 Главное
               </Link>
             </li>
@@ -32,7 +32,7 @@ export function Navigation() {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link href="../signin.html" className={styles.menuLink}>
+              <Link href="/signin" className={styles.menuLink}>
                 Войти
               </Link>
             </li>

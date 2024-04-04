@@ -114,8 +114,8 @@ const playlistSlice = createSlice({
       };
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthor = state.filterOptions.authors.length !== 0;
-        // const hasYear = state.filterOptions.years.length !== 0;
         const hasGenre = state.filterOptions.genres.length !== 0;
+        // const hasYear = state.filterOptions.years.length !== 0;
 
         const isAuthors = hasAuthor
           ? state.filterOptions.authors.includes(track.author)

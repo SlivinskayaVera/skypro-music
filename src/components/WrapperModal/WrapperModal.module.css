@@ -22,7 +22,7 @@
 
 .modalFormLogin {
     width: 366px;
-    height: 439px;
+    min-height: 439px;
     background-color: #FFFFFF;
     border-radius: 12px;
     display: -webkit-box;

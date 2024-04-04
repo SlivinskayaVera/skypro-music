@@ -1,26 +1,82 @@
+"use client";
+
 import Link from "next/link";
 import styles from "./SignInPage.module.css";
 import WrapperModal from "@/components/WrapperModal/WrapperModal";
 import { FormInput } from "@/components/FormInput/FormInput";
 import { BtnEnter } from "@/components/BtnEnter/BtnEnter";
+import { useState } from "react";
+import { signIn } from "../api/userApi";
+import { RegistrationUserType } from "../../../types.types";
+import { useRouter } from "next/navigation";
+
+export type ErrorType = {
+  detail: string;
+  email: string[];
+  password: string[];
+};
 
 export default function SignInPage() {
+  const router = useRouter();
+  const [userData, setUserData] = useState<RegistrationUserType>({
+    email: "",
+    password: "",
+    userName: "",
+  });
+
+  const [errorText, setError] = useState<ErrorType>({
+    email: [],
+    detail: "",
+    password: [],
+  });
+
+
+  function handelLoginBtnClick() {
+    setError({ detail: "", email: [], password: [] });
+    signIn({ email: userData.email, password: userData.password })
+      .then(() => router.replace("/"))
+      .catch((error) => {
+        setError(error);
+      });
+  }
+
   return (
-    <WrapperModal>
-      <FormInput
-        type="text"
-        name="login"
-        placeholder="Почта"
-      />
-      <FormInput
-        type="password"
-        name="password"
-        placeholder="Пароль"
-      />
-      <BtnEnter title="Войти"/>
-      <button className={styles.btnSignUp}>
-        <Link href="/signup">Зарегистрироваться</Link>
-      </button>
-    </WrapperModal>
+    <>
+      <WrapperModal>
+        <p className={styles.textError}>
+          {errorText.email ? errorText.email[0] : ""}
+        </p>
+        <p className={styles.textError}>
+          {errorText.detail ? errorText.detail : ""}
+        </p>
+
+        <FormInput
+          value={userData.email}
+          onChange={(e) => {
+            setUserData({ ...userData, email: e.target.value });
+          }}
+          type="text"
+          name="login"
+          placeholder="Почта"
+        />
+        <p className={styles.textError}>
+          {errorText.password ? errorText.password[0] : ""}
+        </p>
+
+        <FormInput
+          onChange={(e) =>
+            setUserData({ ...userData, password: e.target.value })
+          }
+          value={userData.password}
+          type="password"
+          name="password"
+          placeholder="Пароль"
+        />
+        <BtnEnter onClick={handelLoginBtnClick} title="Войти" />
+        <button className={styles.btnSignUp}>
+          <Link href="/signup">Зарегистрироваться</Link>
+        </button>
+      </WrapperModal>
+    </>
   );
 }

@@ -10,14 +10,22 @@ export type FilterType = {
   isOpen: boolean;
   selected: string[] | string;
   counter: number | null;
-  toggleSelected?: (item: string) => void; 
+  toggleSelected?: (item: string) => void;
   onClick: () => void;
+};
+
+export type RegistrationUserType = {
+  email: string;
+  password: string;
+  userName: string;
 };
 
 export type InputPropsType = {
   type: string;
   name: string;
   placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 };
 
 export type PropsType = { url: string; className: string };

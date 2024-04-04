@@ -1,10 +1,16 @@
 import Link from "next/link";
 import styles from "./BtnEnter.module.css";
 
-export function BtnEnter({ title }: { title: string }) {
+export function BtnEnter({
+  title,
+  onClick,
+}: {
+  title: string;
+  onClick: () => void;
+}) {
   return (
-    <button className={styles.button}>
-      <Link href="/">{title}</Link>
+    <button onClick={onClick} className={styles.button}>
+      {title}
     </button>
   );
 }
