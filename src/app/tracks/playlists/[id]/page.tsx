@@ -9,10 +9,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styles from "../../../../components/Playlist/Playlist.module.css";
 
-// let namePages = ["Плейлист дня", "100 танцевальных хитов", "Инди-заряд"];
 let route = ["daily", "hits", "genre"];
 let namePages = ["Плейлист дня", "100 танцевальных хитов", "Инди-заряд"];
-
 
 type TracksType = {
   params: { id: string };

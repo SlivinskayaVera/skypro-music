@@ -148,3 +148,33 @@ function getBooks(booksList, author = "", genre = "", substring = "") {
   return filteredBooks;
 }
 getBooks(booksList, "Лев Николаевич Толстой", "роман", "Воскресенье");
+
+
+
+// Исходные данные задачи
+
+const hotels = [
+  { id: 1, name: 'Luxury Plus', city: { id: 1, name: 'Amsterdam' } },
+  { id: 2, name: 'Fairy Beach', city: { id: 2, name: 'Antalya' } },
+  { id: 3, name: 'Moscow City Hotel', city: { id: 3, name: 'Moscow' } },
+  { id: 4, name: 'Mystic Orange', city: { id: 2, name: 'Antalya' } },
+];
+
+const getCities = (hotelsList) => {
+return hotelsList.reduce((citiesAcc, hotel) => {
+  const existingCity = citiesAcc.find((c) => c.id === hotel.city.id);
+  const city = { ...hotel.city };
+
+  if (!existingCity) {
+    city.hotels = [];
+    city.hotels.push({ id: hotel.id, name: hotel.name });
+    citiesAcc.push(city);
+  } else {
+    existingCity.hotels.push({ id: hotel.id, name: hotel.name });
+  }
+
+  return citiesAcc;
+}, []);
+};
+
+console.log(getCities(hotels)); 
