@@ -147,7 +147,7 @@ function getBooks(booksList, author = "", genre = "", substring = "") {
   console.log(filteredBooks);
   return filteredBooks;
 }
-getBooks(booksList, "Лев Николаевич Толстой", "роман", "Воскресенье");
+getBooks(booksList, "Лев Николаевич Толстой", "", "");
 
 
 

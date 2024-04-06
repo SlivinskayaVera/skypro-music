@@ -10,36 +10,30 @@ import {
   setCurrentPlaylist,
   setTrackList,
 } from "@/store/features/playlistSlise";
+import { Track } from "../../../types.types";
 
-export default function Playlist() {
+type PlaylistType = {
+  tracksData: Track[];
+}
+
+export default function Playlist({tracksData}: PlaylistType) {
   const currentPlaylist = useAppSelector(
     (store) => store.playlist.currentPlaylist
   );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getTracks().then((resTrackList) => {
-      dispatch(setTrackList(resTrackList));
+      dispatch(setTrackList(tracksData));
       dispatch(setCurrentPlaylist());
-    });
-  }, [dispatch]);
+  }, [tracksData]);
 
   return (
-    <div className={styles.centerBlockContent}>
-      <div className={styles.contentTitle}>
-        <div className={styles.playlistTitleCol}>Трек</div>
-        <div className={styles.playlistTitleCol}>ИСПОЛНИТЕЛЬ</div>
-        <div className={styles.playlistTitleCol}>АЛЬБОМ</div>
-        <div className={styles.playlistTitleCol}>
-          <SVG className={styles.playlistTitleSvg} url="watch" />
-        </div>
-      </div>
+
       <div className={styles.contentPlaylist}>
         {(currentPlaylist.length === 0 && <>ничего не найдено</>) ||
           currentPlaylist?.map((track) => {
             return <TrackItem key={track.id} track={track} />;
           })}
       </div>
-    </div>
   );
 }

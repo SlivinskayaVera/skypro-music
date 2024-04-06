@@ -24,7 +24,7 @@ export async function signUp({ email, password, userName }: UserDataType) {
   const userData = await response.json();
 
   if (!response.ok) {
-    throw userData;
+    throw new Error(JSON.stringify(userData));
   }
 
   return userData;
@@ -45,8 +45,7 @@ export async function signIn({ email, password }: UserDataType) {
   const userData = await response.json();
 
   if (!response.ok) {
-    console.log(userData);
-    throw userData;
+    throw new Error(JSON.stringify(userData));
   }
 
   return userData;
@@ -64,14 +63,32 @@ export async function getTokens({ email, password }: UserDataType) {
     },
   });
 
-  if (!response.ok) {
-    console.log(await response.json());
+  const tokens = await response.json();
 
-    throw new Error("Error");
+  if (!response.ok) {
+    throw new Error(JSON.stringify(tokens));
   }
 
-  const loginData = await response.json();
-  return loginData;
+  return tokens;
 }
 
-// Обновить токен	POST	https://skypro-music-api.skyeng.tech/user/token/refresh/
+export async function refreshTokens({ token }: {token : string}) {
+    console.log(token);
+  const response = await fetch(`${API_URL}/token/refresh/`, {
+    method: "POST",
+    body: JSON.stringify({
+      refresh: token,
+    }),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+
+  const freshToken = await response.json();
+
+  if (!response.ok) {
+    throw new Error(JSON.stringify(freshToken));
+  }
+
+  return freshToken.access;
+}

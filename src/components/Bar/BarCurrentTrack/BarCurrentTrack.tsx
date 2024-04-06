@@ -3,9 +3,26 @@ import classNames from "classnames";
 import styles from "../Bar.module.css";
 import { useAppSelector } from "@/store/hooks";
 import Link from "next/link";
+import { toDislikeTrack, toLikeTrack } from "@/app/api/musicApi";
+import { refreshTokens } from "@/app/api/userApi";
 
 export function BarCurrentTrack() {
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const token = useAppSelector((store) => store.user.token.refresh);
+
+  function handleLikeBtnClick() {
+    if (!currentTrack || !token) {return alert("Только авторизованные пользователи могут добавить треки в избранное")};
+    refreshTokens({ token }).then((freshToken) =>
+      toLikeTrack({ id: `${currentTrack.id}`, accessToken: freshToken })
+    );
+  }
+
+  function handleDislikeBtnClick() {
+    if (!currentTrack || !token) {return alert("Только авторизованные пользователи могут удалить треки из избранного")};
+    refreshTokens({ token }).then((freshToken) =>
+      toDislikeTrack({ id: `${currentTrack.id}`, accessToken: freshToken })
+    );
+  }
 
   return (
     <div className={styles.playerTrackPlay}>
@@ -26,10 +43,13 @@ export function BarCurrentTrack() {
       </div>
 
       <div className={styles.trackPlayLikeDis}>
-        <div className={classNames(styles.trackPlayLike, styles._btnIcon)}>
+        <div
+          onClick={handleLikeBtnClick}
+          className={classNames(styles.trackPlayLike, styles._btnIcon)}
+        >
           <SVG className={styles.trackPlayLikeSvg} url="like" />
         </div>
-        <div className={classNames(styles.trackPlayDislike, styles._btnIcon)}>
+        <div onClick={handleDislikeBtnClick} className={classNames(styles.trackPlayDislike, styles._btnIcon)}>
           <SVG className={styles.trackPlayDislikeSvg} url="dislike" />
         </div>
       </div>

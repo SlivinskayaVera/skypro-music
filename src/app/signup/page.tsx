@@ -38,7 +38,7 @@ export default function SignUpPage() {
     })
       .then(() => router.replace("/signin"))
       .catch((error) => {
-        setError(error);
+        setError(JSON.parse(error.message));
       });
   }
 

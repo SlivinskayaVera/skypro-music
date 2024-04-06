@@ -1,11 +1,13 @@
 "use client";
 
+import { useAppSelector } from "@/store/hooks";
 import styles from "./Navigator.module.css";
 import Link from "next/link";
 import { useState } from "react";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const authState = useAppSelector((store) => store.user.authState);
 
   function handelOpenMenu() {
     setIsOpen((prev) => !prev);
@@ -27,13 +29,13 @@ export function Navigation() {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link href="#" className={styles.menuLink}>
+              <Link href="/tracks/favorites/favorites" className={styles.menuLink}>
                 Мой плейлист
               </Link>
             </li>
             <li className={styles.menuItem}>
               <Link href="/signin" className={styles.menuLink}>
-                Войти
+                {authState ? "Выйти" : "Войти"}
               </Link>
             </li>
           </ul>

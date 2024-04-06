@@ -17,6 +17,7 @@ type PlaylistType = {
   tracks: [] | Track[];
   categoryPlaylists: CategoryPlaylistsType[];
   currentPlaylist: [] | Track[];
+  favoriteTracks: [] | Track[];
   currentTrack: null | Track;
   isShuffled: boolean;
   isRepeated: boolean;
@@ -34,6 +35,7 @@ type PlaylistType = {
 const initialState: PlaylistType = {
   tracks: [],
   categoryPlaylists: [],
+  favoriteTracks: [],
   currentPlaylist: [],
   currentTrack: null,
   isShuffled: false,
@@ -72,6 +74,9 @@ const playlistSlice = createSlice({
       action: PayloadAction<CategoryPlaylistsType[]>
     ) => {
       state.categoryPlaylists = action.payload;
+    },
+    setFavoritePlaylist: (state, action: PayloadAction<Track[]>) => {
+      state.favoriteTracks = action.payload;
     },
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
@@ -135,9 +140,9 @@ const playlistSlice = createSlice({
       state.isPlaying = !state.isPlaying;
     },
     setSortedTracksByDate: (state, action: PayloadAction<{ date: string }>) => {
-      state.filterOptions.authors = [];
-      state.filterOptions.genres = [];
-      state.filteredTracks = [...state.tracks].sort((a, b) => {
+      // state.filterOptions.authors = [];
+      // state.filterOptions.genres = [];
+      state.filteredTracks = [...state.filteredTracks].sort((a, b) => {
         const dateA = new Date(a.release_date);
         const dateB = new Date(b.release_date);
 
@@ -155,6 +160,7 @@ export const {
   setTrackList,
   setPlaylistsByCategory,
   setCurrentTrack,
+  setFavoritePlaylist,
   setToggleShuffled,
   setRepeatTrack,
   setNextTrack,

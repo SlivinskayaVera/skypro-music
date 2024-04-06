@@ -6,9 +6,11 @@ import WrapperModal from "@/components/WrapperModal/WrapperModal";
 import { FormInput } from "@/components/FormInput/FormInput";
 import { BtnEnter } from "@/components/BtnEnter/BtnEnter";
 import { useState } from "react";
-import { signIn } from "../api/userApi";
+import { getTokens, signIn } from "../api/userApi";
 import { RegistrationUserType } from "../../../types.types";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setAuthState, setLoginData } from "@/store/features/authSlice";
 
 export type ErrorType = {
   detail: string;
@@ -17,6 +19,7 @@ export type ErrorType = {
 };
 
 export default function SignInPage() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [userData, setUserData] = useState<RegistrationUserType>({
     email: "",
@@ -30,13 +33,21 @@ export default function SignInPage() {
     password: [],
   });
 
-
   function handelLoginBtnClick() {
     setError({ detail: "", email: [], password: [] });
     signIn({ email: userData.email, password: userData.password })
-      .then(() => router.replace("/"))
+      .then((resData) => {
+        dispatch(setLoginData(resData));
+      })
+      .then(() =>
+        getTokens({ email: userData.email, password: userData.password })
+      )
+      .then((res) => {
+        dispatch(setAuthState(res));
+        router.replace("/");
+      })
       .catch((error) => {
-        setError(error);
+        setError(JSON.parse(error.message));
       });
   }
 

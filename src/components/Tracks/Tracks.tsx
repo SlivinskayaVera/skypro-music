@@ -1,7 +1,8 @@
 import styles from "./Tracks.module.css";
 import React from "react";
-import Playlist from "../Playlist/Playlist";
+// import Playlist from "../Playlist/Playlist";
 import { FilterWrapper } from "../FilterWrapper/FilterWrapper";
+import { PlaylistWrapper } from "../PlaylistWrapper/PlaylistWrapper";
 
 
 // Ниже React.Dispatch<React.SetStateAction<Track | null>> можно заменить на (*типы параментров, если есть *) => void
@@ -12,7 +13,7 @@ export default function Tracks() {
     <div className={styles.mainCenterBlock}>
       <h2 className={styles.centerBlockH2}>Треки</h2>
       <FilterWrapper />
-      <Playlist />
+      <PlaylistWrapper />
     </div>
   );
 }
