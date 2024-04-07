@@ -1,11 +1,9 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { SVG } from "../SVGImage/SVGImage";
 import TrackItem from "../TrackItem/TrackItem";
 import styles from "./Playlist.module.css";
 import { useEffect } from "react";
-import { getTracks } from "@/app/api/musicApi";
 import {
   setCurrentPlaylist,
   setTrackList,

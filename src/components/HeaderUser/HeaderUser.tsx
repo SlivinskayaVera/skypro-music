@@ -10,7 +10,7 @@ export function HeaderUser() {
   return (
     <div className={styles.sidebarPersonal}>
       <p className={styles.sidebarPersonalName}>
-        {userData ? userData.username : "Залогинься"}
+        {userData && userData.username}
       </p>
       <div className={styles.sidebarIcon}>
         <Link href="/signin">
