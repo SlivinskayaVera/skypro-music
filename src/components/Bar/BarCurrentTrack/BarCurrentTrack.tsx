@@ -9,6 +9,9 @@ import { refreshTokens } from "@/app/api/userApi";
 export function BarCurrentTrack() {
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
   const token = useAppSelector((store) => store.user.token.refresh);
+  const user = useAppSelector((store) => store.user.userData);
+
+  let isLiked = currentTrack?.stared_user && JSON.stringify(currentTrack.stared_user).includes(JSON.stringify(user));
 
   function handleLikeBtnClick() {
     if (!currentTrack || !token) {return alert("Только авторизованные пользователи могут добавить треки в избранное")};
@@ -47,7 +50,7 @@ export function BarCurrentTrack() {
           onClick={handleLikeBtnClick}
           className={classNames(styles.trackPlayLike, styles._btnIcon)}
         >
-          <SVG className={styles.trackPlayLikeSvg} url="like" />
+          <SVG className={isLiked ? styles.likedTrackSvg : styles.trackPlayLikeSvg} url="like" />
         </div>
         <div onClick={handleDislikeBtnClick} className={classNames(styles.trackPlayDislike, styles._btnIcon)}>
           <SVG className={styles.trackPlayDislikeSvg} url="dislike" />

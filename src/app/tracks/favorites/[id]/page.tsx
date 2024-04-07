@@ -3,10 +3,7 @@
 import { getAllFavoriteTracks, getPlaylist } from "@/app/api/musicApi";
 import { SVG } from "@/components/SVGImage/SVGImage";
 import TrackItem from "@/components/TrackItem/TrackItem";
-import {
-  setFavoritePlaylist,
-  setPlaylistsByCategory,
-} from "@/store/features/playlistSlise";
+import { setFavoritePlaylist } from "@/store/features/playlistSlise";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -18,18 +15,15 @@ type TracksType = {
   params: { id: string };
 };
 
-export default function Tracks({ params }: TracksType) {
+export default function Tracks() {
   const dispatch = useDispatch();
-  const categoryPlaylists = useAppSelector(
-    (store) => store.playlist.categoryPlaylists
-  );
   const favoritePlaylist = useAppSelector(
     (store) => store.playlist.favoriteTracks
   );
   const token = useAppSelector((store) => store.user.token.refresh);
 
   useEffect(() => {
-    if (!token) return;
+    // if (!token) return;
     refreshTokens({ token })
       .then((freshToken) => getAllFavoriteTracks({ accessToken: freshToken }))
       .then((res) => {
@@ -39,7 +33,7 @@ export default function Tracks({ params }: TracksType) {
 
   return (
     <div className={styles.mainCenterBlock}>
-      <h2 className={styles.centerBlockH2}>ИИиииИзбранное</h2>
+      <h2 className={styles.centerBlockH2}>Мои треки</h2>
       <div className={styles.centerBlockContent}>
         <div className={styles.contentTitle}>
           <div className={styles.playlistTitleCol}>Трек</div>

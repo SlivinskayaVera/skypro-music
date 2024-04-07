@@ -13,6 +13,10 @@ export function Navigation() {
     setIsOpen((prev) => !prev);
   }
 
+  function handleExitBtnClick() {
+    localStorage.removeItem("userData");
+  }
+
   return (
     <nav className={styles.mainNav}>
       <button className={styles.navBurger} onClick={handelOpenMenu}>
@@ -33,7 +37,7 @@ export function Navigation() {
                 Мой плейлист
               </Link>
             </li>
-            <li className={styles.menuItem}>
+            <li onClick={handleExitBtnClick} className={styles.menuItem}>
               <Link href="/signin" className={styles.menuLink}>
                 {authState ? "Выйти" : "Войти"}
               </Link>

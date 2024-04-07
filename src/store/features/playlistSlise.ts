@@ -18,17 +18,17 @@ type PlaylistType = {
   categoryPlaylists: CategoryPlaylistsType[];
   currentPlaylist: [] | Track[];
   favoriteTracks: [] | Track[];
+  filteredTracks: [] | Track[];
+  shuffledPlaylist: [] | Track[];
   currentTrack: null | Track;
   isShuffled: boolean;
   isRepeated: boolean;
-  shuffledPlaylist: [] | Track[];
   filterOptions: {
     authors: string[];
     genres: string[];
     date: string;
     searchValue: string;
   };
-  filteredTracks: [] | Track[];
   isPlaying: boolean;
 };
 
@@ -81,7 +81,7 @@ const playlistSlice = createSlice({
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
     },
-    setCurrentPlaylist: (state) => {
+    setCurrentPlaylist: (state) => {    
       state.currentPlaylist =
         state.filteredTracks.length !== 0
           ? state.filteredTracks
@@ -120,7 +120,6 @@ const playlistSlice = createSlice({
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthor = state.filterOptions.authors.length !== 0;
         const hasGenre = state.filterOptions.genres.length !== 0;
-        // const hasYear = state.filterOptions.years.length !== 0;
 
         const isAuthors = hasAuthor
           ? state.filterOptions.authors.includes(track.author)
@@ -128,7 +127,6 @@ const playlistSlice = createSlice({
         const isGenres = hasGenre
           ? state.filterOptions.genres.includes(track.genre)
           : true;
-        // const isYears = hasYear ? state.filterOptions.years.includes(track.release_date) : true
         const isSearchValueIncluded = track.name
           .toLowerCase()
           .includes(state.filterOptions.searchValue.toLowerCase());
@@ -140,8 +138,6 @@ const playlistSlice = createSlice({
       state.isPlaying = !state.isPlaying;
     },
     setSortedTracksByDate: (state, action: PayloadAction<{ date: string }>) => {
-      // state.filterOptions.authors = [];
-      // state.filterOptions.genres = [];
       state.filteredTracks = [...state.filteredTracks].sort((a, b) => {
         const dateA = new Date(a.release_date);
         const dateB = new Date(b.release_date);

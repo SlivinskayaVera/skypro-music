@@ -73,7 +73,6 @@ export async function getTokens({ email, password }: UserDataType) {
 }
 
 export async function refreshTokens({ token }: {token : string}) {
-    console.log(token);
   const response = await fetch(`${API_URL}/token/refresh/`, {
     method: "POST",
     body: JSON.stringify({

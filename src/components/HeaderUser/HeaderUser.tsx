@@ -1,15 +1,19 @@
 "use client";
+
 import Link from "next/link";
 import styles from "../Header/Header.module.css";
 import Image from "next/image";
-import { useAppSelector } from "@/store/hooks";
 
 export function HeaderUser() {
-  const userName = useAppSelector((store) => store.user.userData.username);
+  const userName = localStorage.userData && JSON.parse(localStorage.userData);
+
+
 
   return (
     <div className={styles.sidebarPersonal}>
-      <p className={styles.sidebarPersonalName}>{userName}</p>
+      <p className={styles.sidebarPersonalName}>
+        {userName ? userName.username : "Залогинься"}
+      </p>
       <div className={styles.sidebarIcon}>
         <Link href="/signin">
           <Image

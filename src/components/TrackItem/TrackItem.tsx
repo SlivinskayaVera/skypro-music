@@ -14,9 +14,11 @@ export default function TrackItem({ track }: TrackItemProps) {
   const durationTrack = timeString(track.duration_in_seconds);
 
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const user = useAppSelector((store) => store.user.userData);
+
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
 
-  // на 24 строке создать текущий плейлист в стор и исходный плейлист
+  let isLiked = track.stared_user && JSON.stringify(track.stared_user).includes(JSON.stringify(user));
 
   return (
     <div
@@ -41,7 +43,9 @@ export default function TrackItem({ track }: TrackItemProps) {
         <div className={styles.trackAuthor}>{track.author}</div>
         <div className={styles.trackAlbum}>{track.album}</div>
         <div className={styles.trackTime}>
-          <SVG className={styles.trackTimeSvg} url="like" />
+          {track.stared_user && (
+            <SVG className={isLiked ? styles.likedTrackSvg : styles.trackTimeSvg} url="like" />
+          )}
           <div className={styles.trackTimeText}>{durationTrack}</div>
         </div>
       </div>

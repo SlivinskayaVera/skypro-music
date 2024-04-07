@@ -39,7 +39,7 @@ export type Track = {
   logo: null;
   name: string;
   release_date: string;
-  stared_user: StaredUser;
+  stared_user: StaredUser[];
   track_file: string;
 };
 

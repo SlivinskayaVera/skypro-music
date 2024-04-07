@@ -363,6 +363,15 @@
     margin-left: 28.5px;
 }
 
+.likedTrackSvg {
+    width: 14px;
+    height: 12px;
+    margin-right: 17px;
+    fill: #B672FF;
+    stroke: #B672FF;
+    padding-top: 1px;
+}
+
 .barVolumeBlock {
     width: auto;
     display: -webkit-box;
