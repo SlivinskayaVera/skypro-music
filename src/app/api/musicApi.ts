@@ -23,7 +23,6 @@ export async function getPlaylist() {
   return responseData;
 }
 
-// Сюда нужно подставить актуальный access токен, т.к. access токен живет только 200 секунд
 export function toLikeTrack({
   accessToken,
   id,
@@ -37,8 +36,6 @@ export function toLikeTrack({
       Authorization: `Bearer ${accessToken}`,
     },
   })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
 }
 
 export function toDislikeTrack({
@@ -54,8 +51,6 @@ export function toDislikeTrack({
       Authorization: `Bearer ${accessToken}`,
     },
   })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
 }
 
 export async function getAllFavoriteTracks({
@@ -74,7 +69,6 @@ export async function getAllFavoriteTracks({
   const responseData = await response.json();
 
   if (!response.ok) {
-    console.log(responseData);
     throw new Error(JSON.stringify(responseData));
   }
 

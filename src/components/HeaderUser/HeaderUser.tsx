@@ -5,14 +5,12 @@ import styles from "../Header/Header.module.css";
 import Image from "next/image";
 
 export function HeaderUser() {
-  const userName = localStorage.userData && JSON.parse(localStorage.userData);
-
-
+  const userData = localStorage.userData && JSON.parse(localStorage.userData);
 
   return (
     <div className={styles.sidebarPersonal}>
       <p className={styles.sidebarPersonalName}>
-        {userName ? userName.username : "Залогинься"}
+        {userData ? userData.username : "Залогинься"}
       </p>
       <div className={styles.sidebarIcon}>
         <Link href="/signin">

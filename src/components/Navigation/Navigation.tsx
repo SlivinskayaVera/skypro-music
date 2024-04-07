@@ -15,6 +15,7 @@ export function Navigation() {
 
   function handleExitBtnClick() {
     localStorage.removeItem("userData");
+    localStorage.removeItem("tokens");
   }
 
   return (

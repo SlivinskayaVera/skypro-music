@@ -48,6 +48,7 @@ export async function signIn({ email, password }: UserDataType) {
     throw new Error(JSON.stringify(userData));
   }
 
+  localStorage.userData = JSON.stringify(userData);
   return userData;
 }
 
@@ -69,6 +70,7 @@ export async function getTokens({ email, password }: UserDataType) {
     throw new Error(JSON.stringify(tokens));
   }
 
+  localStorage.tokens = JSON.stringify(tokens);
   return tokens;
 }
 
