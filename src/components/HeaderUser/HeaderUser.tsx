@@ -7,8 +7,6 @@ import { SVG } from "../SVGImage/SVGImage";
 export function HeaderUser() {
   const userData = localStorage.userData && JSON.parse(localStorage.userData);
 
-  console.log(userData);
-
   return (
     <div className={styles.sidebarPersonal}>
       <p className={styles.sidebarPersonalName}>

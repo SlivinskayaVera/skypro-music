@@ -8,6 +8,7 @@ import { signUp } from "../api/userApi";
 import { RegistrationUserType } from "../../../types.types";
 import styles from "../signin/SignInPage.module.css";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export type ErrorType = {
   username: string[];
@@ -82,6 +83,9 @@ export default function SignUpPage() {
         onClick={handleRegistrationBtnClick}
         title="Зарегистрироваться"
       />
+      <button className={styles.btnSignUp}>
+        <Link href="/signin">Вернуться</Link>
+      </button>
     </WrapperModal>
   );
 }
