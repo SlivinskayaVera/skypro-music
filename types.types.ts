@@ -10,6 +10,7 @@ export type FilterType = {
   isOpen: boolean;
   selected: string[] | string;
   counter: number | null;
+  toggleDeleteSelector?: () => void;
   toggleSelected?: (item: string) => void;
   onClick: () => void;
 };

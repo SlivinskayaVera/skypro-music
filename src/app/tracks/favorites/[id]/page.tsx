@@ -19,7 +19,7 @@ function Tracks() {
   const favoritePlaylist = useAppSelector(
     (store) => store.playlist.favoriteTracks
   );
-  const token = localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+  const token = JSON.parse(localStorage.tokens).refresh;
 
   useEffect(() => {
     refreshTokens({ token })

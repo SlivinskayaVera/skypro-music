@@ -5,16 +5,15 @@ const withAuth = (WrappedComponent: () => React.JSX.Element) => {
   return (props: any) => {
     const Router = useRouter();
 
-    // Проверка аутентификации пользователя
-    const isAuth = localStorage.tokens; // Пример проверки аутентификации
+    const isAuth = localStorage.tokens;
 
     useEffect(() => {
       if (!isAuth) {
-        Router.replace("/signin"); // Перенаправление на страницу входа, если пользователь не аутентифицирован
+        Router.replace("/signin");
       }
     }, [isAuth, Router]);
 
-    return isAuth ? <WrappedComponent {...props}/> : null; // Рендер компонента, если пользователь аутентифицирован
+    return isAuth ? <WrappedComponent {...props} /> : null;
   };
 };
 

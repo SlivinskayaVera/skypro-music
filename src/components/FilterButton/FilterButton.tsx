@@ -10,10 +10,11 @@ export function FilterButton({
   counter,
   onClick,
   toggleSelected,
+  toggleDeleteSelector
 }: FilterType) {
   return (
     <div className={styles.filterPosition}>
-      {counter !== 0 && <span className={styles.counter}>{counter}</span>}
+      {counter !== 0 && <span onClick={toggleDeleteSelector} className={styles.counter}>{counter}</span>}
       <button
         onClick={onClick}
         className={cn(styles.filterButton, `${isOpen && styles.activeButton}`)}

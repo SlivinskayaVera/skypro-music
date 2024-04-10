@@ -58,12 +58,30 @@ export function FilterWrapper() {
     dispatch(setCurrentPlaylist());
   }
 
+  function toggleDeleteSelectedAuthors() {
+    dispatch(
+      setFilteredTracks({
+        authors: [],
+      })
+    );
+    dispatch(setCurrentPlaylist());
+  }
+
   function toggleSelectedGenre(item: string) {
     dispatch(
       setFilteredTracks({
         genres: selectedGenres.includes(item)
           ? selectedGenres.filter((genre) => genre !== item)
           : [...selectedGenres, item],
+      })
+    );
+    dispatch(setCurrentPlaylist());
+  }
+
+  function toggleDeleteSelectedGenres() {
+    dispatch(
+      setFilteredTracks({
+        genres: [],
       })
     );
     dispatch(setCurrentPlaylist());
@@ -88,6 +106,7 @@ export function FilterWrapper() {
         counter={selectedAuthors.length}
         title="исполнителю"
         toggleSelected={toggleSelectedAuthors}
+        toggleDeleteSelector={toggleDeleteSelectedAuthors}
         onClick={() => handelActive("исполнителю")}
       />
       <FilterButton
@@ -106,6 +125,7 @@ export function FilterWrapper() {
         selected={selectedGenres}
         counter={selectedGenres.length}
         toggleSelected={toggleSelectedGenre}
+        toggleDeleteSelector={toggleDeleteSelectedGenres}
         onClick={() => handelActive("жанру")}
       />
     </div>
