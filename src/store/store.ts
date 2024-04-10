@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { playlistReducer } from "./features/playlistSlise";
+import { playlistReducer } from "./features/playlistSliсe";
 import { authReducer } from "./features/authSlice";
 
-// Создание хранилища и передача редьюсеров 
+// Создание хранилища и передача редьюсеров
 export const makeStore = () => {
   return configureStore({
     reducer: combineReducers({

@@ -8,7 +8,7 @@ import {
   setCurrentPlaylist,
   setFilteredTracks,
   setSortedTracksByDate,
-} from "@/store/features/playlistSlise";
+} from "@/store/features/playlistSliсe";
 import { getListItem } from "@/lib/getListItem";
 
 const sortedByDate: string[] = [

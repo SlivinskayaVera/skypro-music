@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./SidebarItem.module.css";
-import { ItemProps } from "../../../types.types";
+import styles from "../Sidebar.module.css";
+
+export type ItemProps = {
+  name: string;
+};
 
 export function SidebarItem({ name }: ItemProps) {
   return (
@@ -11,7 +14,7 @@ export function SidebarItem({ name }: ItemProps) {
           <Image
             className={styles.sidebarImg}
             src={`/img/${name}.png`}
-            alt="day's playlist"
+            alt="playlist"
             width={250}
             height={150}
             priority

@@ -81,7 +81,7 @@ const playlistSlice = createSlice({
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
     },
-    setCurrentPlaylist: (state) => {    
+    setCurrentPlaylist: (state) => {
       state.currentPlaylist =
         state.filteredTracks.length !== 0
           ? state.filteredTracks

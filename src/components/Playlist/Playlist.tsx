@@ -8,7 +8,7 @@ import {
   setCurrentPlaylist,
   setFavoritePlaylist,
   setTrackList,
-} from "@/store/features/playlistSlise";
+} from "@/store/features/playlistSliсe";
 import { Track } from "../../../types.types";
 import { refreshTokens } from "@/app/api/userApi";
 import { getAllFavoriteTracks } from "@/app/api/musicApi";

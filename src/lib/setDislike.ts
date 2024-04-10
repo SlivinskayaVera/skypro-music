@@ -2,7 +2,7 @@
 
 import { getAllFavoriteTracks, toDislikeTrack } from "@/app/api/musicApi";
 import { Track } from "../../types.types";
-import { setFavoritePlaylist } from "@/store/features/playlistSlise";
+import { setFavoritePlaylist } from "@/store/features/playlistSliсe";
 import { refreshTokens } from "@/app/api/userApi";
 import { setAuthState } from "@/store/features/authSlice";
 
@@ -11,8 +11,13 @@ const refreshToken =
 const accessToken =
   localStorage.tokens && JSON.parse(localStorage.tokens).access;
 
-export function setDislike(track: Track, dispatch: React.Dispatch<{ payload: Track[]; type: "playlist/setFavoritePlaylist"; }>) {
-
+export function setDislike(
+  track: Track,
+  dispatch: React.Dispatch<{
+    payload: Track[];
+    type: "playlist/setFavoritePlaylist";
+  }>
+) {
   toDislikeTrack({
     id: `${track.id}`,
     accessToken: accessToken,

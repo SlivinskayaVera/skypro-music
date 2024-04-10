@@ -38,16 +38,13 @@ export function Navigation() {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link
-                href="/tracks/favorites/favorites"
-                className={styles.menuLink}
-              >
+              <Link href="/tracks/favorites" className={styles.menuLink}>
                 Мой плейлист
               </Link>
             </li>
             <li onClick={handleExitBtnClick} className={styles.menuItem}>
               <Link href="/signin" className={styles.menuLink}>
-                {localStorage.userData ? "Выйти" : "Войти"}
+                {localStorage.userData === "Войти" ? "Выйти" : "Войти"}
               </Link>
             </li>
           </ul>

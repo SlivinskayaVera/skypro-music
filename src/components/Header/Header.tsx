@@ -1,8 +1,8 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
 import Image from "next/image";
-import Search from "../Search/Search";
-import { HeaderUser } from "../HeaderUser/HeaderUser";
+import Search from "./Search/Search";
+import { HeaderUser } from "./HeaderUser/HeaderUser";
 
 export function Header() {
   return (

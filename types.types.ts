@@ -1,9 +1,3 @@
-export type ChildrenType = { children: JSX.Element[] };
-
-export type ItemProps = {
-  name: string;
-};
-
 export type FilterType = {
   list: string[];
   title: string;
@@ -29,7 +23,6 @@ export type InputPropsType = {
   value: string;
 };
 
-export type PropsType = { url: string; className: string };
 
 export type Track = {
   album: string;

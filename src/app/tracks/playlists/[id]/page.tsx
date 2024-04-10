@@ -3,7 +3,7 @@
 import { getPlaylist } from "@/app/api/musicApi";
 import { SVG } from "@/components/SVGImage/SVGImage";
 import TrackItem from "@/components/TrackItem/TrackItem";
-import { setPlaylistsByCategory } from "@/store/features/playlistSlise";
+import { setPlaylistsByCategory } from "@/store/features/playlistSliсe";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";

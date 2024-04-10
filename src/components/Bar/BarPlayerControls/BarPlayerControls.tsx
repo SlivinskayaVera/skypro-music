@@ -2,14 +2,22 @@ import { SVG } from "@/components/SVGImage/SVGImage";
 import styles from "../Bar.module.css";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCurrentPlaylist, setNextTrack, setPrevTrack, setToggleShuffled } from "@/store/features/playlistSlise";
+import {
+  setCurrentPlaylist,
+  setNextTrack,
+  setPrevTrack,
+  setToggleShuffled,
+} from "@/store/features/playlistSliсe";
 
 type BarPlayerControlsType = {
   audioRef: HTMLAudioElement | null;
-  onClick: () => void
+  onClick: () => void;
 };
 
-export function BarPlayerControls({ audioRef, onClick }: BarPlayerControlsType) {
+export function BarPlayerControls({
+  audioRef,
+  onClick,
+}: BarPlayerControlsType) {
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
   const isShuffled = useAppSelector((store) => store.playlist.isShuffled);
 

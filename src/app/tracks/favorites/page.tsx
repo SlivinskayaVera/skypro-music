@@ -1,15 +1,13 @@
 "use client";
 
-import {
-  getAllFavoriteTracks,
-} from "@/app/api/musicApi";
+import { getAllFavoriteTracks } from "@/app/api/musicApi";
 import { SVG } from "@/components/SVGImage/SVGImage";
 import TrackItem from "@/components/TrackItem/TrackItem";
-import { setFavoritePlaylist } from "@/store/features/playlistSlise";
+import { setFavoritePlaylist } from "@/store/features/playlistSliсe";
 import { useAppSelector } from "@/store/hooks";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import styles from "../../../../components/Playlist/Playlist.module.css";
+import styles from "../../../components/Playlist/Playlist.module.css";
 import { refreshTokens } from "@/app/api/userApi";
 import Link from "next/link";
 import withAuth from "@/components/WrapperPageWithAuth/WrapperPageWithAuth";

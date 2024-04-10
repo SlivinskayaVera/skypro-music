@@ -2,10 +2,7 @@ import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  setCurrentTrack,
-  setIsPlaying,
-} from "@/store/features/playlistSlise";
+import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSliсe";
 import { timeString } from "@/lib/timeString";
 import { useRouter } from "next/navigation";
 import { setLike } from "@/lib/setLike";
@@ -26,7 +23,8 @@ export default function TrackItem({ track }: TrackItemProps) {
     (state) => state.playlist.favoriteTracks
   );
 
-  const refreshToken = localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+  const refreshToken =
+    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
 
   const isLiked = JSON.stringify(favoriteTracks).includes(
     JSON.stringify(track.track_file)
@@ -36,7 +34,6 @@ export default function TrackItem({ track }: TrackItemProps) {
     if (!refreshToken) {
       return router.replace("/signin");
     }
-
     setLike(track, dispatch);
   }
 
@@ -44,7 +41,6 @@ export default function TrackItem({ track }: TrackItemProps) {
     if (!refreshToken) {
       return router.replace("/signin");
     }
-
     setDislike(track, dispatch);
   }
 

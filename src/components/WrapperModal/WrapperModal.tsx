@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./WrapperModal.module.css";
-import { ChildrenType } from "../../../types.types";
 
-// Ниже пример мы так описываем стрелочную функцию?
-// const WrapperModal: React.FC<ChildrenType> = ({ children }) => {
-function WrapperModal({ children }: ChildrenType) {
+export type WrapperModalType = { children: JSX.Element[] };
+
+function WrapperModal({ children }: WrapperModalType) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
