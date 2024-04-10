@@ -26,7 +26,7 @@ export default function TrackItem({ track }: TrackItemProps) {
     (state) => state.playlist.favoriteTracks
   );
 
-  const refreshToken = JSON.parse(localStorage.tokens).refresh;
+  const refreshToken = localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
 
   const isLiked = JSON.stringify(favoriteTracks).includes(
     JSON.stringify(track.track_file)
