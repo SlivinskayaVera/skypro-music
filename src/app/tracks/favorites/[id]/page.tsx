@@ -1,6 +1,8 @@
 "use client";
 
-import { getAllFavoriteTracks, getPlaylist, toDislikeTrack, toLikeTrack } from "@/app/api/musicApi";
+import {
+  getAllFavoriteTracks,
+} from "@/app/api/musicApi";
 import { SVG } from "@/components/SVGImage/SVGImage";
 import TrackItem from "@/components/TrackItem/TrackItem";
 import { setFavoritePlaylist } from "@/store/features/playlistSlise";
@@ -10,8 +12,9 @@ import { useDispatch } from "react-redux";
 import styles from "../../../../components/Playlist/Playlist.module.css";
 import { refreshTokens } from "@/app/api/userApi";
 import Link from "next/link";
+import withAuth from "@/components/WrapperPageWithAuth/WrapperPageWithAuth";
 
-export default function Tracks() {
+function Tracks() {
   const dispatch = useDispatch();
   const favoritePlaylist = useAppSelector(
     (store) => store.playlist.favoriteTracks
@@ -55,3 +58,5 @@ export default function Tracks() {
     </div>
   );
 }
+
+export default withAuth(Tracks);

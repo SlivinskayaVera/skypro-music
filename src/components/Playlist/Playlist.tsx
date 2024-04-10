@@ -31,9 +31,12 @@ export default function Playlist({ tracksData }: PlaylistType) {
   const favoritePlaylist = useAppSelector(
     (store) => store.playlist.favoriteTracks
   );
-  const refreshToken = localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+  const refreshToken =
+    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
 
   useEffect(() => {
+    if (!refreshToken) return;
+
     refreshTokens({ token: refreshToken })
       .then((accessToken) => getAllFavoriteTracks({ accessToken }))
       .then((res) => {
