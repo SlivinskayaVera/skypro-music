@@ -3,16 +3,10 @@ import classNames from "classnames";
 import styles from "../Bar.module.css";
 import { useAppSelector } from "@/store/hooks";
 import Link from "next/link";
-import {
-  getAllFavoriteTracks,
-  toDislikeTrack,
-  toLikeTrack,
-} from "@/app/api/musicApi";
-import { refreshTokens } from "@/app/api/userApi";
 import { useDispatch } from "react-redux";
-import { setFavoritePlaylist } from "@/store/features/playlistSlise";
 import { useRouter } from "next/navigation";
-import { setAuthState } from "@/store/features/authSlice";
+import { setLike } from "@/lib/setLike";
+import { setDislike } from "@/lib/setDislike";
 
 export function BarCurrentTrack() {
   const dispatch = useDispatch();
@@ -21,8 +15,6 @@ export function BarCurrentTrack() {
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
   const refreshToken =
     localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
-  const accessToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).access;
   const favoriteTracks = useAppSelector(
     (state) => state.playlist.favoriteTracks
   );
@@ -38,15 +30,7 @@ export function BarCurrentTrack() {
       return router.replace("/signin");
     }
 
-    toLikeTrack({ id: `${currentTrack.id}`, accessToken: accessToken })
-      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
-      .then((res) => {
-        dispatch(setFavoritePlaylist(res));
-      })
-      .catch(() => {
-        refreshTokens({ token: refreshToken });
-        handleLikeBtnClick();
-      });
+    setLike(currentTrack, dispatch);
   }
 
   function handleDislikeBtnClick() {
@@ -54,20 +38,7 @@ export function BarCurrentTrack() {
       return router.replace("/signin");
     }
 
-    toDislikeTrack({
-      id: `${currentTrack.id}`,
-      accessToken: accessToken,
-    })
-      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
-      .then((res) => {
-        dispatch(setFavoritePlaylist(res));
-      })
-      .catch(() =>
-        refreshTokens({ token: refreshToken }).then((freshToken) => {
-          setAuthState({ refresh: refreshToken, access: freshToken });
-          handleDislikeBtnClick();
-        })
-      );
+    setDislike(currentTrack, dispatch);
   }
   const toggleLike = isLiked ? handleDislikeBtnClick : handleLikeBtnClick;
 

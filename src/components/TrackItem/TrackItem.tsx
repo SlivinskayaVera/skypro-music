@@ -4,18 +4,12 @@ import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   setCurrentTrack,
-  setFavoritePlaylist,
   setIsPlaying,
 } from "@/store/features/playlistSlise";
 import { timeString } from "@/lib/timeString";
-import { refreshTokens } from "@/app/api/userApi";
-import {
-  getAllFavoriteTracks,
-  toDislikeTrack,
-  toLikeTrack,
-} from "@/app/api/musicApi";
 import { useRouter } from "next/navigation";
-import { setAuthState } from "@/store/features/authSlice";
+import { setLike } from "@/lib/setLike";
+import { setDislike } from "@/lib/setDislike";
 
 type TrackItemProps = {
   track: Track;
@@ -34,8 +28,6 @@ export default function TrackItem({ track }: TrackItemProps) {
 
   const refreshToken =
     localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
-  const accessToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).access;
 
   const isLiked = JSON.stringify(favoriteTracks).includes(
     JSON.stringify(track.track_file)
@@ -46,15 +38,7 @@ export default function TrackItem({ track }: TrackItemProps) {
       return router.replace("/signin");
     }
 
-    toLikeTrack({ id: `${track.id}`, accessToken: accessToken })
-      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
-      .then((res) => {
-        dispatch(setFavoritePlaylist(res));
-      })
-      .catch(() => {
-        refreshTokens({ token: refreshToken });
-        handleLikeBtnClick();
-      });
+    setLike(track, dispatch);
   }
 
   function handleDislikeBtnClick() {
@@ -62,20 +46,7 @@ export default function TrackItem({ track }: TrackItemProps) {
       return router.replace("/signin");
     }
 
-    toDislikeTrack({
-      id: `${track.id}`,
-      accessToken: accessToken,
-    })
-      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
-      .then((res) => {
-        dispatch(setFavoritePlaylist(res));
-      })
-      .catch(() =>
-        refreshTokens({ token: refreshToken }).then((freshToken) => {
-          setAuthState({ refresh: refreshToken, access: freshToken });
-          handleDislikeBtnClick();
-        })
-      );
+    setDislike(track, dispatch);
   }
 
   const toggleLike =
