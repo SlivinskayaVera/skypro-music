@@ -52,16 +52,11 @@ function changeTrack(direction: number) {
     let newIndex =
       currentTracks.findIndex((item) => item.id === state.currentTrack?.id) +
       direction;
-    // Циклическое переключение
     newIndex = (newIndex + currentTracks.length) % currentTracks.length;
-
     state.currentTrack = currentTracks[newIndex];
   };
 }
 
-// Редьюсер принимает текущее состояние, применяет к нему какое-то действие и возвращает новое состояние.
-// Редьюсеры содержат основную логику приложения
-// action.payload - это данные из вне (функции), то есть это параметры/аргументы при вызове редьюсера
 const playlistSlice = createSlice({
   name: "playlist",
   initialState,
