@@ -11,7 +11,6 @@ const accessToken =
   localStorage.tokens && JSON.parse(localStorage.tokens).access;
 
 export function setLike(track: Track, dispatch: React.Dispatch<{ payload: Track[]; type: "playlist/setFavoritePlaylist"; }>) {
-  console.log("object");
 
   toLikeTrack({ id: `${track.id}`, accessToken: accessToken })
     .then(() => getAllFavoriteTracks({ accessToken: accessToken }))

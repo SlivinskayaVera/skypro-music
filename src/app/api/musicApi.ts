@@ -49,9 +49,6 @@ export async function toLikeTrack({
     throw new Error(JSON.stringify(responseData));
   }
 
-  console.log("like");
-
-
   return accessToken;
 }
 
@@ -77,8 +74,6 @@ export async function toDislikeTrack({
   if (!response.ok) {
     throw new Error(JSON.stringify(responseData));
   }
-
-  console.log("dis");
 
   return accessToken;
 }
