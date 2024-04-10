@@ -2,8 +2,20 @@ import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlise";
+import {
+  setCurrentTrack,
+  setFavoritePlaylist,
+  setIsPlaying,
+} from "@/store/features/playlistSlise";
 import { timeString } from "@/lib/timeString";
+import { refreshTokens } from "@/app/api/userApi";
+import {
+  getAllFavoriteTracks,
+  toDislikeTrack,
+  toLikeTrack,
+} from "@/app/api/musicApi";
+import { useRouter } from "next/navigation";
+import { setAuthState } from "@/store/features/authSlice";
 
 type TrackItemProps = {
   track: Track;
@@ -11,14 +23,63 @@ type TrackItemProps = {
 
 export default function TrackItem({ track }: TrackItemProps) {
   const dispatch = useAppDispatch();
-  const durationTrack = timeString(track.duration_in_seconds);
+  const router = useRouter();
 
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
-  const user = useAppSelector((store) => store.user.userData);
-
+  const durationTrack = timeString(track.duration_in_seconds);
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+  const favoriteTracks = useAppSelector(
+    (state) => state.playlist.favoriteTracks
+  );
 
-  let isLiked = track.stared_user && JSON.stringify(track.stared_user).includes(JSON.stringify(user));
+  const refreshToken =
+    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+  const accessToken =
+    localStorage.tokens && JSON.parse(localStorage.tokens).access;
+
+  const isLiked = JSON.stringify(favoriteTracks).includes(
+    JSON.stringify(track.track_file)
+  );
+
+  function handleLikeBtnClick() {
+    if (!refreshToken) {
+      return router.replace("/signin");
+    }
+
+    toLikeTrack({ id: `${track.id}`, accessToken: accessToken })
+      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
+      .then((res) => {
+        dispatch(setFavoritePlaylist(res));
+      })
+      .catch(() => {
+        refreshTokens({ token: refreshToken });
+        handleLikeBtnClick();
+      });
+  }
+
+  function handleDislikeBtnClick() {
+    if (!refreshToken) {
+      return router.replace("/signin");
+    }
+
+    toDislikeTrack({
+      id: `${track.id}`,
+      accessToken: accessToken,
+    })
+      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
+      .then((res) => {
+        dispatch(setFavoritePlaylist(res));
+      })
+      .catch(() =>
+        refreshTokens({ token: refreshToken }).then((freshToken) => {
+          setAuthState({ refresh: refreshToken, access: freshToken });
+          handleDislikeBtnClick();
+        })
+      );
+  }
+
+  const toggleLike =
+    isLiked || !track.stared_user ? handleDislikeBtnClick : handleLikeBtnClick;
 
   return (
     <div
@@ -43,9 +104,21 @@ export default function TrackItem({ track }: TrackItemProps) {
         <div className={styles.trackAuthor}>{track.author}</div>
         <div className={styles.trackAlbum}>{track.album}</div>
         <div className={styles.trackTime}>
-          {track.stared_user && (
-            <SVG className={isLiked ? styles.likedTrackSvg : styles.trackTimeSvg} url="like" />
-          )}
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleLike();
+            }}
+          >
+            <SVG
+              className={
+                isLiked || !track.stared_user
+                  ? styles.likedTrackSvg
+                  : styles.trackTimeSvg
+              }
+              url="like"
+            />
+          </div>
           <div className={styles.trackTimeText}>{durationTrack}</div>
         </div>
       </div>

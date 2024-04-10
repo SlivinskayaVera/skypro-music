@@ -3,29 +3,73 @@ import classNames from "classnames";
 import styles from "../Bar.module.css";
 import { useAppSelector } from "@/store/hooks";
 import Link from "next/link";
-import { toDislikeTrack, toLikeTrack } from "@/app/api/musicApi";
+import {
+  getAllFavoriteTracks,
+  toDislikeTrack,
+  toLikeTrack,
+} from "@/app/api/musicApi";
 import { refreshTokens } from "@/app/api/userApi";
+import { useDispatch } from "react-redux";
+import { setFavoritePlaylist } from "@/store/features/playlistSlise";
+import { useRouter } from "next/navigation";
+import { setAuthState } from "@/store/features/authSlice";
 
 export function BarCurrentTrack() {
-  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
-  const token = useAppSelector((store) => store.user.token.refresh);
-  const user = useAppSelector((store) => store.user.userData);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  let isLiked = currentTrack?.stared_user && JSON.stringify(currentTrack.stared_user).includes(JSON.stringify(user));
+  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const refreshToken =
+    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+  const accessToken =
+    localStorage.tokens && JSON.parse(localStorage.tokens).access;
+  const favoriteTracks = useAppSelector(
+    (state) => state.playlist.favoriteTracks
+  );
+
+  const isLiked =
+    currentTrack &&
+    JSON.stringify(favoriteTracks).includes(
+      JSON.stringify(currentTrack.track_file)
+    );
 
   function handleLikeBtnClick() {
-    if (!currentTrack || !token) {return alert("Только авторизованные пользователи могут добавить треки в избранное")};
-    refreshTokens({ token }).then((freshToken) =>
-      toLikeTrack({ id: `${currentTrack.id}`, accessToken: freshToken })
-    );
+    if (!refreshToken || !currentTrack) {
+      return router.replace("/signin");
+    }
+
+    toLikeTrack({ id: `${currentTrack.id}`, accessToken: accessToken })
+      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
+      .then((res) => {
+        dispatch(setFavoritePlaylist(res));
+      })
+      .catch(() => {
+        refreshTokens({ token: refreshToken });
+        handleLikeBtnClick();
+      });
   }
 
   function handleDislikeBtnClick() {
-    if (!currentTrack || !token) {return alert("Только авторизованные пользователи могут удалить треки из избранного")};
-    refreshTokens({ token }).then((freshToken) =>
-      toDislikeTrack({ id: `${currentTrack.id}`, accessToken: freshToken })
-    );
+    if (!refreshToken || !currentTrack) {
+      return router.replace("/signin");
+    }
+
+    toDislikeTrack({
+      id: `${currentTrack.id}`,
+      accessToken: accessToken,
+    })
+      .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
+      .then((res) => {
+        dispatch(setFavoritePlaylist(res));
+      })
+      .catch(() =>
+        refreshTokens({ token: refreshToken }).then((freshToken) => {
+          setAuthState({ refresh: refreshToken, access: freshToken });
+          handleDislikeBtnClick();
+        })
+      );
   }
+  const toggleLike = isLiked ? handleDislikeBtnClick : handleLikeBtnClick;
 
   return (
     <div className={styles.playerTrackPlay}>
@@ -47,13 +91,13 @@ export function BarCurrentTrack() {
 
       <div className={styles.trackPlayLikeDis}>
         <div
-          onClick={handleLikeBtnClick}
+          onClick={toggleLike}
           className={classNames(styles.trackPlayLike, styles._btnIcon)}
         >
-          <SVG className={isLiked ? styles.likedTrackSvg : styles.trackPlayLikeSvg} url="like" />
-        </div>
-        <div onClick={handleDislikeBtnClick} className={classNames(styles.trackPlayDislike, styles._btnIcon)}>
-          <SVG className={styles.trackPlayDislikeSvg} url="dislike" />
+          <SVG
+            className={isLiked ? styles.likedTrackSvg : styles.trackPlayLikeSvg}
+            url="like"
+          />
         </div>
       </div>
     </div>

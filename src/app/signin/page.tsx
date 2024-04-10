@@ -36,14 +36,14 @@ export default function SignInPage() {
   function handelLoginBtnClick() {
     setError({ detail: "", email: [], password: [] });
     signIn({ email: userData.email, password: userData.password })
-      .then((resData) => {
-        dispatch(setLoginData(resData));
+      .then((resUserData) => {
+        dispatch(setLoginData(resUserData));
       })
       .then(() =>
         getTokens({ email: userData.email, password: userData.password })
       )
-      .then((res) => {
-        dispatch(setAuthState(res));
+      .then((resTokens) => {
+        dispatch(setAuthState(resTokens));
         router.replace("/");
       })
       .catch((error) => {

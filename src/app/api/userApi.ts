@@ -21,13 +21,13 @@ export async function signUp({ email, password, userName }: UserDataType) {
     },
   });
 
-  const userData = await response.json();
+  const responseData = await response.json();
 
   if (!response.ok) {
-    throw new Error(JSON.stringify(userData));
+    throw new Error(JSON.stringify(responseData));
   }
 
-  return userData;
+  return responseData;
 }
 
 export async function signIn({ email, password }: UserDataType) {
@@ -42,14 +42,14 @@ export async function signIn({ email, password }: UserDataType) {
     },
   });
 
-  const userData = await response.json();
+  const responseData = await response.json();
 
   if (!response.ok) {
-    throw new Error(JSON.stringify(userData));
+    throw new Error(JSON.stringify(responseData));
   }
 
-  localStorage.userData = JSON.stringify(userData);
-  return userData;
+  localStorage.userData = JSON.stringify(responseData);
+  return responseData;
 }
 
 export async function getTokens({ email, password }: UserDataType) {
@@ -74,7 +74,7 @@ export async function getTokens({ email, password }: UserDataType) {
   return tokens;
 }
 
-export async function refreshTokens({ token }: {token : string}) {
+export async function refreshTokens({ token }: { token: string }) {
   const response = await fetch(`${API_URL}/token/refresh/`, {
     method: "POST",
     body: JSON.stringify({
@@ -90,6 +90,10 @@ export async function refreshTokens({ token }: {token : string}) {
   if (!response.ok) {
     throw new Error(JSON.stringify(freshToken));
   }
+  localStorage.tokens = JSON.stringify({
+    refresh: token,
+    access: freshToken.access,
+  });
 
   return freshToken.access;
 }

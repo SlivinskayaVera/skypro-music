@@ -26,25 +26,33 @@ export async function getPlaylist() {
   return responseData;
 }
 
-export async  function toLikeTrack({
+export async function toLikeTrack({
   accessToken,
   id,
 }: {
   accessToken: string;
   id: string;
 }) {
-  const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await fetch(
+    `https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 
   const responseData = await response.json();
 
   if (!response.ok) {
     throw new Error(JSON.stringify(responseData));
   }
+
+  console.log("like");
+
+
+  return accessToken;
 }
 
 export async function toDislikeTrack({
@@ -54,18 +62,25 @@ export async function toDislikeTrack({
   accessToken: string;
   id: string;
 }) {
-  const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await fetch(
+    `https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
 
   const responseData = await response.json();
 
   if (!response.ok) {
     throw new Error(JSON.stringify(responseData));
   }
+
+  console.log("dis");
+
+  return accessToken;
 }
 
 export async function getAllFavoriteTracks({
@@ -73,6 +88,7 @@ export async function getAllFavoriteTracks({
 }: {
   accessToken: string;
 }) {
+
   const response = await fetch(
     "https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/",
     {

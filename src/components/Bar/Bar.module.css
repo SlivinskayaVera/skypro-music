@@ -14,7 +14,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(28, 28, 28, 0.5);
+    background: rgba(28, 28, 28, 0.747);
 }
 
 .barHidden {
@@ -39,6 +39,10 @@
     flex-direction: column;
 }
 
+.testDisplayTime {
+    display: none;
+}
+
 .barPlayerProgress {
     --progress-height: 8px;
     --progress-color: #b672ff;
@@ -51,6 +55,10 @@
     background: transparent;
     position: relative;
     overflow: hidden;
+}
+
+.barContent:hover .testDisplayTime {
+    display: flex;
 }
 
 .barPlayerProgress::-webkit-slider-runnable-track {
@@ -418,3 +426,4 @@
 .volumeProgressLine {
     width: 109px;
 }
+

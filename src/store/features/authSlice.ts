@@ -1,5 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+if (localStorage.userData === undefined)
+  localStorage.userData = JSON.stringify({
+    username: "Войти",
+    email: "",
+    first_name: "",
+    id: 0,
+    last_name: "",
+  });
+
 type AuthStateType = {
   authState: boolean;
   userData: LoginUser;
@@ -21,7 +30,7 @@ type LoginUser = {
 
 const initialState: AuthStateType = {
   authState: false,
-  userData: { username: "Залогинься", email: "", first_name: "", id: 0, last_name: "" },
+  userData: JSON.parse(localStorage.userData),
   token: { refresh: "", access: "" },
 };
 
@@ -30,7 +39,6 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuthState: (state, action: PayloadAction<TokenType>) => {
-      state.authState = !state.authState;
       state.token = action.payload;
     },
 
