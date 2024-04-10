@@ -10,7 +10,7 @@ export function HeaderUser() {
   return (
     <div className={styles.sidebarPersonal}>
       <p className={styles.sidebarPersonalName}>
-        {userData && userData.username}
+        <Link className={styles.userLink} href="/tracks/favorites/favorites">{userData && userData.username}</Link>
       </p>
       {userData.username === "Войти" && (
         <div className={styles.sidebarIcon}>

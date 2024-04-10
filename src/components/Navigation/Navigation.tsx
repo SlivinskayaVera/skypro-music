@@ -12,7 +12,13 @@ export function Navigation() {
   }
 
   function handleExitBtnClick() {
-    localStorage.removeItem("userData");
+    localStorage.userData = localStorage.userData = JSON.stringify({
+      username: "Войти",
+      email: "",
+      first_name: "",
+      id: 0,
+      last_name: "",
+    });
     localStorage.removeItem("tokens");
   }
 
@@ -32,7 +38,10 @@ export function Navigation() {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link href="/tracks/favorites/favorites" className={styles.menuLink}>
+              <Link
+                href="/tracks/favorites/favorites"
+                className={styles.menuLink}
+              >
                 Мой плейлист
               </Link>
             </li>
