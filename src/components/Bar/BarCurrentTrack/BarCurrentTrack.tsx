@@ -13,8 +13,6 @@ export function BarCurrentTrack() {
   const router = useRouter();
 
   const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
-  const refreshToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
   const favoriteTracks = useAppSelector(
     (state) => state.playlist.favoriteTracks
   );
@@ -26,6 +24,8 @@ export function BarCurrentTrack() {
     );
 
   function handleLikeBtnClick() {
+    const refreshToken =
+      localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
     if (!refreshToken || !currentTrack) {
       return router.replace("/signin");
     }
@@ -34,6 +34,8 @@ export function BarCurrentTrack() {
   }
 
   function handleDislikeBtnClick() {
+    const refreshToken =
+      localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
     if (!refreshToken || !currentTrack) {
       return router.replace("/signin");
     }
