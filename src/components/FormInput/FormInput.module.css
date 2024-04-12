@@ -16,7 +16,8 @@
 }
 
 .modalInput:user-invalid {
-    outline: red solid 1px;
+    border-radius: 50px;
+    outline: 3px rgb(244, 153, 153) solid;
 }
 
 .modalInput::-webkit-input-placeholder {
