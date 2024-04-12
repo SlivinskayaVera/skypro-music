@@ -1,15 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-// if (localStorage.userData === undefined)
-//   localStorage.userData = JSON.stringify({
-//     username: "Войти",
-//     email: "",
-//     first_name: "",
-//     id: 0,
-//     last_name: "",
-//   });
-
-if (typeof window !== "undefined") {
+if (typeof localStorage.userData === "undefined") {
   localStorage.userData = JSON.stringify({
     username: "Войти",
     email: "",
