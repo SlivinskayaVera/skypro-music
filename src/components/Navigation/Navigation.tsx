@@ -44,7 +44,7 @@ export function Navigation() {
             </li>
             <li onClick={handleExitBtnClick} className={styles.menuItem}>
               <Link href="/signin" className={styles.menuLink}>
-                {localStorage.userData === "Войти" ? "Выйти" : "Войти"}
+                {localStorage.tokens ? "Выйти" : "Войти"}
               </Link>
             </li>
           </ul>

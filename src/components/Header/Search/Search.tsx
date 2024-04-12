@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/store/hooks";
 import {
   setCurrentPlaylist,
   setFilteredTracks,
-} from "@/store/features/playlistSliсe";
+} from "@/store/features/playlistSlice";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");

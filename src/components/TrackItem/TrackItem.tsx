@@ -2,7 +2,7 @@ import styles from "./TrackItem.module.css";
 import { SVG } from "../SVGImage/SVGImage";
 import { Track } from "../../../types.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSliсe";
+import { setCurrentTrack, setIsPlaying } from "@/store/features/playlistSlice";
 import { timeString } from "@/lib/timeString";
 import { useRouter } from "next/navigation";
 import { setLike } from "@/lib/setLike";

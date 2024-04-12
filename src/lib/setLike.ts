@@ -2,7 +2,7 @@
 
 import { getAllFavoriteTracks, toLikeTrack } from "@/app/api/musicApi";
 import { Track } from "../../types.types";
-import { setFavoritePlaylist } from "@/store/features/playlistSliсe";
+import { setFavoritePlaylist } from "@/store/features/playlistSlice";
 import { refreshTokens } from "@/app/api/userApi";
 
 const refreshToken =

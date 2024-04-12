@@ -15,6 +15,7 @@ export function FormInput({
       value={value}
       type={type}
       name={name}
+      required
       placeholder={placeholder}
     />
   );

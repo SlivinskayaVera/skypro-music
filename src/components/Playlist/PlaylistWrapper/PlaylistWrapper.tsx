@@ -1,8 +1,7 @@
-import styles from "../Playlist/Playlist.module.css";
-
+import styles from "../Playlist.module.css";
 import { getTracks } from "@/app/api/musicApi";
-import { SVG } from "../SVGImage/SVGImage";
-import Playlist from "../Playlist/Playlist";
+import { SVG } from "../../SVGImage/SVGImage";
+import Playlist from "../Playlist";
 
 export async function PlaylistWrapper() {
   const tracksData = await getTracks();
@@ -21,3 +20,5 @@ export async function PlaylistWrapper() {
     </div>
   );
 }
+
+

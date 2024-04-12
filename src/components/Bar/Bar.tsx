@@ -3,7 +3,7 @@
 import styles from "./Bar.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { setIsPlaying, setNextTrack } from "@/store/features/playlistSliсe";
+import { setIsPlaying, setNextTrack } from "@/store/features/playlistSlice";
 import { timeString } from "@/lib/timeString";
 import { VolumeBar } from "./VolumeBar/VolumeBar";
 import { BarCurrentTrack } from "./BarCurrentTrack/BarCurrentTrack";

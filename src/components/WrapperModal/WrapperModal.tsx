@@ -13,7 +13,7 @@ function WrapperModal({ children }: WrapperModalType) {
             <Link href="/">
               <div className={styles.modalLogo}>
                 <Image
-                  src="/logo_modal.png"
+                  src="/img/logo_modal.png"
                   alt="logo"
                   width={140}
                   height={21}

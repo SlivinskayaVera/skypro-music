@@ -8,7 +8,7 @@ import {
   setCurrentPlaylist,
   setFavoritePlaylist,
   setTrackList,
-} from "@/store/features/playlistSliсe";
+} from "@/store/features/playlistSlice";
 import { Track } from "../../../types.types";
 import { refreshTokens } from "@/app/api/userApi";
 import { getAllFavoriteTracks } from "@/app/api/musicApi";
@@ -26,11 +26,8 @@ export default function Playlist({ tracksData }: PlaylistType) {
   useEffect(() => {
     dispatch(setTrackList(tracksData));
     dispatch(setCurrentPlaylist());
-  }, [tracksData, dispatch]);
+  }, [dispatch, tracksData]);
 
-  const favoritePlaylist = useAppSelector(
-    (store) => store.playlist.favoriteTracks
-  );
   const refreshToken =
     localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
 

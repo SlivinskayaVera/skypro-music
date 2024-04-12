@@ -7,7 +7,7 @@ import {
   setNextTrack,
   setPrevTrack,
   setToggleShuffled,
-} from "@/store/features/playlistSliсe";
+} from "@/store/features/playlistSlice";
 
 type BarPlayerControlsType = {
   audioRef: HTMLAudioElement | null;

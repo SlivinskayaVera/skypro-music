@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { playlistReducer } from "./features/playlistSliсe";
+import { playlistReducer } from "./features/playlistSlice";
 import { authReducer } from "./features/authSlice";
 
 // Создание хранилища и передача редьюсеров

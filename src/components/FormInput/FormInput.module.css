@@ -15,6 +15,10 @@
     letter-spacing: -0.05px;
 }
 
+.modalInput:user-invalid {
+    outline: red solid 1px;
+}
+
 .modalInput::-webkit-input-placeholder {
     font-style: normal;
     font-weight: 400;

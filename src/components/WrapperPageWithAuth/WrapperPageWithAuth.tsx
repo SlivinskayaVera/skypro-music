@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 const withAuth = (WrappedComponent: () => React.JSX.Element) => {
-  return (props: any) => {
+  return () => {
     const Router = useRouter();
 
     const isAuth = localStorage.tokens;
@@ -13,7 +13,7 @@ const withAuth = (WrappedComponent: () => React.JSX.Element) => {
       }
     }, [isAuth, Router]);
 
-    return isAuth ? <WrappedComponent {...props} /> : null;
+    return isAuth ? <WrappedComponent /> : null;
   };
 };
 
