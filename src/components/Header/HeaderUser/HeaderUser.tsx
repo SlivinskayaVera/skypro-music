@@ -3,18 +3,20 @@
 import Link from "next/link";
 import styles from "../Header.module.css";
 import { SVG } from "../../SVGImage/SVGImage";
+import { useAppSelector } from "@/store/hooks";
 
 export function HeaderUser() {
-  const userData = localStorage.userData && JSON.parse(localStorage.userData);
+  const userName = useAppSelector(store => store.user.userData.username);
+  
 
   return (
     <div className={styles.sidebarPersonal}>
       <p className={styles.sidebarPersonalName}>
         <Link className={styles.userLink} href="/tracks/favorites">
-          {userData.username}
+          {userName}
         </Link>
       </p>
-      {userData.username === "Войти" && (
+      {userName === "Войти" && (
         <div className={styles.sidebarIcon}>
           <Link href="/signin">
             <SVG url={"signin"} className={styles.logoutSvg} />
