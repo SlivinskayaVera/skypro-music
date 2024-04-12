@@ -9,6 +9,8 @@ export async function getTracks() {
     throw new Error(JSON.stringify(responseData));
   }
 
+  console.log(response);
+
   return responseData;
 }
 

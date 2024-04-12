@@ -28,10 +28,9 @@ export default function Playlist({ tracksData }: PlaylistType) {
     dispatch(setCurrentPlaylist());
   }, [dispatch, tracksData]);
 
-  const refreshToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
-
   useEffect(() => {
+    const refreshToken =
+      localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
     if (!refreshToken) return;
 
     refreshTokens({ token: refreshToken })
