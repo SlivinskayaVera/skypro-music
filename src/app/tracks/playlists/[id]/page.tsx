@@ -1,13 +1,11 @@
 "use client";
 
 import { getPlaylist } from "@/app/api/musicApi";
-import { SVG } from "@/components/SVGImage/SVGImage";
 import TrackItem from "@/components/TrackItem/TrackItem";
 import { setPlaylistsByCategory } from "@/store/features/playlistSlice";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import styles from "../../../../components/Playlist/Playlist.module.css";
 import { WrapperTracks } from "@/components/WrapperTracks/WrapperTracks";
 
 let route = ["daily", "hits", "genre"];

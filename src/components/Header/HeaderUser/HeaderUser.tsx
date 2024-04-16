@@ -3,11 +3,16 @@
 import Link from "next/link";
 import styles from "../Header.module.css";
 import { SVG } from "../../SVGImage/SVGImage";
-import { useAppSelector } from "@/store/hooks";
+import Cookie from "js-cookie";
+import { useEffect, useState } from "react";
 
 export function HeaderUser() {
-  const userName = useAppSelector(store => store.user.userData.username);
-  
+  const cookie = Cookie.get("user");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    setUserName(cookie && JSON.parse(cookie).username);
+  }, [userName, cookie]);
 
   return (
     <div className={styles.sidebarPersonal}>
@@ -16,7 +21,7 @@ export function HeaderUser() {
           {userName}
         </Link>
       </p>
-      {userName === "Войти" && (
+      {!userName && (
         <div className={styles.sidebarIcon}>
           <Link href="/signin">
             <SVG url={"signin"} className={styles.logoutSvg} />

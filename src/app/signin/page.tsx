@@ -10,7 +10,7 @@ import { getTokens, signIn } from "../api/userApi";
 import { RegistrationUserType } from "../../../types.types";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { setAuthState, setLoginData } from "@/store/features/authSlice";
+import { setLoginData } from "@/store/features/authSlice";
 
 export type ErrorType = {
   detail: string;
@@ -42,8 +42,7 @@ export default function SignInPage() {
       .then(() =>
         getTokens({ email: userData.email, password: userData.password })
       )
-      .then((resTokens) => {
-        dispatch(setAuthState(resTokens));
+      .then(() => {
         router.replace("/");
       })
       .catch((error) => {

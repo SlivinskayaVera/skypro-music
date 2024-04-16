@@ -3,23 +3,19 @@
 import styles from "./Navigator.module.css";
 import Link from "next/link";
 import { useState } from "react";
+import Cookie from "js-cookie";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const cookies = Cookie.get("user");
 
   function handelOpenMenu() {
     setIsOpen((prev) => !prev);
   }
 
   function handleExitBtnClick() {
-    localStorage.userData = localStorage.userData = JSON.stringify({
-      username: "Войти",
-      email: "",
-      first_name: "",
-      id: 0,
-      last_name: "",
-    });
-    localStorage.removeItem("tokens");
+    Cookie.remove("user");
+    Cookie.remove("tokens");
   }
 
   return (
@@ -44,7 +40,7 @@ export function Navigation() {
             </li>
             <li onClick={handleExitBtnClick} className={styles.menuItem}>
               <Link href="/signin" className={styles.menuLink}>
-                {localStorage.tokens ? "Выйти" : "Войти"}
+                {cookies ? "Выйти" : "Войти"}
               </Link>
             </li>
           </ul>

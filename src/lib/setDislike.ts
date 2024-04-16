@@ -4,7 +4,7 @@ import { getAllFavoriteTracks, toDislikeTrack } from "@/app/api/musicApi";
 import { Track } from "../../types.types";
 import { setFavoritePlaylist } from "@/store/features/playlistSlice";
 import { refreshTokens } from "@/app/api/userApi";
-import { setAuthState } from "@/store/features/authSlice";
+import Cookie from "js-cookie";
 
 export function setDislike(
   track: Track,
@@ -13,22 +13,20 @@ export function setDislike(
     type: "playlist/setFavoritePlaylist";
   }>
 ) {
-  const refreshToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
-  const accessToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).access;
+  const cookie = Cookie.get("tokens");
+  const accessToken = cookie && JSON.parse(cookie).access;
+  const refreshToken = cookie && JSON.parse(cookie).refresh;
 
   toDislikeTrack({
     id: `${track.id}`,
     accessToken: accessToken,
   })
-    .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
+    .then(() => getAllFavoriteTracks({ accessToken }))
     .then((res) => {
       dispatch(setFavoritePlaylist(res));
     })
     .catch(() =>
-      refreshTokens({ token: refreshToken }).then((freshToken) => {
-        setAuthState({ refresh: refreshToken, access: freshToken });
+      refreshTokens({ token: refreshToken }).then(() => {
         setDislike(track, dispatch);
       })
     );

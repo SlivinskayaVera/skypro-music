@@ -1,3 +1,5 @@
+import Cookie from "js-cookie";
+
 const API_URL = "https://skypro-music-api.skyeng.tech/user";
 
 // регистрация
@@ -48,7 +50,7 @@ export async function signIn({ email, password }: UserDataType) {
     throw new Error(JSON.stringify(responseData));
   }
 
-  localStorage.userData = JSON.stringify(responseData);
+  Cookie.set("user", JSON.stringify(responseData));
   return responseData;
 }
 
@@ -70,7 +72,7 @@ export async function getTokens({ email, password }: UserDataType) {
     throw new Error(JSON.stringify(tokens));
   }
 
-  localStorage.tokens = JSON.stringify(tokens);
+  Cookie.set("tokens", JSON.stringify(tokens));
   return tokens;
 }
 
@@ -90,10 +92,14 @@ export async function refreshTokens({ token }: { token: string }) {
   if (!response.ok) {
     throw new Error(JSON.stringify(freshToken));
   }
-  localStorage.tokens = JSON.stringify({
-    refresh: token,
-    access: freshToken.access,
-  });
+
+  Cookie.set(
+    "tokens",
+    JSON.stringify({
+      refresh: token,
+      access: freshToken.access,
+    })
+  );
 
   return freshToken.access;
 }

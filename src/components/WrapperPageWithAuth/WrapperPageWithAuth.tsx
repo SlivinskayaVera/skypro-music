@@ -1,20 +1,20 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import Cookie from "js-cookie";
 
 const withAuth = (WrappedComponent: () => React.JSX.Element) => {
-  return () => {
+  const Component = (props: any) => {
     const Router = useRouter();
-
-    const isAuth = localStorage.tokens;
+    const isAuth = Cookie.get("tokens");
 
     useEffect(() => {
       if (!isAuth) {
         Router.replace("/signin");
       }
     }, [isAuth, Router]);
-
-    return isAuth ? <WrappedComponent /> : null;
+    return isAuth ? <WrappedComponent {...props} /> : null;
   };
+  return Component;
 };
 
 export default withAuth;

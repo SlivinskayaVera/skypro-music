@@ -4,6 +4,7 @@ import { getAllFavoriteTracks, toLikeTrack } from "@/app/api/musicApi";
 import { Track } from "../../types.types";
 import { setFavoritePlaylist } from "@/store/features/playlistSlice";
 import { refreshTokens } from "@/app/api/userApi";
+import Cookie from "js-cookie"
 
 export function setLike(
   track: Track,
@@ -12,13 +13,12 @@ export function setLike(
     type: "playlist/setFavoritePlaylist";
   }>
 ) {
-  const refreshToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
-  const accessToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).access;
+  const cookie = Cookie.get("tokens");
+  const accessToken = cookie && JSON.parse(cookie).access;
+  const refreshToken = cookie && JSON.parse(cookie).refresh;
 
-  toLikeTrack({ id: `${track.id}`, accessToken: accessToken })
-    .then(() => getAllFavoriteTracks({ accessToken: accessToken }))
+  toLikeTrack({ id: `${track.id}`, accessToken })
+    .then(() => getAllFavoriteTracks({ accessToken }))
     .then((res) => {
       dispatch(setFavoritePlaylist(res));
     })

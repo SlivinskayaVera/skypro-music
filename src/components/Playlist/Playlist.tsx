@@ -12,16 +12,18 @@ import {
 import { Track } from "../../../types.types";
 import { refreshTokens } from "@/app/api/userApi";
 import { getAllFavoriteTracks } from "@/app/api/musicApi";
+import Cookie from "js-cookie";
 
 type PlaylistType = {
   tracksData: Track[];
 };
 
 export default function Playlist({ tracksData }: PlaylistType) {
+  const dispatch = useAppDispatch();
+  const cookie = Cookie.get("tokens");
   const currentPlaylist = useAppSelector(
     (store) => store.playlist.currentPlaylist
   );
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setTrackList(tracksData));
@@ -29,8 +31,8 @@ export default function Playlist({ tracksData }: PlaylistType) {
   }, [dispatch, tracksData]);
 
   useEffect(() => {
-    const refreshToken =
-      localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+    const refreshToken = cookie && JSON.parse(cookie).refresh;
+
     if (!refreshToken) return;
 
     refreshTokens({ token: refreshToken })
@@ -38,7 +40,7 @@ export default function Playlist({ tracksData }: PlaylistType) {
       .then((res) => {
         dispatch(setFavoritePlaylist(res));
       });
-  }, []);
+  }, [cookie, dispatch]);
 
   return (
     <div className={styles.contentPlaylist}>

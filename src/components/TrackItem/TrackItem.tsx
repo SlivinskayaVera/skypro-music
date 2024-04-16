@@ -7,6 +7,8 @@ import { timeString } from "@/lib/timeString";
 import { useRouter } from "next/navigation";
 import { setLike } from "@/lib/setLike";
 import { setDislike } from "@/lib/setDislike";
+import Cookie from "js-cookie"
+
 
 type TrackItemProps = {
   track: Track;
@@ -23,22 +25,22 @@ export default function TrackItem({ track }: TrackItemProps) {
     (state) => state.playlist.favoriteTracks
   );
 
-  const refreshToken =
-    localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+    const cookie = Cookie.get("tokens");
+    const accessToken = cookie && JSON.parse(cookie).access;
 
   const isLiked = JSON.stringify(favoriteTracks).includes(
     JSON.stringify(track.track_file)
   );
 
   function handleLikeBtnClick() {
-    if (!refreshToken) {
+    if (!accessToken) {
       return router.replace("/signin");
     }
     setLike(track, dispatch);
   }
 
   function handleDislikeBtnClick() {
-    if (!refreshToken) {
+    if (!accessToken) {
       return router.replace("/signin");
     }
     setDislike(track, dispatch);

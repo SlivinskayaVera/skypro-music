@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { setLike } from "@/lib/setLike";
 import { setDislike } from "@/lib/setDislike";
+import Cookie from "js-cookie"
 
 export function BarCurrentTrack() {
   const dispatch = useDispatch();
@@ -23,9 +24,10 @@ export function BarCurrentTrack() {
       JSON.stringify(currentTrack.track_file)
     );
 
-  function handleLikeBtnClick() {
-    const refreshToken =
-      localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+    const cookie = Cookie.get("tokens");
+    
+    function handleLikeBtnClick() {
+    const refreshToken = cookie && JSON.parse(cookie).refresh;
     if (!refreshToken || !currentTrack) {
       return router.replace("/signin");
     }
@@ -34,8 +36,7 @@ export function BarCurrentTrack() {
   }
 
   function handleDislikeBtnClick() {
-    const refreshToken =
-      localStorage.tokens && JSON.parse(localStorage.tokens).refresh;
+    const refreshToken = cookie && JSON.parse(cookie).refresh;
     if (!refreshToken || !currentTrack) {
       return router.replace("/signin");
     }
