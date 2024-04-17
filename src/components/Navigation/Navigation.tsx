@@ -16,6 +16,8 @@ export function Navigation() {
   function handleExitBtnClick() {
     Cookie.remove("user");
     Cookie.remove("tokens");
+    Cookie.remove("tokenRefresh");
+    Cookie.remove("tokensAccess");
   }
 
   return (

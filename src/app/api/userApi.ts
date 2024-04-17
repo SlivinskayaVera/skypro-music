@@ -73,6 +73,17 @@ export async function getTokens({ email, password }: UserDataType) {
   }
 
   Cookie.set("tokens", JSON.stringify(tokens));
+
+  const dateExpiration = new Date(new Date().getTime() + 200 * 1000);
+  // , { HttpOnly: true }
+
+  Cookie.set("tokenRefresh", JSON.stringify(tokens.refresh));
+  Cookie.set("tokenAccess", JSON.stringify(tokens.access), {
+    expires: dateExpiration,
+  });
+
+  console.log(tokens.refresh);
+
   return tokens;
 }
 
@@ -100,6 +111,12 @@ export async function refreshTokens({ token }: { token: string }) {
       access: freshToken.access,
     })
   );
+
+  const dateExpiration = new Date(new Date().getTime() + 200 * 1000);
+
+  Cookie.set("tokensAccess", JSON.stringify(freshToken.access), {
+    expires: dateExpiration,
+  });
 
   return freshToken.access;
 }

@@ -13,9 +13,8 @@ export function BarCurrentTrack() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
-  const favoriteTracks = useAppSelector(
-    (state) => state.playlist.favoriteTracks
+  const { currentTrack, favoriteTracks } = useAppSelector(
+    (store) => store.playlist
   );
 
   const isLiked =

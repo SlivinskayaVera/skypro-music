@@ -12,25 +12,24 @@ import Cookie from "js-cookie"
 
 type TrackItemProps = {
   track: Track;
+  isLiked: boolean;
 };
 
-export default function TrackItem({ track }: TrackItemProps) {
+export default function TrackItem({ track, isLiked }: TrackItemProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
   const durationTrack = timeString(track.duration_in_seconds);
-  const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
-  const favoriteTracks = useAppSelector(
-    (state) => state.playlist.favoriteTracks
+  const { currentTrack, isPlaying, favoriteTracks } = useAppSelector(
+    (store) => store.playlist
   );
 
-    const cookie = Cookie.get("tokens");
-    const accessToken = cookie && JSON.parse(cookie).access;
+  const cookie = Cookie.get("tokens");
+  const accessToken = cookie && JSON.parse(cookie).access;
 
-  const isLiked = JSON.stringify(favoriteTracks).includes(
-    JSON.stringify(track.track_file)
-  );
+  // const isLiked = JSON.stringify(favoriteTracks).includes(
+  //   JSON.stringify(track.track_file)
+  // );
 
   function handleLikeBtnClick() {
     if (!accessToken) {

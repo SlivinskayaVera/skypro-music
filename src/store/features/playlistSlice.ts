@@ -1,21 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Track } from "../../../types.types";
 
-type CategoryPlaylistsType = {
-  id: number;
-  items: Track[];
-  owner: {
-    email: string;
-    first_name: string;
-    id: number;
-    last_name: string;
-    username: string;
-  };
-};
-
 type PlaylistType = {
   tracks: [] | Track[];
-  categoryPlaylists: CategoryPlaylistsType[];
   currentPlaylist: [] | Track[];
   favoriteTracks: [] | Track[];
   filteredTracks: [] | Track[];
@@ -34,7 +21,6 @@ type PlaylistType = {
 
 const initialState: PlaylistType = {
   tracks: [],
-  categoryPlaylists: [],
   favoriteTracks: [],
   currentPlaylist: [],
   currentTrack: null,
@@ -63,12 +49,6 @@ const playlistSlice = createSlice({
   reducers: {
     setTrackList: (state, action: PayloadAction<Track[]>) => {
       state.tracks = action.payload;
-    },
-    setPlaylistsByCategory: (
-      state,
-      action: PayloadAction<CategoryPlaylistsType[]>
-    ) => {
-      state.categoryPlaylists = action.payload;
     },
     setFavoritePlaylist: (state, action: PayloadAction<Track[]>) => {
       state.favoriteTracks = action.payload;
@@ -149,7 +129,6 @@ const playlistSlice = createSlice({
 
 export const {
   setTrackList,
-  setPlaylistsByCategory,
   setCurrentTrack,
   setFavoritePlaylist,
   setToggleShuffled,

@@ -18,8 +18,7 @@ export function BarPlayerControls({
   audioRef,
   onClick,
 }: BarPlayerControlsType) {
-  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
-  const isShuffled = useAppSelector((store) => store.playlist.isShuffled);
+  const {currentTrack, isShuffled} = useAppSelector((store) => store.playlist);
 
   const dispatch = useAppDispatch();
 
