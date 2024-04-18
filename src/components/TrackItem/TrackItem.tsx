@@ -12,7 +12,7 @@ import Cookie from "js-cookie"
 
 type TrackItemProps = {
   track: Track;
-  isLiked: boolean;
+  isLiked?: boolean;
 };
 
 export default function TrackItem({ track, isLiked }: TrackItemProps) {

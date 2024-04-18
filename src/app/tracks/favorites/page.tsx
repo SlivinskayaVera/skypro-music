@@ -21,7 +21,6 @@ function Tracks() {
   const refreshToken = cookie && JSON.parse(cookie).refresh;
   
   useEffect(() => {
-    console.log("object");
     refreshTokens({ token: refreshToken })
       .then((freshToken) => getAllFavoriteTracks({ accessToken: freshToken }))
       .then((res) => {

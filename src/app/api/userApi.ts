@@ -82,8 +82,6 @@ export async function getTokens({ email, password }: UserDataType) {
     expires: dateExpiration,
   });
 
-  console.log(tokens.refresh);
-
   return tokens;
 }
 
