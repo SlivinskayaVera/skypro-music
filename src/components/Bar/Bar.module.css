@@ -1,13 +1,32 @@
+@keyframes background {
+    50% {
+        box-shadow: 0 -200px 100px -100px rgb(116, 114, 114) inset;
+    }
+}
+
+/* ._btn перенести в глобал */
 ._btn {
     cursor: pointer;
 }
 
-.bar {
-    position: absolute;
+.barActive {
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(28, 28, 28, 0.5);
+    background: rgba(28, 28, 28, 0.747);
+}
+
+.barHidden {
+    display: none;
+}
+
+.timers {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 5px;
 }
 
 .barContent {
@@ -20,11 +39,68 @@
     flex-direction: column;
 }
 
-.barPlayerProgress {
-    width: 100%;
-    height: 5px;
-    background: #2e2e2e;
+.testDisplayTime {
+    display: none;
 }
+
+.barPlayerProgress {
+    --progress-height: 8px;
+    --progress-color: #b672ff;
+    --progress-bg-color: #2e2e2e;
+    margin: 0;
+    width: 100%;
+    height: var(--progress-height);
+    appearance: none;
+    cursor: pointer;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.barContent:hover .testDisplayTime {
+    display: flex;
+}
+
+.barPlayerProgress::-webkit-slider-runnable-track {
+    position: relative;
+    height: var(--progress-height);
+    background: var(--progress-bg-color);
+}
+
+.barPlayerProgress::-webkit-slider-thumb {
+    --thumb-height: 1px;
+    --thumb-width: 1px;
+    position: relative;
+    -webkit-appearance: none;
+    width: var(--thumb-width, var(--thumb-height));
+    box-shadow: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0 100vmax var(--progress-color);
+}
+
+.barPlayerProgress::-webkit-slider-runnable-track {
+    background: var(--progress-bg-color);
+}
+
+.barPlayerProgress::-moz-range-track {
+    width: 100%;
+    height: var(--progress-height);
+    background: var(--progress-bg-color);
+    border: none;
+    border-radius: 0px;
+}
+
+.barPlayerProgress::-moz-range-thumb {
+    border: none;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.barPlayerProgress::-moz-range-progress {
+    background-color: var(--progress-color);
+    height: var(--progress-height);
+}
+
 
 .barPlayerBlock {
     height: 73px;
@@ -119,8 +195,21 @@
 .playerBtnRepeatSvg {
     width: 18px;
     height: 12px;
-    fill: transparent;
+    fill: #696969;
     stroke: #696969;
+}
+
+.playerBtnActiveRepeatSvg {
+    width: 18px;
+    height: 12px;
+    fill: white;
+    stroke: white;
+}
+
+.playerBtnRepeatSvg:active {
+    fill: #ffffff;
+    stroke: #ffffff;
+    cursor: pointer;
 }
 
 ._btnIcon:hover svg {
@@ -142,8 +231,6 @@
     cursor: pointer;
 }
 
-
-
 .playerBtnShuffle {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -158,6 +245,13 @@
     height: 12px;
     fill: transparent;
     stroke: #696969;
+}
+
+.playerActiveBtnShuffleSvg {
+    width: 19px;
+    height: 12px;
+    fill: transparent;
+    stroke: white;
 }
 
 .playerTrackPlay {
@@ -244,6 +338,7 @@
     font-size: 13px;
     line-height: 24px;
     color: #ffffff;
+    white-space: nowrap;
 }
 
 .trackPlayLikeDis {
@@ -257,7 +352,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-left: 26%;
+    margin-left: 26px;
 }
 
 .trackPlayLike,
@@ -274,6 +369,15 @@
 
 .trackPlayDislike {
     margin-left: 28.5px;
+}
+
+.likedTrackSvg {
+    width: 14px;
+    height: 12px;
+    margin-right: 17px;
+    fill: #B672FF;
+    stroke: #B672FF;
+    padding-top: 1px;
 }
 
 .barVolumeBlock {
@@ -322,3 +426,4 @@
 .volumeProgressLine {
     width: 109px;
 }
+

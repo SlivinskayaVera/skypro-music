@@ -1,0 +1,126 @@
+.modal {
+    position: absolute;
+    top: 50px;
+    border-radius: 12px;
+    background: rgb(49, 49, 49);
+    /* Автолейаут */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 34px;
+}
+
+.filterButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.filterButton:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+.filterButton:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
+.filterPosition {
+    position: relative;
+}
+
+.activeButton {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid;
+    border-color: rgb(182, 114, 255);
+    border-radius: 60px;
+    padding: 6px 20px;
+    background-color: transparent;
+    color: rgb(182, 114, 255);
+}
+
+.activeButton:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+.activeButton:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    max-height: 232px;
+    row-gap: 28px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: rgb(75, 73, 73);
+}
+
+.list::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    border: 3px solid rgb(255, 255, 255);
+}
+
+.listItem {
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0%;
+    text-align: left;
+    padding-right: 28px;
+}
+
+.listItem:hover {
+    color: rgb(182, 114, 255);
+    text-decoration-line: underline;
+}
+
+.listItemActive {
+    color: rgb(228, 89, 249);
+}
+
+.counter {
+    position: absolute;
+    text-align: center;
+    padding: 3px;
+    width: 25px;
+    border-radius: 50%;
+    background: #b672ff;
+    right: -5px;
+    top: -15px;
+    cursor: pointer;
+}

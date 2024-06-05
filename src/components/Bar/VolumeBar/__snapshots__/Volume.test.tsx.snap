@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Volume bar correct display 1`] = `
+<div
+  className="barVolumeBlock"
+>
+  <div
+    className="volumeContent"
+  >
+    <div
+      className="volumeImage"
+    >
+      <svg
+        className="volumeSvg"
+      >
+        <use
+          xlinkHref="/img/icon/sprite.svg#icon-volume"
+        />
+      </svg>
+    </div>
+    <div
+      className="volumeProgress _btn"
+    >
+      <input
+        className="barPlayerProgress _btn"
+        max="1"
+        min="0"
+        name="range"
+        onChange={[Function]}
+        step={1e-10}
+        type="range"
+      />
+    </div>
+  </div>
+</div>
+`;
