@@ -1,10 +1,13 @@
 "use client";
 
-import { SVG } from "../SVGImage/SVGImage";
-import styles from "../Header/Header.module.css";
+import { SVG } from "../../SVGImage/SVGImage";
+import styles from "../Header.module.css";
 import { useState } from "react";
 import { useAppDispatch } from "@/store/hooks";
-import { setCurrentPlaylist, setFilteredTracks } from "@/store/features/playlistSlise";
+import {
+  setCurrentPlaylist,
+  setFilteredTracks,
+} from "@/store/features/playlistSlice";
 
 export default function Search() {
   const [searchValue, setSearchValue] = useState("");

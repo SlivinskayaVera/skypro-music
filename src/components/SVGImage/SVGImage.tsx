@@ -1,6 +1,6 @@
-import { PropsType } from "../../../types.types";
+type SVGPropsType = { url: string; className: string };
 
-export function SVG({ url, className }: PropsType) {
+export function SVG({ url, className }: SVGPropsType) {
   return (
     <svg className={className}>
       <use xlinkHref={`/img/icon/sprite.svg#icon-${url}`}></use>

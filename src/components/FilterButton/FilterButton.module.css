@@ -75,7 +75,7 @@
 .list {
     display: flex;
     flex-direction: column;
-    height: 232px;
+    max-height: 232px;
     row-gap: 28px;
     overflow: auto;
     white-space: nowrap;
@@ -122,4 +122,5 @@
     background: #b672ff;
     right: -5px;
     top: -15px;
+    cursor: pointer;
 }

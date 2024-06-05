@@ -3,9 +3,46 @@ import classNames from "classnames";
 import styles from "../Bar.module.css";
 import { useAppSelector } from "@/store/hooks";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { setLike } from "@/lib/setLike";
+import { setDislike } from "@/lib/setDislike";
+import Cookie from "js-cookie"
 
 export function BarCurrentTrack() {
-  const currentTrack = useAppSelector((store) => store.playlist.currentTrack);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { currentTrack, favoriteTracks } = useAppSelector(
+    (store) => store.playlist
+  );
+
+  const isLiked =
+    currentTrack &&
+    JSON.stringify(favoriteTracks).includes(
+      JSON.stringify(currentTrack.track_file)
+    );
+
+    const cookie = Cookie.get("tokens");
+    
+    function handleLikeBtnClick() {
+    const refreshToken = cookie && JSON.parse(cookie).refresh;
+    if (!refreshToken || !currentTrack) {
+      return router.replace("/signin");
+    }
+
+    setLike(currentTrack, dispatch);
+  }
+
+  function handleDislikeBtnClick() {
+    const refreshToken = cookie && JSON.parse(cookie).refresh;
+    if (!refreshToken || !currentTrack) {
+      return router.replace("/signin");
+    }
+
+    setDislike(currentTrack, dispatch);
+  }
+  const toggleLike = isLiked ? handleDislikeBtnClick : handleLikeBtnClick;
 
   return (
     <div className={styles.playerTrackPlay}>
@@ -26,11 +63,14 @@ export function BarCurrentTrack() {
       </div>
 
       <div className={styles.trackPlayLikeDis}>
-        <div className={classNames(styles.trackPlayLike, styles._btnIcon)}>
-          <SVG className={styles.trackPlayLikeSvg} url="like" />
-        </div>
-        <div className={classNames(styles.trackPlayDislike, styles._btnIcon)}>
-          <SVG className={styles.trackPlayDislikeSvg} url="dislike" />
+        <div
+          onClick={toggleLike}
+          className={classNames(styles.trackPlayLike, styles._btnIcon)}
+        >
+          <SVG
+            className={isLiked ? styles.likedTrackSvg : styles.trackPlayLikeSvg}
+            url="like"
+          />
         </div>
       </div>
     </div>

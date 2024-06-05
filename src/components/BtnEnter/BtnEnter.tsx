@@ -1,10 +1,19 @@
-import Link from "next/link";
 import styles from "./BtnEnter.module.css";
 
-export function BtnEnter({ title }: { title: string }) {
+type BtnEnterType = {
+  title: string;
+  onClick: () => void;
+};
+
+export function BtnEnter({ title, onClick }: BtnEnterType) {
+  function handleBtnClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    onClick();
+  }
+
   return (
-    <button className={styles.button}>
-      <Link href="/">{title}</Link>
+    <button onClick={(e) => handleBtnClick(e)} className={styles.button}>
+      {title}
     </button>
   );
 }

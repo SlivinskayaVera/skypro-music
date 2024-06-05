@@ -1,39 +1,27 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Track } from "../../../types.types";
 
-type CategoryPlaylistsType = {
-  id: number;
-  items: Track[];
-  owner: {
-    email: string;
-    first_name: string;
-    id: number;
-    last_name: string;
-    username: string;
-  };
-};
-
 type PlaylistType = {
   tracks: [] | Track[];
-  categoryPlaylists: CategoryPlaylistsType[];
   currentPlaylist: [] | Track[];
+  favoriteTracks: [] | Track[];
+  filteredTracks: [] | Track[];
+  shuffledPlaylist: [] | Track[];
   currentTrack: null | Track;
   isShuffled: boolean;
   isRepeated: boolean;
-  shuffledPlaylist: [] | Track[];
   filterOptions: {
     authors: string[];
     genres: string[];
     date: string;
     searchValue: string;
   };
-  filteredTracks: [] | Track[];
   isPlaying: boolean;
 };
 
 const initialState: PlaylistType = {
   tracks: [],
-  categoryPlaylists: [],
+  favoriteTracks: [],
   currentPlaylist: [],
   currentTrack: null,
   isShuffled: false,
@@ -50,16 +38,11 @@ function changeTrack(direction: number) {
     let newIndex =
       currentTracks.findIndex((item) => item.id === state.currentTrack?.id) +
       direction;
-    // Циклическое переключение
     newIndex = (newIndex + currentTracks.length) % currentTracks.length;
-
     state.currentTrack = currentTracks[newIndex];
   };
 }
 
-// Редьюсер принимает текущее состояние, применяет к нему какое-то действие и возвращает новое состояние.
-// Редьюсеры содержат основную логику приложения
-// action.payload - это данные из вне (функции), то есть это параметры/аргументы при вызове редьюсера
 const playlistSlice = createSlice({
   name: "playlist",
   initialState,
@@ -67,11 +50,8 @@ const playlistSlice = createSlice({
     setTrackList: (state, action: PayloadAction<Track[]>) => {
       state.tracks = action.payload;
     },
-    setPlaylistsByCategory: (
-      state,
-      action: PayloadAction<CategoryPlaylistsType[]>
-    ) => {
-      state.categoryPlaylists = action.payload;
+    setFavoritePlaylist: (state, action: PayloadAction<Track[]>) => {
+      state.favoriteTracks = action.payload;
     },
     setCurrentTrack: (state, action: PayloadAction<Track>) => {
       state.currentTrack = action.payload;
@@ -114,7 +94,6 @@ const playlistSlice = createSlice({
       };
       state.filteredTracks = state.tracks.filter((track) => {
         const hasAuthor = state.filterOptions.authors.length !== 0;
-        // const hasYear = state.filterOptions.years.length !== 0;
         const hasGenre = state.filterOptions.genres.length !== 0;
 
         const isAuthors = hasAuthor
@@ -123,7 +102,6 @@ const playlistSlice = createSlice({
         const isGenres = hasGenre
           ? state.filterOptions.genres.includes(track.genre)
           : true;
-        // const isYears = hasYear ? state.filterOptions.years.includes(track.release_date) : true
         const isSearchValueIncluded = track.name
           .toLowerCase()
           .includes(state.filterOptions.searchValue.toLowerCase());
@@ -135,9 +113,7 @@ const playlistSlice = createSlice({
       state.isPlaying = !state.isPlaying;
     },
     setSortedTracksByDate: (state, action: PayloadAction<{ date: string }>) => {
-      state.filterOptions.authors = [];
-      state.filterOptions.genres = [];
-      state.filteredTracks = [...state.tracks].sort((a, b) => {
+      state.filteredTracks = [...state.filteredTracks].sort((a, b) => {
         const dateA = new Date(a.release_date);
         const dateB = new Date(b.release_date);
 
@@ -153,8 +129,8 @@ const playlistSlice = createSlice({
 
 export const {
   setTrackList,
-  setPlaylistsByCategory,
   setCurrentTrack,
+  setFavoritePlaylist,
   setToggleShuffled,
   setRepeatTrack,
   setNextTrack,

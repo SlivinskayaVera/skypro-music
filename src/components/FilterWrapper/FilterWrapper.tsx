@@ -8,7 +8,7 @@ import {
   setCurrentPlaylist,
   setFilteredTracks,
   setSortedTracksByDate,
-} from "@/store/features/playlistSlise";
+} from "@/store/features/playlistSlice";
 import { getListItem } from "@/lib/getListItem";
 
 const sortedByDate: string[] = [
@@ -25,14 +25,8 @@ export function FilterWrapper() {
   }
 
   const tracks = useAppSelector((store) => store.playlist.tracks);
-  const selectedAuthors = useAppSelector(
-    (store) => store.playlist.filterOptions.authors
-  );
-  const selectedGenres = useAppSelector(
-    (store) => store.playlist.filterOptions.genres
-  );
-  const selectedDate = useAppSelector(
-    (store) => store.playlist.filterOptions.date
+  const { authors, genres, date } = useAppSelector(
+    (store) => store.playlist.filterOptions
   );
   const dispatch = useAppDispatch();
 
@@ -50,9 +44,18 @@ export function FilterWrapper() {
   function toggleSelectedAuthors(item: string) {
     dispatch(
       setFilteredTracks({
-        authors: selectedAuthors.includes(item)
-          ? selectedAuthors.filter((author) => author !== item)
-          : [...selectedAuthors, item],
+        authors: authors.includes(item)
+          ? authors.filter((author) => author !== item)
+          : [...authors, item],
+      })
+    );
+    dispatch(setCurrentPlaylist());
+  }
+
+  function toggleDeleteSelectedAuthors() {
+    dispatch(
+      setFilteredTracks({
+        authors: [],
       })
     );
     dispatch(setCurrentPlaylist());
@@ -61,9 +64,18 @@ export function FilterWrapper() {
   function toggleSelectedGenre(item: string) {
     dispatch(
       setFilteredTracks({
-        genres: selectedGenres.includes(item)
-          ? selectedGenres.filter((genre) => genre !== item)
-          : [...selectedGenres, item],
+        genres: genres.includes(item)
+          ? genres.filter((genre) => genre !== item)
+          : [...genres, item],
+      })
+    );
+    dispatch(setCurrentPlaylist());
+  }
+
+  function toggleDeleteSelectedGenres() {
+    dispatch(
+      setFilteredTracks({
+        genres: [],
       })
     );
     dispatch(setCurrentPlaylist());
@@ -84,17 +96,18 @@ export function FilterWrapper() {
       <FilterButton
         isOpen={isActive === "исполнителю" ? true : false}
         list={authorsList}
-        selected={selectedAuthors}
-        counter={selectedAuthors.length}
+        selected={authors}
+        counter={authors.length}
         title="исполнителю"
         toggleSelected={toggleSelectedAuthors}
+        toggleDeleteSelector={toggleDeleteSelectedAuthors}
         onClick={() => handelActive("исполнителю")}
       />
       <FilterButton
         isOpen={isActive === "году выпуска" ? true : false}
         list={sortedByDate}
         title="году выпуска"
-        selected={selectedDate}
+        selected={date}
         counter={0}
         toggleSelected={toggleSelectedDate}
         onClick={() => handelActive("году выпуска")}
@@ -103,9 +116,10 @@ export function FilterWrapper() {
         isOpen={isActive === "жанру" ? true : false}
         list={genreList}
         title="жанру"
-        selected={selectedGenres}
-        counter={selectedGenres.length}
+        selected={genres}
+        counter={genres.length}
         toggleSelected={toggleSelectedGenre}
+        toggleDeleteSelector={toggleDeleteSelectedGenres}
         onClick={() => handelActive("жанру")}
       />
     </div>
