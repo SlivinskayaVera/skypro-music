@@ -88,5 +88,5 @@ export async function getAllFavoriteTracks({
     throw new Error(JSON.stringify(responseData));
   }
 
-  return responseData;
+  return responseData.data;
 }
