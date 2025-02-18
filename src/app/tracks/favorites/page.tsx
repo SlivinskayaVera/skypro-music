@@ -32,7 +32,7 @@ function Tracks() {
     <WrapperTracks title={"Мои треки"}>
       {favoritePlaylist.length !== 0 ? (
         favoritePlaylist.map((track) => {
-          return <TrackItem key={track.id} track={track} />;
+          return <TrackItem key={track._id} track={track} />;
         })
       ) : (
         <>
