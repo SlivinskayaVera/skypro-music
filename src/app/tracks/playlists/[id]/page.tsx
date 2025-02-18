@@ -29,7 +29,7 @@ export default function Tracks({ params }: TracksType) {
   return (
     <WrapperTracks title={namePages[id]}>
       {playlist.map((track) => {
-        return <TrackItem key={track.id} track={track} />;
+        return <TrackItem key={track._id} track={track} />;
       })}
     </WrapperTracks>
   );

@@ -42,20 +42,14 @@ export default function Playlist({ tracksData }: PlaylistType) {
       });
   }, [cookie, dispatch]);
 
-  const user = Cookie.get("user");
-  const userID = user && JSON.parse(user).id;
-
   return (
     <div className={styles.contentPlaylist}>
       {(currentPlaylist.length === 0 && <>ничего не найдено</>) ||
         currentPlaylist?.map((track) => {
           return (
             <TrackItem
-              key={track.id}
+              key={track._id}
               track={track}
-              isLiked={
-                !!(track.stared_user ?? []).find(({ id }) => id === userID)
-              }
             />
           );
         })}
