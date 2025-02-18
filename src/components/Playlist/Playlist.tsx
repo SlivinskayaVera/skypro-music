@@ -51,11 +51,8 @@ export default function Playlist({ tracksData }: PlaylistType) {
         currentPlaylist?.map((track) => {
           return (
             <TrackItem
-              key={track.id}
+              key={track._id}
               track={track}
-              isLiked={
-                !!(track.stared_user ?? []).find(({ id }) => id === userID)
-              }
             />
           );
         })}
