@@ -17,7 +17,7 @@ export function setLike(
   const accessToken = cookie && JSON.parse(cookie).access;
   const refreshToken = cookie && JSON.parse(cookie).refresh;
 
-  toLikeTrack({ id: `${track.id}`, accessToken })
+  toLikeTrack({ id: `${track._id}`, accessToken })
     .then(() => getAllFavoriteTracks({ accessToken }))
     .then((res) => {
       dispatch(setFavoritePlaylist(res));

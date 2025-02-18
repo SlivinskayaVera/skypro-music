@@ -36,7 +36,7 @@ function changeTrack(direction: number) {
   return (state: PlaylistType) => {
     const currentTracks = state.currentPlaylist;
     let newIndex =
-      currentTracks.findIndex((item) => item.id === state.currentTrack?.id) +
+      currentTracks.findIndex((item) => item._id === state.currentTrack?._id) +
       direction;
     newIndex = (newIndex + currentTracks.length) % currentTracks.length;
     state.currentTrack = currentTracks[newIndex];
@@ -100,7 +100,7 @@ const playlistSlice = createSlice({
           ? state.filterOptions.authors.includes(track.author)
           : true;
         const isGenres = hasGenre
-          ? state.filterOptions.genres.includes(track.genre)
+          ? state.filterOptions.genres.includes(track.genre[0])
           : true;
         const isSearchValueIncluded = track.name
           .toLowerCase()
