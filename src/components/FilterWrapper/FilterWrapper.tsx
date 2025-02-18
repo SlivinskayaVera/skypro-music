@@ -10,6 +10,7 @@ import {
   setSortedTracksByDate,
 } from "@/store/features/playlistSlice";
 import { getListItem } from "@/lib/getListItem";
+import { getUniquesFromArrays } from '@/lib/getUniquesFromArrays';
 
 const sortedByDate: string[] = [
   "По умолчанию",
@@ -31,15 +32,10 @@ export function FilterWrapper() {
   const dispatch = useAppDispatch();
 
   const authorsList = useMemo(() => getListItem("author", tracks), [tracks]);
-  const genreList = useMemo(() => getListItem("genre", tracks), [tracks]);
-
-  // const uniq = (value, index, array) => array.indexOf(value) === index
-
-  // const artists = tracks
-  //   .map(({ author }) => author ?? 'Неизвестный исполнитель')
-  //   .filter((i) => i)
-  //   .filter(uniq)
-  //   .sort()
+  const genreList = useMemo(
+    () => getUniquesFromArrays(getListItem("genre", tracks)),
+    [tracks]
+  );
 
   function toggleSelectedAuthors(item: string) {
     dispatch(

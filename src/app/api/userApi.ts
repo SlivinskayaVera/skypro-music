@@ -1,6 +1,6 @@
 import Cookie from "js-cookie";
 
-const API_URL = "https://skypro-music-api.skyeng.tech/user";
+const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 // регистрация
 
@@ -11,7 +11,7 @@ type UserDataType = {
 };
 
 export async function signUp({ email, password, userName }: UserDataType) {
-  const response = await fetch(`${API_URL}/signup/`, {
+  const response = await fetch(`${API_URL}/user/signup/`, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -33,7 +33,7 @@ export async function signUp({ email, password, userName }: UserDataType) {
 }
 
 export async function signIn({ email, password }: UserDataType) {
-  const response = await fetch(`${API_URL}/login/`, {
+  const response = await fetch(`${API_URL}/user/login/`, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -55,7 +55,7 @@ export async function signIn({ email, password }: UserDataType) {
 }
 
 export async function getTokens({ email, password }: UserDataType) {
-  const response = await fetch(`${API_URL}/token/`, {
+  const response = await fetch(`${API_URL}/user/token/`, {
     method: "POST",
     body: JSON.stringify({
       email: email,
@@ -86,7 +86,7 @@ export async function getTokens({ email, password }: UserDataType) {
 }
 
 export async function refreshTokens({ token }: { token: string }) {
-  const response = await fetch(`${API_URL}/token/refresh/`, {
+  const response = await fetch(`${API_URL}/user/token/refresh/`, {
     method: "POST",
     body: JSON.stringify({
       refresh: token,

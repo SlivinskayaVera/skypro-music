@@ -18,7 +18,7 @@ export function setDislike(
   const refreshToken = cookie && JSON.parse(cookie).refresh;
 
   toDislikeTrack({
-    id: `${track.id}`,
+    id: `${track._id}`,
     accessToken: accessToken,
   })
     .then(() => getAllFavoriteTracks({ accessToken }))

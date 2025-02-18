@@ -49,7 +49,7 @@ export default function SignUpPage() {
         {errorText.email ? errorText.email[0] : ""}
       </p>
       <FormInput
-        type="text"
+        type="email"
         name="login"
         placeholder="Почта"
         value={userData.email}

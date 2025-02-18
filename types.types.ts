@@ -23,17 +23,16 @@ export type InputPropsType = {
   value: string;
 };
 
-
 export type Track = {
   album: string;
   author: string;
   duration_in_seconds: number;
   genre: string;
-  id: number;
+  _id: number;
   logo: null;
   name: string;
   release_date: string;
-  stared_user: StaredUser[];
+  staredUser: number[];
   track_file: string;
 };
 
